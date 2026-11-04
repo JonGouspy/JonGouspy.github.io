@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var m;try{m=localStorage.getItem('mode')}catch(e){}if(m!=='light'&&m!=='dark')m=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.mode=m;})()</script>
+<title>PCB Snake — Jon Gouspy</title>
+<meta name="description" content="Snake kontsola bat PCB propioan: mikrokontrolagailua eta charlieplexing bidezko LED matrizea.">
+<link rel="alternate" hreflang="fr" href="https://jon-gouspy.github.io/projets/pcb-snake.html"><link rel="alternate" hreflang="en" href="https://jon-gouspy.github.io/en/projects/pcb-snake.html"><link rel="alternate" hreflang="eu" href="https://jon-gouspy.github.io/eu/proiektuak/pcb-snake.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23101318'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb547' text-anchor='middle'>JG</text></svg>">
+</head>
+<body class="theme-hardware">
+<header class="topbar">
+  <a class="logo" href="../../eu/index.html"><span class="logo-mark">JG</span><span class="logo-text">Jon Gouspy</span></a>
+  <nav>
+    <a class="nl" href="../../eu/index.html#projets">Proiektuak</a>
+    <a class="nl" href="../../eu/index.html#apropos">Niri buruz</a>
+    <a class="nl" href="../../eu/index.html#contact">Harremana</a>
+    <a class="btn-gh" href="https://github.com/jon-gouspy" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="lang-switch" role="group" aria-label="Hizkuntza"><a href="../../projets/pcb-snake.html" hreflang="fr" lang="fr" title="Français" data-lang="fr">FR</a><a href="../../en/projects/pcb-snake.html" hreflang="en" lang="en" title="English" data-lang="en">EN</a><a href="../../eu/proiektuak/pcb-snake.html" hreflang="eu" lang="eu" title="Euskara" data-lang="eu" class="active" aria-current="true">EU</a></div>
+    <button class="mode-toggle" type="button" aria-label="Gai argia / iluna aldatu" title="Gai argia / iluna aldatu"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="p-hero wrap">
+    <a class="back mono" href="../index.html#projets">← Proiektu guztiak</a>
+    <div class="p-hero-grid">
+      <div class="p-hero-main">
+        <p class="eyebrow"><span class="theme-badge">Hardwarea</span><span class="mono dim">05 / Elektronika</span></p>
+        <h1>PCB Snake</h1>
+        <p class="lead">Snake kontsola bat PCB propioan: mikrokontrolagailua eta charlieplexing bidezko LED matrizea.</p>
+        <div class="tags"><span class="tag">PCB</span><span class="tag">KiCad</span><span class="tag">Mikrokontrolagailua</span><span class="tag">Charlieplexing</span><span class="tag">C</span></div>
+        <div class="actions">
+          <a class="btn" href="https://github.com/jon-gouspy/pcb-snake" target="_blank" rel="noopener">Kodea ikusi ↗</a>
+        </div>
+      </div>
+      <div class="p-hero-side">
+        <div class="deco" aria-hidden="true"><svg viewBox="0 0 320 270">
+<g class="d-trace">
+<path d="M0 60 H80 L110 90 H150"/><path d="M0 120 H60 L90 150 H150"/><path d="M0 200 H100 L130 170 H150"/>
+<path d="M250 90 H280 L320 50"/><path d="M250 130 H320"/><path d="M250 170 H270 L310 210 V270"/>
+<path d="M190 70 V30 L220 0"/><path d="M210 190 V240 L240 270"/>
+</g>
+<rect x="150" y="70" width="100" height="120" rx="4" class="d-chip"/>
+<g class="d-pin"><rect x="142" y="82" width="10" height="6"/><rect x="248" y="82" width="10" height="6"/><rect x="142" y="98" width="10" height="6"/><rect x="248" y="98" width="10" height="6"/><rect x="142" y="114" width="10" height="6"/><rect x="248" y="114" width="10" height="6"/><rect x="142" y="130" width="10" height="6"/><rect x="248" y="130" width="10" height="6"/><rect x="142" y="146" width="10" height="6"/><rect x="248" y="146" width="10" height="6"/><rect x="142" y="162" width="10" height="6"/><rect x="248" y="162" width="10" height="6"/><rect x="142" y="178" width="10" height="6"/><rect x="248" y="178" width="10" height="6"/></g>
+<circle cx="163" cy="83" r="4" class="d-dot"/>
+<text x="200" y="135" class="d-txt">MCU</text>
+<g class="d-via"><circle cx="80" cy="60" r="6"/><circle cx="60" cy="120" r="6"/><circle cx="100" cy="200" r="6"/><circle cx="280" cy="90" r="6"/><circle cx="270" cy="170" r="6"/><circle cx="190" cy="30" r="6"/><circle cx="210" cy="240" r="6"/></g>
+</svg></div>
+        <dl class="facts"><div class="fact"><dt>Diseinua</dt><dd>Eskema + PCB bideratzea</dd></div><div class="fact"><dt>Pantaila</dt><dd>Charlieplexing LEDak</dd></div><div class="fact"><dt>Firmwarea</dt><dd>C txertatua</dd></div><div class="fact"><dt>Mota</dt><dd>Hardware-proiektu osoa</dd></div></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Testuingurua</h2>
+    <div class="prose"><p>Helburua: Snake jokoa exekutatzen duen kontsola txiki bat hutsetik diseinatzea — eskema elektronikoa, PCBaren bideratzea, soldadura, eta ondoren jokoaren firmwarea.</p>
+<p>Erronka interesgarria: LED asko pin gutxirekin gidatzea. Hor sartzen da <strong>charlieplexing</strong>-a, GPIOen inpedantzia altuko egoera baliatzen duena <code>n × (n − 1)</code> LED <code>n</code> pin bakarrik erabiliz helbideratzeko.</p></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Arkitektura</h2>
+    <ol class="pipeline"><li><span class="step-n">01</span>Eskema</li><li><span class="step-n">02</span>Aztarnak</li><li><span class="step-n">03</span>PCB bideratzea</li><li><span class="step-n">04</span>Fabrikazioa</li><li><span class="step-n">05</span>Soldadura</li><li><span class="step-n">06</span>Firmwarea</li><li><span class="step-n">07</span>Snake jokoa</li></ol>
+    <p class="caption">Eskematik kontsola funtzionalera.</p>
+    <!-- Image / GIF / demo :
+    <figure class="media"><img src="../../assets/img/pcb-snake.jpg" alt="PCB Snake"><figcaption>…</figcaption></figure>
+    -->
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Puntu teknikoak</h2>
+    <div class="points"><div class="point"><h3>Charlieplexing</h3><p>LED bat pizteko, pin bat 1era jartzen da, beste bat 0ra, eta gainerako guztiak sarrera gisa (inpedantzia altua). 9 pinekin: 9 × 8 = 72 LED helbideragarri, 8 × 8 sare baterako nahikoa.</p></div><div class="point"><h3>Ekorketa</h3><p>LED bakarra (edo lerro bakarra) pizten da aldi berean, baina ekorketa nahikoa azkarra da ikusmenaren iraunkortasunak irudi egonkorra erakusteko.</p></div><div class="point"><h3>Bideratzea</h3><p>Charlieplexing-aren kableatua trinkoa eta ez oso intuitiboa da: LEDen kokapenak eta pisten bideratzeak arreta berezia eskatu dute.</p></div><div class="point"><h3>Sarrerak</h3><p>Norabide-botoiak, software bidezko errebote-iragazkiarekin, freskatze-zikloen artean irakurriak.</p></div><div class="point"><h3>Jokoaren logika</h3><p>Sugea buffer zirkular batean gordeta, sagarraren sorrera, talken detekzioa eta abiaduraren igoera mailakatua.</p></div><div class="point"><h3>Elikadura</h3><p>Korronte-mugatzeko erresistentzien eta elikaduraren dimentsionamendua, distira homogeneoa lortzeko.</p></div></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Kode-zatia</h2>
+    <div class="code">
+      <div class="code-bar mono"><span class="dots"><i></i><i></i><i></i></span>C</div>
+      <pre><code>// Turn on the LED between pin `hi` (anode) and `lo` (cathode)
+static void led_on(uint8_t hi, uint8_t lo)
+{
+    PIN_DDR  = 0;                    // all pins high-impedance
+    PIN_PORT = 0;
+    PIN_DDR  = (1 &lt;&lt; hi) | (1 &lt;&lt; lo);// only hi and lo become outputs
+    PIN_PORT = (1 &lt;&lt; hi);            // hi = 1, lo = 0 -&gt; current through LED
+}
+
+ISR(TIMER_vect)                       // display refresh
+{
+    static uint8_t i = 0;
+    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);
+    else                PIN_DDR = 0;
+    i = (i + 1) % NB_LEDS;
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Zer ikasi dudan</h2>
+    <ul class="learned"><li>PCB oso bat diseinatzea, eskematik soldatutako produktura arte.</li><li>Pinak aurrezten dituen multiplexazio-teknika dotorea.</li><li>Hardware-mugen eta software-arkitekturaren arteko lotura oso zehatza.</li></ul>
+  </section>
+
+  <nav class="wrap pager">
+    <a class="theme-systeme" href="deriscage-esp32.html"><span class="mono dim">← Aurrekoa</span><strong>Dériscage ESP32an</strong></a>
+    <a class="next theme-architecture" href="cpu-monocycle.html"><span class="mono dim">Hurrengoa →</span><strong>Ziklo bakarreko CPUa</strong></a>
+  </nav>
+</main>
+<footer class="footer">
+  <div class="wrap footer-in">
+    <span>© 2026 Jon Gouspy</span>
+    <span class="mono dim">Eskuz egina · GitHub Pages-en ostatatua</span>
+  </div>
+</footer>
+<script>
+(function(){
+  var b=document.querySelector('.mode-toggle');
+  if(b)b.addEventListener('click',function(){
+    var m=document.documentElement.dataset.mode==='light'?'dark':'light';
+    document.documentElement.dataset.mode=m;try{localStorage.setItem('mode',m)}catch(e){}
+  });
+  document.querySelectorAll('.lang-switch a').forEach(function(a){
+    a.addEventListener('click',function(){try{localStorage.setItem('lang',a.dataset.lang)}catch(e){}});
+  });
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('active',x===c)});
+    var f=c.dataset.f;
+    document.querySelectorAll('.card').forEach(function(k){k.hidden=!(f==='all'||k.dataset.theme===f)});
+  })});
+})();
+</script>
+</body>
+</html>

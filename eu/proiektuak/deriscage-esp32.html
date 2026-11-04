@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var m;try{m=localStorage.getItem('mode')}catch(e){}if(m!=='light'&&m!=='dark')m=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.mode=m;})()</script>
+<title>Dériscage ESP32an — Jon Gouspy</title>
+<meta name="description" content="Mugimenduaren estimazioa IMU bidez: Madgwick iragazkia + ZUPT zuzenketa, ESP32an.">
+<link rel="alternate" hreflang="fr" href="https://jon-gouspy.github.io/projets/deriscage-esp32.html"><link rel="alternate" hreflang="en" href="https://jon-gouspy.github.io/en/projects/deriscage-esp32.html"><link rel="alternate" hreflang="eu" href="https://jon-gouspy.github.io/eu/proiektuak/deriscage-esp32.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23101318'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb547' text-anchor='middle'>JG</text></svg>">
+</head>
+<body class="theme-systeme">
+<header class="topbar">
+  <a class="logo" href="../../eu/index.html"><span class="logo-mark">JG</span><span class="logo-text">Jon Gouspy</span></a>
+  <nav>
+    <a class="nl" href="../../eu/index.html#projets">Proiektuak</a>
+    <a class="nl" href="../../eu/index.html#apropos">Niri buruz</a>
+    <a class="nl" href="../../eu/index.html#contact">Harremana</a>
+    <a class="btn-gh" href="https://github.com/jon-gouspy" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="lang-switch" role="group" aria-label="Hizkuntza"><a href="../../projets/deriscage-esp32.html" hreflang="fr" lang="fr" title="Français" data-lang="fr">FR</a><a href="../../en/projects/deriscage-esp32.html" hreflang="en" lang="en" title="English" data-lang="en">EN</a><a href="../../eu/proiektuak/deriscage-esp32.html" hreflang="eu" lang="eu" title="Euskara" data-lang="eu" class="active" aria-current="true">EU</a></div>
+    <button class="mode-toggle" type="button" aria-label="Gai argia / iluna aldatu" title="Gai argia / iluna aldatu"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="p-hero wrap">
+    <a class="back mono" href="../index.html#projets">← Proiektu guztiak</a>
+    <div class="p-hero-grid">
+      <div class="p-hero-main">
+        <p class="eyebrow"><span class="theme-badge">Sistemak</span><span class="mono dim">04 / Sistema txertatuak</span></p>
+        <h1>Dériscage ESP32an</h1>
+        <p class="lead">Mugimenduaren estimazioa IMU bidez: Madgwick iragazkia + ZUPT zuzenketa, ESP32an.</p>
+        <div class="tags"><span class="tag">ESP32</span><span class="tag">ESP-IDF</span><span class="tag">FreeRTOS</span><span class="tag">MPU6050</span><span class="tag">I²C</span><span class="tag">Sentsore-fusioa</span></div>
+        <div class="actions">
+          <a class="btn" href="https://github.com/jon-gouspy/deriscage-esp32" target="_blank" rel="noopener">Kodea ikusi ↗</a>
+        </div>
+      </div>
+      <div class="p-hero-side">
+        <div class="deco" aria-hidden="true"><svg viewBox="0 0 320 270"><path d="M0 0 V270" class="d-grid"/><path d="M40 0 V270" class="d-grid"/><path d="M80 0 V270" class="d-grid"/><path d="M120 0 V270" class="d-grid"/><path d="M160 0 V270" class="d-grid"/><path d="M200 0 V270" class="d-grid"/><path d="M240 0 V270" class="d-grid"/><path d="M280 0 V270" class="d-grid"/><path d="M320 0 V270" class="d-grid"/><path d="M0 15 H320" class="d-grid"/><path d="M0 55 H320" class="d-grid"/><path d="M0 95 H320" class="d-grid"/><path d="M0 135 H320" class="d-grid"/><path d="M0 175 H320" class="d-grid"/><path d="M0 215 H320" class="d-grid"/><path d="M0 255 H320" class="d-grid"/>
+<path d="M160 0 V270 M0 135 H320" class="d-axis"/>
+<path d="M0.0,95.0 L2.0,96.3 L4.0,97.1 L6.0,97.1 L8.0,96.1 L10.0,94.0 L12.0,91.0 L14.0,87.2 L16.0,82.7 L18.0,77.8 L20.0,72.6 L22.0,67.6 L24.0,63.4 L26.0,60.5 L28.0,59.5 L30.0,60.5 L32.0,63.3 L34.0,67.5 L36.0,72.5 L38.0,77.7 L40.0,82.7 L42.0,87.2 L44.0,91.1 L46.0,94.1 L48.0,96.1 L50.0,97.1 L52.0,97.0 L54.0,96.2 L56.0,94.9 L58.0,93.6 L60.0,92.7 L62.0,92.5 L64.0,93.1 L66.0,94.3 L68.0,95.7 L70.0,96.9 L72.0,97.5 L74.0,97.3 L76.0,96.4 L78.0,95.1 L80.0,93.8 L82.0,92.7 L84.0,92.3 L86.0,92.6 L88.0,93.2 L90.0,93.6 L92.0,93.2 L94.0,91.4 L96.0,87.5 L98.0,81.8 L100.0,74.5 L102.0,66.9 L104.0,60.2 L106.0,55.9 L108.0,54.8 L110.0,57.2 L112.0,62.5 L114.0,69.4 L116.0,76.5 L118.0,82.6 L120.0,87.0 L122.0,89.6 L124.0,90.8 L126.0,91.3 L128.0,91.6 L130.0,92.3 L132.0,93.5 L134.0,94.9 L136.0,96.3 L138.0,97.2 L140.0,97.5 L142.0,97.0 L144.0,95.8 L146.0,94.4 L148.0,93.2 L150.0,92.6 L152.0,92.6 L154.0,93.4 L156.0,94.7 L158.0,96.1 L160.0,97.1 L162.0,97.4 L164.0,96.9 L166.0,95.7 L168.0,93.8 L170.0,91.6 L172.0,89.2 L174.0,86.5 L176.0,83.4 L178.0,79.6 L180.0,75.0 L182.0,69.9 L184.0,64.8 L186.0,60.6 L188.0,58.3 L190.0,58.3 L192.0,60.9 L194.0,65.6 L196.0,71.7 L198.0,78.2 L200.0,84.4 L202.0,89.6 L204.0,93.4 L206.0,95.6 L208.0,96.4 L210.0,96.1 L212.0,95.0 L214.0,93.7 L216.0,92.8 L218.0,92.5 L220.0,93.0 L222.0,94.0 L224.0,95.4 L226.0,96.7 L228.0,97.4 L230.0,97.4 L232.0,96.7 L234.0,95.4 L236.0,94.0 L238.0,92.9 L240.0,92.5 L242.0,92.8 L244.0,93.7 L246.0,94.8 L248.0,95.6 L250.0,95.5 L252.0,94.0 L254.0,90.8 L256.0,85.8 L258.0,79.4 L260.0,72.2 L262.0,65.4 L264.0,60.0 L266.0,57.0 L268.0,56.9 L270.0,59.7 L272.0,64.5 L274.0,70.4 L276.0,76.1 L278.0,81.0 L280.0,84.6 L282.0,87.2 L284.0,89.1 L286.0,90.8 L288.0,92.5 L290.0,94.3 L292.0,95.9 L294.0,97.0 L296.0,97.5 L298.0,97.1 L300.0,96.1 L302.0,94.7 L304.0,93.4 L306.0,92.6 L308.0,92.6 L310.0,93.2 L312.0,94.5 L314.0,95.9 L316.0,97.0 L318.0,97.5 L320.0,97.2" class="d-ch1"/>
+<path d="M0.0,215.0 L2.0,211.3 L4.0,207.8 L6.0,204.3 L8.0,201.0 L10.0,198.0 L12.0,195.2 L14.0,192.8 L16.0,190.8 L18.0,189.1 L20.0,188.0 L22.0,187.2 L24.0,187.0 L26.0,187.2 L28.0,188.0 L30.0,189.1 L32.0,190.8 L34.0,192.8 L36.0,195.2 L38.0,198.0 L40.0,201.0 L42.0,204.3 L44.0,207.8 L46.0,211.3 L48.0,215.0 L50.0,215.0 L52.0,215.0 L54.0,215.0 L56.0,215.0 L58.0,215.0 L60.0,215.0 L62.0,215.0 L64.0,215.0 L66.0,215.0 L68.0,215.0 L70.0,215.0 L72.0,215.0 L74.0,215.0 L76.0,215.0 L78.0,215.0 L80.0,215.0 L82.0,211.3 L84.0,207.8 L86.0,204.3 L88.0,201.0 L90.0,198.0 L92.0,195.2 L94.0,192.8 L96.0,190.8 L98.0,189.1 L100.0,188.0 L102.0,187.2 L104.0,187.0 L106.0,187.2 L108.0,188.0 L110.0,189.1 L112.0,190.8 L114.0,192.8 L116.0,195.2 L118.0,198.0 L120.0,201.0 L122.0,204.3 L124.0,207.8 L126.0,211.3 L128.0,215.0 L130.0,215.0 L132.0,215.0 L134.0,215.0 L136.0,215.0 L138.0,215.0 L140.0,215.0 L142.0,215.0 L144.0,215.0 L146.0,215.0 L148.0,215.0 L150.0,215.0 L152.0,215.0 L154.0,215.0 L156.0,215.0 L158.0,215.0 L160.0,215.0 L162.0,211.3 L164.0,207.8 L166.0,204.3 L168.0,201.0 L170.0,198.0 L172.0,195.2 L174.0,192.8 L176.0,190.8 L178.0,189.1 L180.0,188.0 L182.0,187.2 L184.0,187.0 L186.0,187.2 L188.0,188.0 L190.0,189.1 L192.0,190.8 L194.0,192.8 L196.0,195.2 L198.0,198.0 L200.0,201.0 L202.0,204.3 L204.0,207.8 L206.0,211.3 L208.0,215.0 L210.0,215.0 L212.0,215.0 L214.0,215.0 L216.0,215.0 L218.0,215.0 L220.0,215.0 L222.0,215.0 L224.0,215.0 L226.0,215.0 L228.0,215.0 L230.0,215.0 L232.0,215.0 L234.0,215.0 L236.0,215.0 L238.0,215.0 L240.0,215.0 L242.0,211.3 L244.0,207.8 L246.0,204.3 L248.0,201.0 L250.0,198.0 L252.0,195.2 L254.0,192.8 L256.0,190.8 L258.0,189.1 L260.0,188.0 L262.0,187.2 L264.0,187.0 L266.0,187.2 L268.0,188.0 L270.0,189.1 L272.0,190.8 L274.0,192.8 L276.0,195.2 L278.0,198.0 L280.0,201.0 L282.0,204.3 L284.0,207.8 L286.0,211.3 L288.0,215.0 L290.0,215.0 L292.0,215.0 L294.0,215.0 L296.0,215.0 L298.0,215.0 L300.0,215.0 L302.0,215.0 L304.0,215.0 L306.0,215.0 L308.0,215.0 L310.0,215.0 L312.0,215.0 L314.0,215.0 L316.0,215.0 L318.0,215.0 L320.0,215.0" class="d-ch2"/>
+<text x="8" y="30" class="d-txt d-c1">CH1 a_z</text><text x="8" y="160" class="d-txt d-c2">CH2 v · ZUPT</text></svg></div>
+        <dl class="facts"><div class="fact"><dt>Txartela</dt><dd>ESP32</dd></div><div class="fact"><dt>Lan-markoa</dt><dd>ESP-IDF · FreeRTOS</dd></div><div class="fact"><dt>Sentsorea</dt><dd>MPU6050 (azelerometroa + giroskopioa)</dd></div><div class="fact"><dt>Algoritmoak</dt><dd>Madgwick · ZUPT</dd></div></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Testuingurua</h2>
+    <div class="prose"><p>MPU6050 batek 3 ardatzeko azelerazioak eta abiadura angeluarrak ematen ditu. Teorian, azelerazioa bi aldiz integratzea nahikoa da posizioa lortzeko. Praktikan, alborapenik txikiena ere lehertu egiten da: segundo gutxiren buruan posizioa hainbat metro desbideratzen da.</p>
+<p>Proiektu honek bi teknika uztartzen ditu estimazioa erabilgarria izan dadin: <strong>Madgwick iragazkia</strong>, sentsorearen orientazioa ezagutzeko, eta <strong>ZUPT</strong> zuzenketa (Zero Velocity Update), sentsorea geldi dagoen bakoitzean abiadura zerora itzultzeko.</p></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Arkitektura</h2>
+    <ol class="pipeline"><li><span class="step-n">01</span>MPU6050</li><li><span class="step-n">02</span>I²C irakurketa</li><li><span class="step-n">03</span>Alborapenen kalibrazioa</li><li><span class="step-n">04</span>Madgwick iragazkia</li><li><span class="step-n">05</span>Azel. munduko erreferentzian</li><li><span class="step-n">06</span>− grabitatea</li><li><span class="step-n">07</span>∫ abiadura</li><li><span class="step-n">08</span>Geldiune-detekzioa</li><li><span class="step-n">09</span>ZUPT: v = 0</li><li><span class="step-n">10</span>∫ posizioa</li></ol>
+    <p class="caption">ESP32an denbora errealean exekutatzen den prozesamendu-katea.</p>
+    <!-- Image / GIF / demo :
+    <figure class="media"><img src="../../assets/img/deriscage-esp32.jpg" alt="Dériscage ESP32an"><figcaption>…</figcaption></figure>
+    -->
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Puntu teknikoak</h2>
+    <div class="points"><div class="point"><h3>I²C driverra</h3><p>MPU6050arekiko komunikazioa ESP-IDFren I²C APIaren bidez: tarteen konfigurazioa (±g, °/s) eta erregistroen irakurketa jarraitua.</p></div><div class="point"><h3>FreeRTOS atazak</h3><p>Maiztasun finkoko eskuratze-ataza bat eta prozesamendu-ataza bat; ilara baten bidez trukatzen dituzte datuak, laginketa erregularra bermatzeko.</p></div><div class="point"><h3>Madgwick iragazkia</h3><p>Giroskopioaren eta azelerometroaren fusioa, orientazio-kuaternioi baten gaineko gradiente-jaitsieraren bidez, β parametroaz doitua.</p></div><div class="point"><h3>Munduko erreferentzia</h3><p>Azelerazioa Lurraren erreferentzia-sistemara biratzen da kuaternioiari esker, eta grabitatea kentzen zaio azelerazio lineala soilik gordetzeko.</p></div><div class="point"><h3>Geldiune-detekzioa</h3><p>Leiho irristakor batean: azelerazioaren norma g-tik hurbil eta biraketa ia nulua → sentsorea geldi dagoela jotzen da.</p></div><div class="point"><h3>ZUPT zuzenketa</h3><p>Geldiune bakoitzean abiadura zerora behartzen da: metatutako errorea mozten da eta posizioaren desbideratzea mugatuta geratzen da.</p></div></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Kode-zatia</h2>
+    <div class="code">
+      <div class="code-bar mono"><span class="dots"><i></i><i></i><i></i></span>C</div>
+      <pre><code>static bool is_stationary(const imu_sample_t *s)
+{
+    float a_norm = vec3_norm(s-&gt;acc);          // in g
+    float w_norm = vec3_norm(s-&gt;gyro);         // in rad/s
+    return fabsf(a_norm - 1.0f) &lt; ACC_TH &amp;&amp; w_norm &lt; GYRO_TH;
+}
+
+void process(imu_sample_t *s, float dt)
+{
+    madgwick_update(&amp;q, s-&gt;gyro, s-&gt;acc, BETA, dt);
+    vec3 a_world = quat_rotate(q, s-&gt;acc);
+    a_world.z -= 1.0f;                         // remove gravity
+
+    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT
+    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));
+
+    pos = vec3_add(pos, vec3_scale(vel, dt));
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Zer ikasi dudan</h2>
+    <ul class="learned"><li>ESP-IDFrekin garatzea eta denbora errealeko aplikazio bat FreeRTOSekin egituratzea.</li><li>Sentsore-fusioa eta kostu baxuko IMU baten muga fisikoak ulertzea.</li><li>Desbideratze bat aurretiazko ezagutzaren bidez zuzentzea (hemen: geldiuneak).</li></ul>
+  </section>
+
+  <nav class="wrap pager">
+    <a class="theme-software" href="object-detection-gpu.html"><span class="mono dim">← Aurrekoa</span><strong>Object Detection GPU</strong></a>
+    <a class="next theme-hardware" href="pcb-snake.html"><span class="mono dim">Hurrengoa →</span><strong>PCB Snake</strong></a>
+  </nav>
+</main>
+<footer class="footer">
+  <div class="wrap footer-in">
+    <span>© 2026 Jon Gouspy</span>
+    <span class="mono dim">Eskuz egina · GitHub Pages-en ostatatua</span>
+  </div>
+</footer>
+<script>
+(function(){
+  var b=document.querySelector('.mode-toggle');
+  if(b)b.addEventListener('click',function(){
+    var m=document.documentElement.dataset.mode==='light'?'dark':'light';
+    document.documentElement.dataset.mode=m;try{localStorage.setItem('mode',m)}catch(e){}
+  });
+  document.querySelectorAll('.lang-switch a').forEach(function(a){
+    a.addEventListener('click',function(){try{localStorage.setItem('lang',a.dataset.lang)}catch(e){}});
+  });
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('active',x===c)});
+    var f=c.dataset.f;
+    document.querySelectorAll('.card').forEach(function(k){k.hidden=!(f==='all'||k.dataset.theme===f)});
+  })});
+})();
+</script>
+</body>
+</html>

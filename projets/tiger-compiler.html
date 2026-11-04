@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var m;try{m=localStorage.getItem('mode')}catch(e){}if(m!=='light'&&m!=='dark')m=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.mode=m;})()</script>
+<title>Tiger Compiler — Jon Gouspy</title>
+<meta name="description" content="Un compilateur complet pour le langage Tiger, écrit en C++.">
+<link rel="alternate" hreflang="fr" href="https://jon-gouspy.github.io/projets/tiger-compiler.html"><link rel="alternate" hreflang="en" href="https://jon-gouspy.github.io/en/projects/tiger-compiler.html"><link rel="alternate" hreflang="eu" href="https://jon-gouspy.github.io/eu/proiektuak/tiger-compiler.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23101318'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb547' text-anchor='middle'>JG</text></svg>">
+</head>
+<body class="theme-compilation">
+<header class="topbar">
+  <a class="logo" href="../index.html"><span class="logo-mark">JG</span><span class="logo-text">Jon Gouspy</span></a>
+  <nav>
+    <a class="nl" href="../index.html#projets">Projets</a>
+    <a class="nl" href="../index.html#apropos">À propos</a>
+    <a class="nl" href="../index.html#contact">Contact</a>
+    <a class="btn-gh" href="https://github.com/jon-gouspy" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="lang-switch" role="group" aria-label="Langue"><a href="../projets/tiger-compiler.html" hreflang="fr" lang="fr" title="Français" data-lang="fr" class="active" aria-current="true">FR</a><a href="../en/projects/tiger-compiler.html" hreflang="en" lang="en" title="English" data-lang="en">EN</a><a href="../eu/proiektuak/tiger-compiler.html" hreflang="eu" lang="eu" title="Euskara" data-lang="eu">EU</a></div>
+    <button class="mode-toggle" type="button" aria-label="Basculer entre thème clair et sombre" title="Basculer entre thème clair et sombre"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="p-hero wrap">
+    <a class="back mono" href="../index.html#projets">← Tous les projets</a>
+    <div class="p-hero-grid">
+      <div class="p-hero-main">
+        <p class="eyebrow"><span class="theme-badge">Compilation</span><span class="mono dim">01 / Compilation</span></p>
+        <h1>Tiger Compiler</h1>
+        <p class="lead">Un compilateur complet pour le langage Tiger, écrit en C++.</p>
+        <div class="tags"><span class="tag">C++</span><span class="tag">Flex</span><span class="tag">Bison</span><span class="tag">AST</span><span class="tag">IR</span></div>
+        <div class="actions">
+          <a class="btn" href="https://github.com/jon-gouspy/tiger-compiler" target="_blank" rel="noopener">Voir le code ↗</a>
+        </div>
+      </div>
+      <div class="p-hero-side">
+        <div class="deco" aria-hidden="true"><svg viewBox="0 0 320 270"><path d="M170 46 C170 69.0, 80 69.0, 80 92" class="d-line"/><path d="M170 46 C170 69.0, 262 69.0, 262 92" class="d-line"/><path d="M80 116 C80 140.0, 36 140.0, 36 164" class="d-line"/><path d="M80 116 C80 140.0, 124 140.0, 124 164" class="d-line"/><path d="M262 116 C262 140.0, 262 140.0, 262 164" class="d-line"/><path d="M124 188 C124 208.0, 124 208.0, 124 228" class="d-line"/><path d="M262 188 C262 208.0, 262 208.0, 262 228" class="d-line"/><rect x="138.2" y="22" width="63.599999999999994" height="24" rx="3" class="d-node d-hl"/><text x="170" y="38" class="d-txt">LetExp</text><rect x="55.8" y="92" width="48.4" height="24" rx="3" class="d-node"/><text x="80" y="108" class="d-txt">Decs</text><rect x="226.4" y="92" width="71.19999999999999" height="24" rx="3" class="d-node"/><text x="262" y="108" class="d-txt">CallExp</text><rect x="0.4000000000000057" y="164" width="71.19999999999999" height="24" rx="3" class="d-node"/><text x="36" y="180" class="d-txt">TypeDec</text><rect x="92.2" y="164" width="63.599999999999994" height="24" rx="3" class="d-node"/><text x="124" y="180" class="d-txt">FunDec</text><rect x="218.8" y="164" width="86.39999999999999" height="24" rx="3" class="d-node"/><text x="262" y="180" class="d-txt">print_int</text><rect x="96.0" y="228" width="56.0" height="24" rx="3" class="d-node"/><text x="124" y="244" class="d-txt">IfExp</text><rect x="230.2" y="228" width="63.599999999999994" height="24" rx="3" class="d-node"/><text x="262" y="244" class="d-txt">sum(l)</text></svg></div>
+        <dl class="facts"><div class="fact"><dt>Langage</dt><dd>C++17</dd></div><div class="fact"><dt>Outils</dt><dd>Flex · Bison · Make</dd></div><div class="fact"><dt>Cible</dt><dd>Assembleur / IR</dd></div><div class="fact"><dt>Type</dt><dd>Projet d&#x27;équipe</dd></div></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Contexte</h2>
+    <div class="prose"><p>Tiger est un petit langage impératif typé, issu du livre <em>Modern Compiler Implementation</em> d'Andrew Appel. Il possède des types structurés (records, tableaux), des fonctions imbriquées, des portées lexicales et une gestion explicite de <code>let … in … end</code>.</p>
+<p>L'objectif : partir d'un fichier source <code>.tig</code> et produire du code exécutable, en traversant toutes les étapes d'un vrai compilateur — de l'analyse lexicale jusqu'à l'allocation de registres.</p></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Architecture</h2>
+    <ol class="pipeline"><li><span class="step-n">01</span>Source .tig</li><li><span class="step-n">02</span>Lexer (Flex)</li><li><span class="step-n">03</span>Parser (Bison)</li><li><span class="step-n">04</span>AST</li><li><span class="step-n">05</span>Binding</li><li><span class="step-n">06</span>Type-checking</li><li><span class="step-n">07</span>Traduction IR</li><li><span class="step-n">08</span>Canonisation</li><li><span class="step-n">09</span>Sélection d&#x27;instructions</li><li><span class="step-n">10</span>Allocation de registres</li><li><span class="step-n">11</span>Assembleur</li></ol>
+    <p class="caption">Chaîne de compilation, du texte source au code machine.</p>
+    <!-- Image / GIF / demo :
+    <figure class="media"><img src="../assets/img/tiger-compiler.jpg" alt="Tiger Compiler"><figcaption>…</figcaption></figure>
+    -->
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Points techniques</h2>
+    <div class="points"><div class="point"><h3>Analyse lexicale &amp; syntaxique</h3><p>Scanner Flex et grammaire Bison, avec gestion des conflits, des priorités d&#x27;opérateurs et des messages d&#x27;erreur localisés (ligne / colonne).</p></div><div class="point"><h3>AST &amp; visiteurs</h3><p>Arbre syntaxique abstrait en C++ parcouru via le design pattern Visitor : pretty-printer, binder, type-checker et traducteur partagent la même hiérarchie.</p></div><div class="point"><h3>Liaison des noms</h3><p>Résolution des identifiants avec tables de symboles à portées imbriquées, détection des variables qui « s&#x27;échappent » vers des fonctions internes.</p></div><div class="point"><h3>Vérification de types</h3><p>Typage des expressions, des records récursifs et des tableaux ; erreurs sémantiques claires plutôt qu&#x27;un crash.</p></div><div class="point"><h3>Représentation intermédiaire</h3><p>Traduction en arbre IR, linéarisation et canonisation des blocs de base avant la génération de code.</p></div><div class="point"><h3>Back-end</h3><p>Sélection d&#x27;instructions par tuilage de motifs, analyse de vivacité et allocation de registres par coloration de graphe.</p></div></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Extrait de code</h2>
+    <div class="code">
+      <div class="code-bar mono"><span class="dots"><i></i><i></i><i></i></span>Tiger</div>
+      <pre><code>let
+  type intlist = { head: int, tail: intlist }
+  function sum(l: intlist): int =
+    if l = nil then 0
+    else l.head + sum(l.tail)
+  var l := intlist { head = 1,
+           tail = intlist { head = 2, tail = nil } }
+in
+  print_int(sum(l))
+end</code></pre>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Ce que j&#x27;en retiens</h2>
+    <ul class="learned"><li>Comprendre ce qui se passe réellement entre le code source et le binaire.</li><li>Concevoir une grosse base de code C++ modulaire et testable (suites de tests par étape).</li><li>Travailler en équipe sur un projet long avec revues de code et intégration continue.</li></ul>
+  </section>
+
+  <nav class="wrap pager">
+    <a class="theme-architecture" href="cpu-monocycle.html"><span class="mono dim">← Précédent</span><strong>CPU Monocycle</strong></a>
+    <a class="next theme-hardware" href="light-tracker.html"><span class="mono dim">Suivant →</span><strong>Light Tracker</strong></a>
+  </nav>
+</main>
+<footer class="footer">
+  <div class="wrap footer-in">
+    <span>© 2026 Jon Gouspy</span>
+    <span class="mono dim">Fait main · hébergé sur GitHub Pages</span>
+  </div>
+</footer>
+<script>
+(function(){
+  var b=document.querySelector('.mode-toggle');
+  if(b)b.addEventListener('click',function(){
+    var m=document.documentElement.dataset.mode==='light'?'dark':'light';
+    document.documentElement.dataset.mode=m;try{localStorage.setItem('mode',m)}catch(e){}
+  });
+  document.querySelectorAll('.lang-switch a').forEach(function(a){
+    a.addEventListener('click',function(){try{localStorage.setItem('lang',a.dataset.lang)}catch(e){}});
+  });
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('active',x===c)});
+    var f=c.dataset.f;
+    document.querySelectorAll('.card').forEach(function(k){k.hidden=!(f==='all'||k.dataset.theme===f)});
+  })});
+})();
+</script>
+</body>
+</html>

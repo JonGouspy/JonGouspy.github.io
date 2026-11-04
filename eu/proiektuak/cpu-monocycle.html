@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var m;try{m=localStorage.getItem('mode')}catch(e){}if(m!=='light'&&m!=='dark')m=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.mode=m;})()</script>
+<title>Ziklo bakarreko CPUa — Jon Gouspy</title>
+<meta name="description" content="VHDLz deskribatutako ziklo bakarreko prozesadorea: agindu bakoitza erloju-ziklo bakar batean exekutatzen da.">
+<link rel="alternate" hreflang="fr" href="https://jon-gouspy.github.io/projets/cpu-monocycle.html"><link rel="alternate" hreflang="en" href="https://jon-gouspy.github.io/en/projects/cpu-monocycle.html"><link rel="alternate" hreflang="eu" href="https://jon-gouspy.github.io/eu/proiektuak/cpu-monocycle.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23101318'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb547' text-anchor='middle'>JG</text></svg>">
+</head>
+<body class="theme-architecture">
+<header class="topbar">
+  <a class="logo" href="../../eu/index.html"><span class="logo-mark">JG</span><span class="logo-text">Jon Gouspy</span></a>
+  <nav>
+    <a class="nl" href="../../eu/index.html#projets">Proiektuak</a>
+    <a class="nl" href="../../eu/index.html#apropos">Niri buruz</a>
+    <a class="nl" href="../../eu/index.html#contact">Harremana</a>
+    <a class="btn-gh" href="https://github.com/jon-gouspy" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="lang-switch" role="group" aria-label="Hizkuntza"><a href="../../projets/cpu-monocycle.html" hreflang="fr" lang="fr" title="Français" data-lang="fr">FR</a><a href="../../en/projects/cpu-monocycle.html" hreflang="en" lang="en" title="English" data-lang="en">EN</a><a href="../../eu/proiektuak/cpu-monocycle.html" hreflang="eu" lang="eu" title="Euskara" data-lang="eu" class="active" aria-current="true">EU</a></div>
+    <button class="mode-toggle" type="button" aria-label="Gai argia / iluna aldatu" title="Gai argia / iluna aldatu"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg></button>
+  </nav>
+</header>
+
+<main>
+  <section class="p-hero wrap">
+    <a class="back mono" href="../index.html#projets">← Proiektu guztiak</a>
+    <div class="p-hero-grid">
+      <div class="p-hero-main">
+        <p class="eyebrow"><span class="theme-badge">Arkitektura</span><span class="mono dim">06 / Arkitektura · FPGA</span></p>
+        <h1>Ziklo bakarreko CPUa</h1>
+        <p class="lead">VHDLz deskribatutako ziklo bakarreko prozesadorea: agindu bakoitza erloju-ziklo bakar batean exekutatzen da.</p>
+        <div class="tags"><span class="tag">VHDL</span><span class="tag">Arkitektura</span><span class="tag">ALU</span><span class="tag">Simulazioa</span><span class="tag">FPGA</span></div>
+        <div class="actions">
+          <a class="btn" href="https://github.com/jon-gouspy/cpu-monocycle" target="_blank" rel="noopener">Kodea ikusi ↗</a>
+        </div>
+      </div>
+      <div class="p-hero-side">
+        <div class="deco" aria-hidden="true"><svg viewBox="0 0 320 270">
+<text x="10" y="8" class="d-lbl">CLK</text><path d="M10 40 H30 V15 H50 V40 H70 V15 H90 V40 H110 V15 H130 V40 H150 V15 H170 V40 H190 V15 H210 V40 H230 V15 H250 V40 H270 V15 H290 V40 H310" class="d-wave"/>
+<text x="10" y="72" class="d-lbl">PC</text><path d="M10 95 L16 83 H84 L90 95 L84 107 H16 Z" class="d-bus"/><text x="50" y="99" class="d-txt">0x00</text><path d="M90 95 L96 83 H164 L170 95 L164 107 H96 Z" class="d-bus"/><text x="130" y="99" class="d-txt">0x04</text><path d="M170 95 L176 83 H244 L250 95 L244 107 H176 Z" class="d-bus"/><text x="210" y="99" class="d-txt">0x08</text><path d="M250 95 L256 83 H324 L330 95 L324 107 H256 Z" class="d-bus"/><text x="290" y="99" class="d-txt">0x0C</text>
+<text x="10" y="137" class="d-lbl">INSTR</text><path d="M10 160 L16 148 H84 L90 160 L84 172 H16 Z" class="d-bus"/><text x="50" y="164" class="d-txt">ADD</text><path d="M90 160 L96 148 H164 L170 160 L164 172 H96 Z" class="d-bus"/><text x="130" y="164" class="d-txt">LDR</text><path d="M170 160 L176 148 H244 L250 160 L244 172 H176 Z" class="d-bus"/><text x="210" y="164" class="d-txt">SUB</text><path d="M250 160 L256 148 H324 L330 160 L324 172 H256 Z" class="d-bus"/><text x="290" y="164" class="d-txt">BEQ</text>
+<text x="10" y="202" class="d-lbl">WE</text><path d="M10 250 H90 V225 H170 V250 H250 V225 H310" class="d-wave d-w2"/>
+</svg></div>
+        <dl class="facts"><div class="fact"><dt>Lengoaia</dt><dd>VHDL</dd></div><div class="fact"><dt>Arkitektura</dt><dd>Ziklo bakarrekoa</dd></div><div class="fact"><dt>Egiaztapena</dt><dd>Testbench-ak / simulazioa</dd></div><div class="fact"><dt>Mota</dt><dd>Diseinu digitala</dd></div></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Testuingurua</h2>
+    <div class="prose"><p>Ziklo bakarreko prozesadore batek agindu bakoitza osorik — bilaketa, deskodetzea, exekuzioa, memoria-sarbidea, idazketa — erloju-ziklo bakar batean exekutatzen du. Arrazoitzeko arkitekturarik sinpleena da, eta ondoren pipeline-a ulertzeko oinarria.</p>
+<p>Proiektuan datu-bideko bloke bakoitza VHDLz deskribatu, kontrol-unitate batekin elkartu eta dena simulazioan balioztatzen da benetako programekin.</p></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Arkitektura</h2>
+    <ol class="pipeline"><li><span class="step-n">01</span>PC</li><li><span class="step-n">02</span>Agindu-memoria</li><li><span class="step-n">03</span>Deskodetzailea / Kontrola</li><li><span class="step-n">04</span>Erregistro-bankua</li><li><span class="step-n">05</span>Zeinu-hedapena</li><li><span class="step-n">06</span>ALU</li><li><span class="step-n">07</span>Datu-memoria</li><li><span class="step-n">08</span>Idazketa (write-back)</li></ol>
+    <p class="caption">Ziklo bakarreko prozesadorearen datu-bidea.</p>
+    <!-- Image / GIF / demo :
+    <figure class="media"><img src="../../assets/img/cpu-monocycle.jpg" alt="Ziklo bakarreko CPUa"><figcaption>…</figcaption></figure>
+    -->
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Puntu teknikoak</h2>
+    <div class="points"><div class="point"><h3>ALU</h3><p>Eragiketa aritmetiko eta logikoak, eta baldintzapeko jauzietarako erabiltzen diren adierazleak (N, Z, C, V).</p></div><div class="point"><h3>Erregistro-bankua</h3><p>Bi irakurketa-ataka asinkrono eta idazketa-ataka bat, erloju-ertzean sinkronoa.</p></div><div class="point"><h3>Kontrol-unitatea</h3><p>Opcode-a kontrol-seinaletan deskodetzea: multiplexoreen hautaketa, erregistro / memoria idazketa, ALU eragiketa.</p></div><div class="point"><h3>Memoriak</h3><p>Programarekin hasieratutako agindu-memoria eta datu-memoria bereizia (Harvard arkitektura).</p></div><div class="point"><h3>PCaren kudeaketa</h3><p>Inkrementua, jauzi erlatiboak eta saltoak, adierazleen arabera multiplexore batek hautatuak.</p></div><div class="point"><h3>Egiaztapena</h3><p>Testbench bat entitate bakoitzeko, eta ondoren testbench global bat, programa bat exekutatu eta amaieran erregistroak egiaztatzen dituena.</p></div></div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Kode-zatia</h2>
+    <div class="code">
+      <div class="code-bar mono"><span class="dots"><i></i><i></i><i></i></span>VHDL</div>
+      <pre><code>entity alu is
+  port (
+    op     : in  std_logic_vector(1 downto 0);
+    a, b   : in  std_logic_vector(31 downto 0);
+    s      : out std_logic_vector(31 downto 0);
+    n_flag : out std_logic
+  );
+end entity;
+
+architecture rtl of alu is
+  signal res : signed(31 downto 0);
+begin
+  with op select res &lt;=
+    signed(a) + signed(b) when &quot;00&quot;,
+    signed(b)             when &quot;01&quot;,
+    signed(a) - signed(b) when &quot;10&quot;,
+    signed(a)             when others;
+
+  s      &lt;= std_logic_vector(res);
+  n_flag &lt;= res(31);
+end architecture;</code></pre>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="h-sec"><span class="sec-mark"></span>Zer ikasi dudan</h2>
+    <ul class="learned"><li>Hardwarean pentsatzea: konkurrentzia, seinaleak, denbora, agindu-sekuentzia baten ordez.</li><li>Agindu bat seinale elektriko bihurtzen den modua zehazki ulertzea.</li><li>Simulazio bidezko egiaztapenaren garrantzia edozein sintesi egin aurretik.</li></ul>
+  </section>
+
+  <nav class="wrap pager">
+    <a class="theme-hardware" href="pcb-snake.html"><span class="mono dim">← Aurrekoa</span><strong>PCB Snake</strong></a>
+    <a class="next theme-compilation" href="tiger-compiler.html"><span class="mono dim">Hurrengoa →</span><strong>Tiger Compiler</strong></a>
+  </nav>
+</main>
+<footer class="footer">
+  <div class="wrap footer-in">
+    <span>© 2026 Jon Gouspy</span>
+    <span class="mono dim">Eskuz egina · GitHub Pages-en ostatatua</span>
+  </div>
+</footer>
+<script>
+(function(){
+  var b=document.querySelector('.mode-toggle');
+  if(b)b.addEventListener('click',function(){
+    var m=document.documentElement.dataset.mode==='light'?'dark':'light';
+    document.documentElement.dataset.mode=m;try{localStorage.setItem('mode',m)}catch(e){}
+  });
+  document.querySelectorAll('.lang-switch a').forEach(function(a){
+    a.addEventListener('click',function(){try{localStorage.setItem('lang',a.dataset.lang)}catch(e){}});
+  });
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('active',x===c)});
+    var f=c.dataset.f;
+    document.querySelectorAll('.card').forEach(function(k){k.hidden=!(f==='all'||k.dataset.theme===f)});
+  })});
+})();
+</script>
+</body>
+</html>
