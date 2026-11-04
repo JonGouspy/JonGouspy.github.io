@@ -47,6 +47,6 @@ Chaque page projet porte une classe sur `<body>` :
 - Remplace partout `jon-gouspy` et `jon-gouspy-futur-ingenieur` (rechercher/remplacer dans tout le dossier).
 - Les boutons « Voir le code » pointent vers `github.com/jon-gouspy/<nom-du-projet>` :
   adapte-les au vrai nom de tes dépôts.
-- Chaque page projet contient un commentaire `<!-- Ajoute ici un schéma… -->`
+- Chaque page projet contient un commentaire `<!-- Add image here -->`
   pour insérer une photo, un GIF ou une capture.
 - Vérifie les détails techniques et ajoute tes chiffres (gains de perf GPU, dérive mesurée…).

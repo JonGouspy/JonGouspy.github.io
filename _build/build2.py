@@ -191,7 +191,7 @@ def project_page(i, p):
     {sec("Architecture")}
     <ol class="pipeline">{steps}</ol>
     <p class="caption">{e(p["pipeline_caption"])}</p>
-    <!-- Ajoute ici un schéma, une photo ou une démo :
+    <!-- Add image here :
     <figure class="media"><img src="../assets/img/{p["slug"]}.jpg" alt="{e(p["title"])}"><figcaption>Légende</figcaption></figure>
     -->
   </section>
@@ -344,7 +344,7 @@ Pour changer le thème d'un projet : modifie la classe `theme-…` du `<body>` d
 - Remplace partout `jon-gouspy` et `jon-gouspy-futur-ingenieur` (rechercher/remplacer dans tout le dossier).
 - Les boutons « Voir le code » pointent vers `github.com/jon-gouspy/<nom-du-projet>` :
   adapte-les au vrai nom de tes dépôts.
-- Chaque page projet contient un commentaire `<!-- Ajoute ici un schéma… -->`
+- Chaque page projet contient un commentaire `<!-- Add image here -->`
   pour insérer une photo, un GIF ou une capture.
 - Vérifie les détails techniques et ajoute tes chiffres (gains de perf GPU, dérive mesurée…).
 """
