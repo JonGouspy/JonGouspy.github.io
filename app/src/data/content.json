@@ -519,7 +519,8 @@
    {
     "slug": "deriscage-esp32",
     "num": "04",
-    "title": "Dériscage sur ESP32",
+    "title": "Dérisquage sur ESP32",
+    "repo": "https://github.com/JonGouspy/gap",
     "tagline": "Estimation de mouvement par IMU : filtre de Madgwick + correction ZUPT, sur ESP32.",
     "domain": "Systèmes embarqués",
     "tags": [
@@ -589,7 +590,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "static bool is_stationary(const imu_sample_t *s)\n{\n    float a_norm = vec3_norm(s->acc);          // en g\n    float w_norm = vec3_norm(s->gyro);         // en rad/s\n    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;\n}\n\nvoid process(imu_sample_t *s, float dt)\n{\n    madgwick_update(&q, s->gyro, s->acc, BETA, dt);\n    vec3 a_world = quat_rotate(q, s->acc);\n    a_world.z -= 1.0f;                         // retire la gravité\n\n    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT\n    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));\n\n    pos = vec3_add(pos, vec3_scale(vel, dt));\n}",
+    "code": "// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »\nvoid axis_zupt(float *p, float *v, matrix2x2_t *cov_matrix)\n{\n    float y = -(*v);\n    float S = cov_matrix->x4 + ZUPT_R;\n    float K0 = cov_matrix->x2 / S;\n    float K1 = cov_matrix->x4 / S;\n    *p += K0 * y;\n    *v += K1 * y;\n    cov_matrix->x1 -= K0 * cov_matrix->x3;\n    cov_matrix->x2 -= K0 * cov_matrix->x4;\n    cov_matrix->x3 -= K1 * cov_matrix->x2;\n    cov_matrix->x4 -= K1 * cov_matrix->x4;\n}\n\nvoid position_update(inertial_state_t *data, float dt)\n{\n    vec3_t a_body = {data->mpu_data.acc.x, data->mpu_data.acc.y, data->mpu_data.acc.z};\n    vec3_t a_world;\n    quaternion_rotate_to_world(&data->quat, &a_body, &a_world);\n    a_world.z -= GRAVITY;                         // retire la gravité\n\n    // amag, gmag : normes de l'accélération et du gyroscope\n    // Immobile : accélération ≈ g et rotation quasi nulle, ZUPT_WINDOW échantillons de suite\n    if (fabsf(amag - GRAVITY) < ZUPT_ACCEL_TOL && gmag < ZUPT_GYRO_TOL)\n        data->zupt_count++;\n    else\n        data->zupt_count = 0;\n    data->zupt_active = (data->zupt_count >= ZUPT_WINDOW);\n\n    // prédiction : intégration de l'accélération (idem pour y et z)\n    axis_predict(&data->relative_pos.x, &data->velocity.x, &data->covariance[0], a_world.x, dt);\n\n    // à l'arrêt : correction de Kalman (idem pour y et z)\n    if (data->zupt_active)\n        axis_zupt(&data->relative_pos.x, &data->velocity.x, &data->covariance[0]);\n}",
     "learned": [
      "Développer sur ESP-IDF et structurer une application temps réel avec FreeRTOS.",
      "Comprendre la fusion de capteurs et les limites physiques d'une centrale inertielle bas coût.",
@@ -996,7 +997,8 @@
    {
     "slug": "deriscage-esp32",
     "num": "04",
-    "title": "Dériscage on ESP32",
+    "title": "Dérisquage on ESP32",
+    "repo": "https://github.com/JonGouspy/gap",
     "tagline": "IMU motion estimation: Madgwick filter + ZUPT correction, on ESP32.",
     "domain": "Embedded systems",
     "tags": [
@@ -1066,7 +1068,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "static bool is_stationary(const imu_sample_t *s)\n{\n    float a_norm = vec3_norm(s->acc);          // in g\n    float w_norm = vec3_norm(s->gyro);         // in rad/s\n    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;\n}\n\nvoid process(imu_sample_t *s, float dt)\n{\n    madgwick_update(&q, s->gyro, s->acc, BETA, dt);\n    vec3 a_world = quat_rotate(q, s->acc);\n    a_world.z -= 1.0f;                         // remove gravity\n\n    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT\n    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));\n\n    pos = vec3_add(pos, vec3_scale(vel, dt));\n}",
+    "code": "// Kalman update: virtual measurement \"velocity = 0\"\nvoid axis_zupt(float *p, float *v, matrix2x2_t *cov_matrix)\n{\n    float y = -(*v);\n    float S = cov_matrix->x4 + ZUPT_R;\n    float K0 = cov_matrix->x2 / S;\n    float K1 = cov_matrix->x4 / S;\n    *p += K0 * y;\n    *v += K1 * y;\n    cov_matrix->x1 -= K0 * cov_matrix->x3;\n    cov_matrix->x2 -= K0 * cov_matrix->x4;\n    cov_matrix->x3 -= K1 * cov_matrix->x2;\n    cov_matrix->x4 -= K1 * cov_matrix->x4;\n}\n\nvoid position_update(inertial_state_t *data, float dt)\n{\n    vec3_t a_body = {data->mpu_data.acc.x, data->mpu_data.acc.y, data->mpu_data.acc.z};\n    vec3_t a_world;\n    quaternion_rotate_to_world(&data->quat, &a_body, &a_world);\n    a_world.z -= GRAVITY;                         // remove gravity\n\n    // amag, gmag: norms of the acceleration and of the gyroscope\n    // Stationary: acceleration ≈ g and almost no rotation, for ZUPT_WINDOW samples in a row\n    if (fabsf(amag - GRAVITY) < ZUPT_ACCEL_TOL && gmag < ZUPT_GYRO_TOL)\n        data->zupt_count++;\n    else\n        data->zupt_count = 0;\n    data->zupt_active = (data->zupt_count >= ZUPT_WINDOW);\n\n    // prediction: integrate the acceleration (same for y and z)\n    axis_predict(&data->relative_pos.x, &data->velocity.x, &data->covariance[0], a_world.x, dt);\n\n    // when stopped: Kalman correction (same for y and z)\n    if (data->zupt_active)\n        axis_zupt(&data->relative_pos.x, &data->velocity.x, &data->covariance[0]);\n}",
     "learned": [
      "Developing with ESP-IDF and structuring a real-time application with FreeRTOS.",
      "Understanding sensor fusion and the physical limits of a low-cost IMU.",
@@ -1473,7 +1475,8 @@
    {
     "slug": "deriscage-esp32",
     "num": "04",
-    "title": "Dériscage ESP32an",
+    "title": "Dérisquage ESP32an",
+    "repo": "https://github.com/JonGouspy/gap",
     "tagline": "Mugimenduaren estimazioa IMU bidez: Madgwick iragazkia + ZUPT zuzenketa, ESP32an.",
     "domain": "Sistema txertatuak",
     "tags": [
@@ -1543,7 +1546,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "static bool is_stationary(const imu_sample_t *s)\n{\n    float a_norm = vec3_norm(s->acc);          // in g\n    float w_norm = vec3_norm(s->gyro);         // in rad/s\n    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;\n}\n\nvoid process(imu_sample_t *s, float dt)\n{\n    madgwick_update(&q, s->gyro, s->acc, BETA, dt);\n    vec3 a_world = quat_rotate(q, s->acc);\n    a_world.z -= 1.0f;                         // remove gravity\n\n    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT\n    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));\n\n    pos = vec3_add(pos, vec3_scale(vel, dt));\n}",
+    "code": "// Kalman eguneraketa: \"abiadura = 0\" neurketa birtuala\nvoid axis_zupt(float *p, float *v, matrix2x2_t *cov_matrix)\n{\n    float y = -(*v);\n    float S = cov_matrix->x4 + ZUPT_R;\n    float K0 = cov_matrix->x2 / S;\n    float K1 = cov_matrix->x4 / S;\n    *p += K0 * y;\n    *v += K1 * y;\n    cov_matrix->x1 -= K0 * cov_matrix->x3;\n    cov_matrix->x2 -= K0 * cov_matrix->x4;\n    cov_matrix->x3 -= K1 * cov_matrix->x2;\n    cov_matrix->x4 -= K1 * cov_matrix->x4;\n}\n\nvoid position_update(inertial_state_t *data, float dt)\n{\n    vec3_t a_body = {data->mpu_data.acc.x, data->mpu_data.acc.y, data->mpu_data.acc.z};\n    vec3_t a_world;\n    quaternion_rotate_to_world(&data->quat, &a_body, &a_world);\n    a_world.z -= GRAVITY;                         // grabitatea kendu\n\n    // amag, gmag: azelerazioaren eta giroskopioaren moduluak\n    // Geldirik: azelerazioa ≈ g eta ia biraketarik gabe, ZUPT_WINDOW lagin jarraian\n    if (fabsf(amag - GRAVITY) < ZUPT_ACCEL_TOL && gmag < ZUPT_GYRO_TOL)\n        data->zupt_count++;\n    else\n        data->zupt_count = 0;\n    data->zupt_active = (data->zupt_count >= ZUPT_WINDOW);\n\n    // aurreikuspena: azelerazioaren integrazioa (berdin y eta z-rentzat)\n    axis_predict(&data->relative_pos.x, &data->velocity.x, &data->covariance[0], a_world.x, dt);\n\n    // geldirik dagoenean: Kalman zuzenketa (berdin y eta z-rentzat)\n    if (data->zupt_active)\n        axis_zupt(&data->relative_pos.x, &data->velocity.x, &data->covariance[0]);\n}",
     "learned": [
      "ESP-IDFrekin garatzea eta denbora errealeko aplikazio bat FreeRTOSekin egituratzea.",
      "Sentsore-fusioa eta kostu baxuko IMU baten muga fisikoak ulertzea.",

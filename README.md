@@ -74,7 +74,7 @@ Each page sets a class on `<body>`:
 | `theme-compilation`   | code editor, purple, syntax tree           | Tiger Compiler             |
 | `theme-hardware`      | green PCB, copper traces and pads          | Light Tracker, PCB Snake   |
 | `theme-software`      | GPU, cyan/purple, pixel grid               | Object Detection GPU       |
-| `theme-systeme`       | oscilloscope, phosphor green, signals      | Dériscage ESP32            |
+| `theme-systeme`       | oscilloscope, phosphor green, signals      | Dérisquage ESP32           |
 | `theme-architecture`  | blueprint, clock timing diagram            | CPU Monocycle              |
 
 A project's theme is set by `THEME_OF` in `_build/build2.py`. For a new theme, copy a `.theme-…` block in
