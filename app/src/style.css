@@ -1,5 +1,5 @@
 /* =========================================================
-   Base — variables par défaut (page d'accueil)
+   Base — default variables (home page)
    ========================================================= */
 :root, .theme-home{
   --bg:#0c0e11; --panel:#161a20; --line:#252b34; --line2:#323a46;
@@ -17,7 +17,7 @@
 }
 
 /* =========================================================
-   THÈME COMPILATION — éditeur de code, violet, AST
+   COMPILATION THEME — code editor, purple, AST
    ========================================================= */
 .theme-compilation{
   --bg:#100c18; --panel:#181324; --line:#2a2239; --line2:#3d3254;
@@ -33,7 +33,7 @@
   --h-spacing:-.04em;
   --mark:"//";
 }
-body.theme-compilation::before{ /* gouttière de numéros de ligne */
+body.theme-compilation::before{ /* line-number gutter */
   content:""; position:fixed; top:0; bottom:0; left:0; width:52px; z-index:0; pointer-events:none;
   border-right:1px solid var(--line);
   background:repeating-linear-gradient(180deg,transparent 0 27px,rgba(199,146,234,.12) 27px 28px);
@@ -45,7 +45,7 @@ body.theme-compilation::before{ /* gouttière de numéros de ligne */
 @keyframes blink{50%{opacity:0}}
 
 /* =========================================================
-   THÈME HARDWARE — PCB vert, cuivre, pastilles
+   HARDWARE THEME — green PCB, copper, pads
    ========================================================= */
 .theme-hardware{
   --bg:#0a1d13; --panel:#0f2a1c; --line:#1b4630; --line2:#2a6342;
@@ -60,7 +60,7 @@ body.theme-compilation::before{ /* gouttière de numéros de ligne */
   --h-transform:uppercase; --h-spacing:.01em;
   --mark:"◎";
 }
-/* pastilles de soudure aux coins des cartes */
+/* solder pads at the card corners */
 .theme-hardware .point, .theme-hardware .facts, .card.theme-hardware, .theme-hardware .skill{
   background-image:
     radial-gradient(circle at 9px 9px,var(--accent) 2.5px,transparent 3px),
@@ -72,7 +72,7 @@ body.theme-compilation::before{ /* gouttière de numéros de ligne */
 .theme-hardware .h-sec{font-size:24px}
 
 /* =========================================================
-   THÈME SOFTWARE — GPU, cyan/violet, pixels
+   SOFTWARE THEME — GPU, cyan/purple, pixels
    ========================================================= */
 .theme-software{
   --bg:#070b14; --panel:rgba(18,27,46,.82); --line:#1c2740; --line2:#2c3c60;
@@ -98,7 +98,7 @@ body.theme-compilation::before{ /* gouttière de numéros de ligne */
 .theme-software .pipeline li{border-radius:999px}
 
 /* =========================================================
-   THÈME SYSTÈME — oscilloscope, phosphore vert
+   SYSTEM THEME — oscilloscope, green phosphor
    ========================================================= */
 .theme-systeme{
   --bg:#061310; --panel:#0a1c17; --line:#14342b; --line2:#1f4d3f;
@@ -124,7 +124,7 @@ body.theme-systeme::after{ /* scanlines */
 .theme-systeme .learned li::before{color:var(--accent2)}
 
 /* =========================================================
-   THÈME ARCHITECTURE — plan d'ingénieur, chronogramme
+   ARCHITECTURE THEME — engineering blueprint, timing diagram
    ========================================================= */
 .theme-architecture{
   --bg:#0c2747; --panel:#0f3058; --line:#21507f; --line2:#3570a8;
@@ -146,7 +146,7 @@ body.theme-systeme::after{ /* scanlines */
 .theme-architecture .tag{background:transparent;border-color:var(--accent2);color:var(--accent2)}
 
 /* =========================================================
-   Socle commun (utilise les variables ci-dessus)
+   Common base (uses the variables above)
    ========================================================= */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -172,7 +172,7 @@ h1,h2,h3{font-family:var(--head)}
 .topbar nav a{color:var(--dim);transition:color .15s} .topbar nav a:hover{color:var(--text)}
 .btn-gh{border:1px solid var(--line2);padding:5px 12px;border-radius:var(--r-sm);color:var(--text)!important}
 
-/* Hero (accueil) */
+/* Hero (home) */
 .hero{padding:110px 24px 80px}
 .eyebrow{font-size:14px;color:var(--dim);letter-spacing:.04em;margin-bottom:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .pulse{width:8px;height:8px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
@@ -188,7 +188,7 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:56px;font-size:13px;color:var(--dim)}
 .stack span{border:1px dashed var(--line2);padding:4px 10px;border-radius:5px}
 
-/* Badge de thème */
+/* Theme badge */
 .theme-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 10%,transparent);
   padding:3px 9px;border-radius:var(--r-sm)}
@@ -202,20 +202,20 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .prose{max-width:760px} .prose p+p{margin-top:14px} .prose strong{color:var(--text)}
 .prose p{color:var(--body)}
 
-/* Filtres (accueil) */
+/* Filters (home) */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-.chip{font:500 13px var(--mono);cursor:pointer;color:var(--dim);background:var(--panel);border:1px solid var(--line);
+.chip{font:500 13px var(--mono);cursor:pointer;color:var(--dim);background:var(--bg);border:1px solid var(--line);
   padding:6px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;transition:all .15s}
 .chip i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .chip:hover{color:var(--text)}
-.chip.active{color:var(--text);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--panel))}
+.chip.active{color:var(--text);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--bg))}
 .theme-home .chip[data-f="all"].active{border-color:#ffb547}
 
-/* Cartes projets : chaque carte porte son thème */
+/* Project cards: each card carries its theme */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
 .card{position:relative;overflow:hidden;display:flex;flex-direction:column;
   background-color:var(--bg);color:var(--text);font-family:var(--sans);
-  border:1px solid var(--line2);border-radius:var(--r);padding:24px;min-height:330px;
+  border:1px solid var(--line2);border-radius:12px;padding:24px;min-height:330px;
   transition:border-color .2s,transform .2s,box-shadow .2s}
 .card[hidden]{display:none}
 .card::before{content:"";position:absolute;inset:0;background-image:var(--pattern);background-size:var(--pattern-size);opacity:.9;pointer-events:none}
@@ -243,7 +243,7 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .contact h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.02em}
 .contact p{margin-top:10px}
 
-/* Page projet */
+/* Project page */
 .p-hero{padding:56px 24px 30px}
 .back{font-size:14px;color:var(--dim);display:inline-block;margin-bottom:36px} .back:hover{color:var(--accent)}
 .p-hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:end}
@@ -294,7 +294,7 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .footer{border-top:1px solid var(--line);padding:24px 0;font-size:14px;color:var(--dim);background:var(--bg)}
 .footer-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
-/* ---------- Illustrations SVG (couleurs pilotées par le thème) ---------- */
+/* ---------- SVG illustrations (colors driven by the theme) ---------- */
 .d-txt{font-family:var(--mono);font-size:11px;fill:var(--text);text-anchor:middle}
 .d-line{fill:none;stroke:var(--accent2);stroke-width:1.4;opacity:.7}
 .d-node{fill:var(--panel);stroke:var(--accent);stroke-width:1.2}
@@ -333,7 +333,7 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 }
 
 /* =========================================================
-   CONTRÔLES : langue + clair/sombre
+   CONTROLS: language + light/dark
    ========================================================= */
 .lang-switch{display:flex;border:1px solid var(--line2);border-radius:var(--r-sm);overflow:hidden;font-family:var(--mono);font-size:12px}
 .lang-switch a{padding:5px 9px;color:var(--dim)!important;transition:background .15s,color .15s}
@@ -351,7 +351,7 @@ body,.card,.point,.facts,.topbar{transition:background-color .25s,color .25s,bor
 @media (max-width:420px){ .btn-gh{display:none} }
 
 /* =========================================================
-   MODE CLAIR — une variante par thème
+   LIGHT MODE — one variant per theme
    ========================================================= */
 html[data-mode="light"], html[data-mode="light"] .theme-home{
   --bg:#f6f4ef; --panel:#ffffff; --line:#e6e1d7; --line2:#d3ccbe;

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Portfolio avec thèmes par catégorie de projet."""
+
+"""Portfolio with custom theme by project category."""
 import html, os, math, shutil
 from projects_data import NAME, GITHUB, EMAIL, LINKEDIN, PROJECTS
 
@@ -15,7 +16,7 @@ THEME_OF = {
     "cpu-monocycle": "architecture",
 }
 
-# ---------- Illustrations de héros (SVG décoratifs) ----------
+# ---------- Hero illustrations (decorative SVGs) ----------
 def svg_compilation():
     nodes = {"root": (170, 34, "LetExp"), "decs": (80, 104, "Decs"), "body": (262, 104, "CallExp"),
              "ty": (36, 176, "TypeDec"), "fn": (124, 176, "FunDec"), "pr": (262, 176, "print_int"),
@@ -64,7 +65,7 @@ def wave(f, n=160, x0=0, w=320, y0=0, a=1):
 def svg_systeme():
     grid = "".join(f'<path d="M{x} 0 V270" class="d-grid"/>' for x in range(0, 321, 40)) + \
            "".join(f'<path d="M0 {y} H320" class="d-grid"/>' for y in range(15, 271, 40))
-    def acc(t):  # pas de marche : impulsions + bruit
+    def acc(t):  # no walking steps: impulses + noise
         return -math.exp(-((t * 4 % 1) - .35) ** 2 * 60) * 38 + math.sin(t * 90) * 2.5
     def vel(t):
         p = t * 4 % 1
@@ -302,51 +303,32 @@ document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () =
 </main>
 """ + footer(script)
 
-README = f"""# Portfolio — {NAME}
+README = f"""# Portfolio - {NAME}
 
-Site statique (HTML/CSS, sans dépendance) prêt pour **GitHub Pages**.
+Static site (HTML/CSS, no dependencies) ready for **GitHub Pages**.
 
 ```
-index.html              page d'accueil (filtre par thème)
-projets/*.html          une page par projet, chacune avec son thème
-assets/style.css        styles + thèmes
-assets/img/             (à créer) tes photos / schémas
+index.html              home page (filter by theme)
+projets/*.html          one page per project, each with its own theme
+assets/style.css        styles + themes
+assets/img/             (to create) your photos / diagrams
 ```
 
-## Thèmes
+## Themes
 
-Chaque page projet porte une classe sur `<body>` :
+Each project page carries a class on `<body>`:
 
-| Classe                | Ambiance                                   | Projets                    |
+| Class                 | Mood                                       | Projects                   |
 |-----------------------|--------------------------------------------|----------------------------|
-| `theme-compilation`   | éditeur de code, violet, arbre syntaxique  | Tiger Compiler             |
-| `theme-hardware`      | PCB vert, pistes et pastilles cuivre       | Light Tracker, PCB Snake   |
-| `theme-software`      | GPU, cyan/violet, grille de pixels         | Object Detection GPU       |
-| `theme-systeme`       | oscilloscope, vert phosphore, signaux      | Dériscage ESP32            |
-| `theme-architecture`  | plan bleu, chronogramme d'horloge          | CPU Monocycle              |
+| `theme-compilation`   | code editor, purple, syntax tree           | Tiger Compiler             |
+| `theme-hardware`      | green PCB, copper traces and pads          | Light Tracker, PCB Snake   |
+| `theme-software`      | GPU, cyan/purple, pixel grid               | Object Detection GPU       |
+| `theme-systeme`       | oscilloscope, phosphor green, signals      | Dériscage ESP32            |
+| `theme-architecture`  | blueprint, clock timing diagram            | CPU Monocycle              |
 
-Pour changer le thème d'un projet : modifie la classe `theme-…` du `<body>` de sa page
-(et de sa carte dans `index.html`). Pour un nouveau thème : copie un bloc `.theme-…` dans
-`assets/style.css` et ajuste ses variables (`--bg`, `--accent`, `--pattern`, polices…).
-
-## Mise en ligne
-
-1. Crée un dépôt nommé **`jon-gouspy.github.io`** (remplace par ton pseudo).
-2. Copie le contenu de ce dossier à la racine du dépôt, puis :
-   ```bash
-   git add . && git commit -m "Portfolio" && git push
-   ```
-3. Dans *Settings → Pages*, choisis la branche `main` / dossier `/ (root)`.
-4. Le site est en ligne sur `https://jon-gouspy.github.io`.
-
-## À personnaliser
-
-- Remplace partout `jon-gouspy` et `jon-gouspy-futur-ingenieur` (rechercher/remplacer dans tout le dossier).
-- Les boutons « Voir le code » pointent vers `github.com/jon-gouspy/<nom-du-projet>` :
-  adapte-les au vrai nom de tes dépôts.
-- Chaque page projet contient un commentaire `<!-- Add image here -->`
-  pour insérer une photo, un GIF ou une capture.
-- Vérifie les détails techniques et ajoute tes chiffres (gains de perf GPU, dérive mesurée…).
+To change a project's theme: edit the `theme-…` class on its page's `<body>`
+(and on its card in `index.html`). For a new theme: copy a `.theme-…` block in
+`assets/style.css` and adjust its variables (`--bg`, `--accent`, `--pattern`, fonts…).
 """
 
 def main():
