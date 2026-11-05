@@ -266,6 +266,8 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .step-n{font-family:var(--mono);font-size:11px;color:var(--accent)}
 .caption{margin-top:16px;font-size:14px;color:var(--dim);font-family:var(--mono)}
 .media{margin-top:24px} .media img{width:100%;border-radius:var(--r);border:1px solid var(--line)}
+.media.portrait{max-width:220px;margin-inline:auto} .media.portrait img{height:auto}
+.context-grid{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start} .context-grid .media{margin-top:0;max-width:none} .context-grid .media img{height:var(--h);width:auto}
 .media figcaption{font-size:14px;color:var(--dim);margin-top:8px}
 
 .points{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
@@ -319,7 +321,8 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .d-lbl{font-family:var(--mono);font-size:10px;fill:var(--dim)}
 
 @media (max-width:860px){
-  .about,.p-hero-grid{grid-template-columns:1fr}
+  .about,.p-hero-grid,.context-grid{grid-template-columns:1fr}
+  .context-grid .media{max-width:220px} .context-grid .media img{height:auto;width:100%}
   .deco{max-width:280px}
   .topbar nav a:not(.btn-gh){display:none}
   .hero{padding:70px 24px 50px}

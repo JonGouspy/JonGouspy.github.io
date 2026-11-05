@@ -1,8 +1,29 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import Deco from "../components/Deco.jsx";
 import Layout from "../components/Layout.jsx";
 import SectionTitle, { Tags } from "../components/Section.jsx";
 import { homePath, projectPath, projects, site, themeLabels, ui } from "../content";
+
+// Context text with an image on its right, scaled to twice the height of the text block.
+function ContextWithImage({ html, image, alt }) {
+  const textRef = useRef(null);
+  const [h, setH] = useState(null);
+  useLayoutEffect(() => {
+    const el = textRef.current;
+    const ro = new ResizeObserver(() => setH(el.offsetHeight));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div className="context-grid">
+      <div ref={textRef} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+      <figure className="media portrait" style={{ "--h": h ? `${h * 2}px` : "auto" }}>
+        <img src={image} alt={alt} width="179" height="440" loading="lazy" />
+      </figure>
+    </div>
+  );
+}
 
 export default function Project({ lang }) {
   const { slug } = useParams();
@@ -41,7 +62,11 @@ export default function Project({ lang }) {
 
         <section className="wrap section">
           <SectionTitle>{U.s_context}</SectionTitle>
-          <div className="prose" dangerouslySetInnerHTML={{ __html: p.context }} />
+          {p.image ? (
+            <ContextWithImage html={p.context} image={p.image} alt={p.title} />
+          ) : (
+            <div className="prose" dangerouslySetInnerHTML={{ __html: p.context }} />
+          )}
         </section>
 
         <section className="wrap section">

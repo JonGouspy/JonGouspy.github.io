@@ -363,6 +363,8 @@
     "slug": "light-tracker",
     "num": "02",
     "title": "Light Tracker",
+    "repo": "https://github.com/JonGouspy/light-tracker",
+    "image": "/img/light-tracker.png",
     "tagline": "Un robot qui s'oriente tout seul vers la source de lumière la plus intense.",
     "domain": "Robotique",
     "tags": [
@@ -430,7 +432,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "#define DEADBAND 20\n\nvoid loop(void) {\n    int left  = read_avg(ADC_LEFT,  8);\n    int right = read_avg(ADC_RIGHT, 8) + calib_offset;\n    int err   = left - right;\n\n    if (abs(err) < DEADBAND) {\n        motor_stop();\n    } else {\n        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);\n        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);\n    }\n}",
+    "code": "// TIM2 : interruption périodique qui cadence les mesures\nvoid initTimer(void)\n{\n    __TIM2_CLK_ENABLE();\n\n    gTimHandle.Instance = TIM2;\n    gTimHandle.Init.Period = 1000 - 1;\n    gTimHandle.Init.Prescaler = (90000000 / 40000000) - 1;\n    gTimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;\n    HAL_TIM_Base_Init(&gTimHandle);\n\n    __HAL_TIM_ENABLE_IT(&gTimHandle, TIM_IT_UPDATE);\n    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);\n    HAL_NVIC_EnableIRQ(TIM2_IRQn);\n    HAL_TIM_Base_Start_IT(&gTimHandle);\n}\n\n// ADC1, canal 11 (PC1) : conversions lues par interruption\nvoid initADC(void)\n{\n    GPIO_InitStruct.Pin  = GPIO_PIN_1;\n    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;   // PC1 en entrée analogique\n    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);\n\n    HAL_NVIC_SetPriority(ADC_IRQn, 5, 0);\n    HAL_NVIC_EnableIRQ(ADC_IRQn);\n\n    gAdcHandle.Instance = ADC1;\n    gAdcHandle.Init.Resolution = ADC_RESOLUTION_12B;\n    gAdcHandle.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;  // TIM2 déclenche la conversion\n    HAL_ADC_Init(&gAdcHandle);\n\n    ADC_ChannelStruct.Channel = ADC_CHANNEL_11;\n    ADC_ChannelStruct.SamplingTime = ADC_SAMPLETIME_480CYCLES;  // temps d'échantillonnage maximal\n    HAL_ADC_ConfigChannel(&gAdcHandle, &ADC_ChannelStruct);\n\n    HAL_ADC_Start_IT(&gAdcHandle);\n}",
     "learned": [
      "Passer d'une idée simple à un système physique qui marche vraiment (bruit, tolérances, mécanique).",
      "Les bases de l'asservissement : erreur, gain, zone morte, stabilité.",
@@ -838,6 +840,8 @@
     "slug": "light-tracker",
     "num": "02",
     "title": "Light Tracker",
+    "repo": "https://github.com/JonGouspy/light-tracker",
+    "image": "/img/light-tracker.png",
     "tagline": "A robot that turns on its own toward the brightest light source.",
     "domain": "Robotics",
     "tags": [
@@ -905,7 +909,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "#define DEADBAND 20\n\nvoid loop(void) {\n    int left  = read_avg(ADC_LEFT,  8);\n    int right = read_avg(ADC_RIGHT, 8) + calib_offset;\n    int err   = left - right;\n\n    if (abs(err) < DEADBAND) {\n        motor_stop();\n    } else {\n        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);\n        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);\n    }\n}",
+    "code": "// TIM2: periodic interrupt that paces the measurements\nvoid initTimer(void)\n{\n    __TIM2_CLK_ENABLE();\n\n    gTimHandle.Instance = TIM2;\n    gTimHandle.Init.Period = 1000 - 1;\n    gTimHandle.Init.Prescaler = (90000000 / 40000000) - 1;\n    gTimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;\n    HAL_TIM_Base_Init(&gTimHandle);\n\n    __HAL_TIM_ENABLE_IT(&gTimHandle, TIM_IT_UPDATE);\n    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);\n    HAL_NVIC_EnableIRQ(TIM2_IRQn);\n    HAL_TIM_Base_Start_IT(&gTimHandle);\n}\n\n// ADC1, channel 11 (PC1): conversions read through an interrupt\nvoid initADC(void)\n{\n    GPIO_InitStruct.Pin  = GPIO_PIN_1;\n    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;   // PC1 as analog input\n    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);\n\n    HAL_NVIC_SetPriority(ADC_IRQn, 5, 0);\n    HAL_NVIC_EnableIRQ(ADC_IRQn);\n\n    gAdcHandle.Instance = ADC1;\n    gAdcHandle.Init.Resolution = ADC_RESOLUTION_12B;\n    gAdcHandle.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;  // TIM2 triggers the conversion\n    HAL_ADC_Init(&gAdcHandle);\n\n    ADC_ChannelStruct.Channel = ADC_CHANNEL_11;\n    ADC_ChannelStruct.SamplingTime = ADC_SAMPLETIME_480CYCLES;  // maximum sampling time\n    HAL_ADC_ConfigChannel(&gAdcHandle, &ADC_ChannelStruct);\n\n    HAL_ADC_Start_IT(&gAdcHandle);\n}",
     "learned": [
      "Turning a simple idea into a physical system that actually works (noise, tolerances, mechanics).",
      "Control basics: error, gain, dead zone, stability.",
@@ -1313,6 +1317,8 @@
     "slug": "light-tracker",
     "num": "02",
     "title": "Light Tracker",
+    "repo": "https://github.com/JonGouspy/light-tracker",
+    "image": "/img/light-tracker.png",
     "tagline": "Argi-iturri biziena dagoen aldera bere kabuz biratzen den robota.",
     "domain": "Robotika",
     "tags": [
@@ -1380,7 +1386,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "#define DEADBAND 20\n\nvoid loop(void) {\n    int left  = read_avg(ADC_LEFT,  8);\n    int right = read_avg(ADC_RIGHT, 8) + calib_offset;\n    int err   = left - right;\n\n    if (abs(err) < DEADBAND) {\n        motor_stop();\n    } else {\n        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);\n        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);\n    }\n}",
+    "code": "// TIM2: neurketak kadentziatzen dituen eten periodikoa\nvoid initTimer(void)\n{\n    __TIM2_CLK_ENABLE();\n\n    gTimHandle.Instance = TIM2;\n    gTimHandle.Init.Period = 1000 - 1;\n    gTimHandle.Init.Prescaler = (90000000 / 40000000) - 1;\n    gTimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;\n    HAL_TIM_Base_Init(&gTimHandle);\n\n    __HAL_TIM_ENABLE_IT(&gTimHandle, TIM_IT_UPDATE);\n    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);\n    HAL_NVIC_EnableIRQ(TIM2_IRQn);\n    HAL_TIM_Base_Start_IT(&gTimHandle);\n}\n\n// ADC1, 11. kanala (PC1): bihurketak etenen bidez irakurtzen dira\nvoid initADC(void)\n{\n    GPIO_InitStruct.Pin  = GPIO_PIN_1;\n    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;   // PC1 sarrera analogiko gisa\n    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);\n\n    HAL_NVIC_SetPriority(ADC_IRQn, 5, 0);\n    HAL_NVIC_EnableIRQ(ADC_IRQn);\n\n    gAdcHandle.Instance = ADC1;\n    gAdcHandle.Init.Resolution = ADC_RESOLUTION_12B;\n    gAdcHandle.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;  // TIM2-k bihurketa abiarazten du\n    HAL_ADC_Init(&gAdcHandle);\n\n    ADC_ChannelStruct.Channel = ADC_CHANNEL_11;\n    ADC_ChannelStruct.SamplingTime = ADC_SAMPLETIME_480CYCLES;  // laginketa-denbora maximoa\n    HAL_ADC_ConfigChannel(&gAdcHandle, &ADC_ChannelStruct);\n\n    HAL_ADC_Start_IT(&gAdcHandle);\n}",
     "learned": [
      "Ideia sinple bat benetan funtzionatzen duen sistema fisiko bihurtzea (zarata, tolerantziak, mekanika).",
      "Kontrolaren oinarriak: errorea, irabazia, zona hila, egonkortasuna.",
