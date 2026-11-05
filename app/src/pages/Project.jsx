@@ -27,7 +27,7 @@ export default function Project({ lang }) {
               <p className="lead">{p.tagline}</p>
               <Tags items={p.tags} />
               <div className="actions">
-                <a className="btn" href={`${site.github}/${p.slug}`} target="_blank" rel="noopener noreferrer">{U.view_code}</a>
+                <a className="btn" href={p.repo ?? `${site.github}/${p.slug}`} target="_blank" rel="noopener noreferrer">{U.view_code}</a>
               </div>
             </div>
             <div className="p-hero-side">

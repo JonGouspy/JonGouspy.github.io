@@ -599,6 +599,7 @@
     "slug": "pcb-snake",
     "num": "05",
     "title": "PCB Snake",
+    "repo": "https://github.com/JonGouspy/Snake",
     "tagline": "Une console Snake sur PCB maison : microcontrôleur, matrice de LEDs en charlieplexing.",
     "domain": "Électronique",
     "tags": [
@@ -664,7 +665,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "// Allume la LED reliée entre la broche `hi` (anode) et `lo` (cathode)\nstatic void led_on(uint8_t hi, uint8_t lo)\n{\n    PIN_DDR  = 0;                    // toutes les broches en haute impédance\n    PIN_PORT = 0;\n    PIN_DDR  = (1 << hi) | (1 << lo);// seules hi et lo deviennent des sorties\n    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> courant dans la LED\n}\n\nISR(TIMER_vect)                       // rafraîchissement de l'écran\n{\n    static uint8_t i = 0;\n    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);\n    else                PIN_DDR = 0;\n    i = (i + 1) % NB_LEDS;\n}",
+    "code": "// Broche « flottante » : entrée sans pull-up ni pull-down (haute impédance)\nstatic void pin_hiz(uint16_t pin)\n{\n    GPIO_InitTypeDef cfg = {0};\n    cfg.Pin  = pin;\n    cfg.Mode = GPIO_MODE_INPUT;\n    cfg.Pull = GPIO_NOPULL;\n    HAL_GPIO_Init(GPIOA, &cfg);\n}\n\n// Allume une LED : anode à 1, cathode à 0, les autres broches restent flottantes\nvoid light_up(led_info *led)\n{\n    pin_output(led->anode);\n    HAL_GPIO_WritePin(GPIOA, led->anode, GPIO_PIN_SET);\n\n    pin_output(led->cathode);\n    HAL_GPIO_WritePin(GPIOA, led->cathode, GPIO_PIN_RESET);\n}\n\n// Balayage : une seule LED allumée à la fois, ~1 ms chacune\nvoid print_matrix(const bool number[LED_COUNT])\n{\n    led_info prev = LEDS[LED_COUNT - 1];\n\n    for (int i = 0; i < LED_COUNT; ++i)\n    {\n        led_info curr = LEDS[i];\n\n        if (number[i])\n        {\n            turn_off(&prev);     // éteint la LED précédente\n            light_up(&curr);\n            prev = curr;\n            HAL_Delay(1);        // persistance rétinienne\n        }\n    }\n    turn_off(&prev);\n}",
     "learned": [
      "Concevoir un PCB complet, du schéma au produit soudé.",
      "Une technique de multiplexage élégante qui économise les broches.",
@@ -1073,6 +1074,7 @@
     "slug": "pcb-snake",
     "num": "05",
     "title": "PCB Snake",
+    "repo": "https://github.com/JonGouspy/Snake",
     "tagline": "A Snake console on a custom PCB: microcontroller and charlieplexed LED matrix.",
     "domain": "Electronics",
     "tags": [
@@ -1138,7 +1140,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "// Turn on the LED between pin `hi` (anode) and `lo` (cathode)\nstatic void led_on(uint8_t hi, uint8_t lo)\n{\n    PIN_DDR  = 0;                    // all pins high-impedance\n    PIN_PORT = 0;\n    PIN_DDR  = (1 << hi) | (1 << lo);// only hi and lo become outputs\n    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> current through LED\n}\n\nISR(TIMER_vect)                       // display refresh\n{\n    static uint8_t i = 0;\n    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);\n    else                PIN_DDR = 0;\n    i = (i + 1) % NB_LEDS;\n}",
+    "code": "// \"Floating\" pin: input with no pull-up or pull-down (high impedance)\nstatic void pin_hiz(uint16_t pin)\n{\n    GPIO_InitTypeDef cfg = {0};\n    cfg.Pin  = pin;\n    cfg.Mode = GPIO_MODE_INPUT;\n    cfg.Pull = GPIO_NOPULL;\n    HAL_GPIO_Init(GPIOA, &cfg);\n}\n\n// Turn on an LED: anode high, cathode low, all other pins stay floating\nvoid light_up(led_info *led)\n{\n    pin_output(led->anode);\n    HAL_GPIO_WritePin(GPIOA, led->anode, GPIO_PIN_SET);\n\n    pin_output(led->cathode);\n    HAL_GPIO_WritePin(GPIOA, led->cathode, GPIO_PIN_RESET);\n}\n\n// Scan: only one LED on at a time, ~1 ms each\nvoid print_matrix(const bool number[LED_COUNT])\n{\n    led_info prev = LEDS[LED_COUNT - 1];\n\n    for (int i = 0; i < LED_COUNT; ++i)\n    {\n        led_info curr = LEDS[i];\n\n        if (number[i])\n        {\n            turn_off(&prev);     // turn off the previous LED\n            light_up(&curr);\n            prev = curr;\n            HAL_Delay(1);        // persistence of vision\n        }\n    }\n    turn_off(&prev);\n}",
     "learned": [
      "Designing a complete PCB, from schematic to soldered product.",
      "An elegant multiplexing technique that saves pins.",
@@ -1547,6 +1549,7 @@
     "slug": "pcb-snake",
     "num": "05",
     "title": "PCB Snake",
+    "repo": "https://github.com/JonGouspy/Snake",
     "tagline": "Snake kontsola bat PCB propioan: mikrokontrolagailua eta charlieplexing bidezko LED matrizea.",
     "domain": "Elektronika",
     "tags": [
@@ -1612,7 +1615,7 @@
      ]
     ],
     "code_lang": "C",
-    "code": "// Turn on the LED between pin `hi` (anode) and `lo` (cathode)\nstatic void led_on(uint8_t hi, uint8_t lo)\n{\n    PIN_DDR  = 0;                    // all pins high-impedance\n    PIN_PORT = 0;\n    PIN_DDR  = (1 << hi) | (1 << lo);// only hi and lo become outputs\n    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> current through LED\n}\n\nISR(TIMER_vect)                       // display refresh\n{\n    static uint8_t i = 0;\n    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);\n    else                PIN_DDR = 0;\n    i = (i + 1) % NB_LEDS;\n}",
+    "code": "// Pin \"flotatzailea\": pull-up edo pull-down gabeko sarrera (inpedantzia altua)\nstatic void pin_hiz(uint16_t pin)\n{\n    GPIO_InitTypeDef cfg = {0};\n    cfg.Pin  = pin;\n    cfg.Mode = GPIO_MODE_INPUT;\n    cfg.Pull = GPIO_NOPULL;\n    HAL_GPIO_Init(GPIOA, &cfg);\n}\n\n// LED bat piztu: anodoa 1ean, katodoa 0an, gainerako pinak flotatzen\nvoid light_up(led_info *led)\n{\n    pin_output(led->anode);\n    HAL_GPIO_WritePin(GPIOA, led->anode, GPIO_PIN_SET);\n\n    pin_output(led->cathode);\n    HAL_GPIO_WritePin(GPIOA, led->cathode, GPIO_PIN_RESET);\n}\n\n// Ekorketa: LED bakarra piztuta aldi berean, ~1 ms bakoitza\nvoid print_matrix(const bool number[LED_COUNT])\n{\n    led_info prev = LEDS[LED_COUNT - 1];\n\n    for (int i = 0; i < LED_COUNT; ++i)\n    {\n        led_info curr = LEDS[i];\n\n        if (number[i])\n        {\n            turn_off(&prev);     // aurreko LEDa itzali\n            light_up(&curr);\n            prev = curr;\n            HAL_Delay(1);        // ikusmenaren iraunkortasuna\n        }\n    }\n    turn_off(&prev);\n}",
     "learned": [
      "PCB oso bat diseinatzea, eskematik soldatutako produktura arte.",
      "Pinak aurrezten dituen multiplexazio-teknika dotorea.",
