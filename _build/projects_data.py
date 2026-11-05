@@ -130,7 +130,7 @@ void initADC(void)
     learned=["Penser un algorithme en termes de parallélisme massif.", "L'impact énorme des accès mémoire sur les performances GPU.", "Mesurer avant d'optimiser : profiler, comparer, itérer."],
   ),
   dict(
-    slug="deriscage-esp32", num="04", title="Dériscage sur ESP32",
+    slug="deriscage-esp32", num="04", title="Dérisquage sur ESP32", repo="https://github.com/JonGouspy/gap",
     tagline="Estimation de mouvement par IMU : filtre de Madgwick + correction ZUPT, sur ESP32.",
     domain="Systèmes embarqués", tags=["ESP32", "ESP-IDF", "FreeRTOS", "MPU6050", "I²C", "Fusion de capteurs"],
     facts=[("Carte", "ESP32"), ("Framework", "ESP-IDF · FreeRTOS"), ("Capteur", "MPU6050 (accéléro + gyro)"), ("Algorithmes", "Madgwick · ZUPT")],
@@ -146,23 +146,42 @@ void initADC(void)
       ("Détection d'immobilité", "Sur une fenêtre glissante : norme de l'accélération proche de g et rotation quasi nulle → le capteur est considéré à l'arrêt."),
       ("Correction ZUPT", "À chaque phase d'arrêt, la vitesse est forcée à zéro : l'erreur accumulée est coupée, la dérive de position reste bornée."),
     ],
-    code_lang="C", code="""static bool is_stationary(const imu_sample_t *s)
+    code_lang="C", code="""// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »
+void axis_zupt(float *p, float *v, matrix2x2_t *cov_matrix)
 {
-    float a_norm = vec3_norm(s->acc);          // en g
-    float w_norm = vec3_norm(s->gyro);         // en rad/s
-    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;
+    float y = -(*v);
+    float S = cov_matrix->x4 + ZUPT_R;
+    float K0 = cov_matrix->x2 / S;
+    float K1 = cov_matrix->x4 / S;
+    *p += K0 * y;
+    *v += K1 * y;
+    cov_matrix->x1 -= K0 * cov_matrix->x3;
+    cov_matrix->x2 -= K0 * cov_matrix->x4;
+    cov_matrix->x3 -= K1 * cov_matrix->x2;
+    cov_matrix->x4 -= K1 * cov_matrix->x4;
 }
 
-void process(imu_sample_t *s, float dt)
+void position_update(inertial_state_t *data, float dt)
 {
-    madgwick_update(&q, s->gyro, s->acc, BETA, dt);
-    vec3 a_world = quat_rotate(q, s->acc);
-    a_world.z -= 1.0f;                         // retire la gravité
+    vec3_t a_body = {data->mpu_data.acc.x, data->mpu_data.acc.y, data->mpu_data.acc.z};
+    vec3_t a_world;
+    quaternion_rotate_to_world(&data->quat, &a_body, &a_world);
+    a_world.z -= GRAVITY;                         // retire la gravité
 
-    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT
-    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));
+    // amag, gmag : normes de l'accélération et du gyroscope
+    // Immobile : accélération ≈ g et rotation quasi nulle, ZUPT_WINDOW échantillons de suite
+    if (fabsf(amag - GRAVITY) < ZUPT_ACCEL_TOL && gmag < ZUPT_GYRO_TOL)
+        data->zupt_count++;
+    else
+        data->zupt_count = 0;
+    data->zupt_active = (data->zupt_count >= ZUPT_WINDOW);
 
-    pos = vec3_add(pos, vec3_scale(vel, dt));
+    // prédiction : intégration de l'accélération (idem pour y et z)
+    axis_predict(&data->relative_pos.x, &data->velocity.x, &data->covariance[0], a_world.x, dt);
+
+    // à l'arrêt : correction de Kalman (idem pour y et z)
+    if (data->zupt_active)
+        axis_zupt(&data->relative_pos.x, &data->velocity.x, &data->covariance[0]);
 }""",
     learned=["Développer sur ESP-IDF et structurer une application temps réel avec FreeRTOS.", "Comprendre la fusion de capteurs et les limites physiques d'une centrale inertielle bas coût.", "Corriger une dérive par des connaissances a priori (ici : les phases d'arrêt)."],
   ),

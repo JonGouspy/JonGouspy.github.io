@@ -75,6 +75,11 @@ UI = {
 
 # Translated code comments (EN and EU use English in code)
 CODE_EN = [
+    ("// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »", "// Kalman update: virtual measurement \"velocity = 0\""),
+    ("// amag, gmag : normes de l'accélération et du gyroscope", "// amag, gmag: norms of the acceleration and of the gyroscope"),
+    ("// Immobile : accélération ≈ g et rotation quasi nulle, ZUPT_WINDOW échantillons de suite", "// Stationary: acceleration ≈ g and almost no rotation, for ZUPT_WINDOW samples in a row"),
+    ("// prédiction : intégration de l'accélération (idem pour y et z)", "// prediction: integrate the acceleration (same for y and z)"),
+    ("// à l'arrêt : correction de Kalman (idem pour y et z)", "// when stopped: Kalman correction (same for y and z)"),
     ("// TIM2 : interruption périodique qui cadence les mesures", "// TIM2: periodic interrupt that paces the measurements"),
     ("// ADC1, canal 11 (PC1) : conversions lues par interruption", "// ADC1, channel 11 (PC1): conversions read through an interrupt"),
     ("// PC1 en entrée analogique", "// PC1 as analog input"),
@@ -90,6 +95,12 @@ CODE_EN = [
 
 # Basque code comments (applied before CODE_EN for the EU pages; other comments fall back to CODE_EN)
 CODE_EU = [
+    ("// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »", "// Kalman eguneraketa: \"abiadura = 0\" neurketa birtuala"),
+    ("// amag, gmag : normes de l'accélération et du gyroscope", "// amag, gmag: azelerazioaren eta giroskopioaren moduluak"),
+    ("// Immobile : accélération ≈ g et rotation quasi nulle, ZUPT_WINDOW échantillons de suite", "// Geldirik: azelerazioa ≈ g eta ia biraketarik gabe, ZUPT_WINDOW lagin jarraian"),
+    ("// prédiction : intégration de l'accélération (idem pour y et z)", "// aurreikuspena: azelerazioaren integrazioa (berdin y eta z-rentzat)"),
+    ("// à l'arrêt : correction de Kalman (idem pour y et z)", "// geldirik dagoenean: Kalman zuzenketa (berdin y eta z-rentzat)"),
+    ("// retire la gravité", "// grabitatea kendu"),
     ("// TIM2 : interruption périodique qui cadence les mesures", "// TIM2: neurketak kadentziatzen dituen eten periodikoa"),
     ("// ADC1, canal 11 (PC1) : conversions lues par interruption", "// ADC1, 11. kanala (PC1): bihurketak etenen bidez irakurtzen dira"),
     ("// PC1 en entrée analogique", "// PC1 sarrera analogiko gisa"),
@@ -153,7 +164,7 @@ TR["en"]["object-detection-gpu"] = dict(
   learned=["Thinking about an algorithm in terms of massive parallelism.", "The huge impact of memory access patterns on GPU performance.", "Measure before optimizing: profile, compare, iterate."])
 
 TR["en"]["deriscage-esp32"] = dict(
-  title="Dériscage on ESP32",
+  title="Dérisquage on ESP32",
   tagline="IMU motion estimation: Madgwick filter + ZUPT correction, on ESP32.", domain="Embedded systems",
   tags=["ESP32", "ESP-IDF", "FreeRTOS", "MPU6050", "I²C", "Sensor fusion"],
   facts=[("Board", "ESP32"), ("Framework", "ESP-IDF · FreeRTOS"), ("Sensor", "MPU6050 (accel + gyro)"), ("Algorithms", "Madgwick · ZUPT")],
@@ -250,7 +261,7 @@ TR["eu"]["object-detection-gpu"] = dict(
   learned=["Algoritmo bat paralelismo masiboaren ikuspegitik pentsatzea.", "Memoria-sarbideek GPUaren errendimenduan duten eragin izugarria.", "Optimizatu aurretik neurtu: profilatu, konparatu, iteratu."])
 
 TR["eu"]["deriscage-esp32"] = dict(
-  title="Dériscage ESP32an",
+  title="Dérisquage ESP32an",
   tagline="Mugimenduaren estimazioa IMU bidez: Madgwick iragazkia + ZUPT zuzenketa, ESP32an.", domain="Sistema txertatuak",
   tags=["ESP32", "ESP-IDF", "FreeRTOS", "MPU6050", "I²C", "Sentsore-fusioa"],
   facts=[("Txartela", "ESP32"), ("Lan-markoa", "ESP-IDF · FreeRTOS"), ("Sentsorea", "MPU6050 (azelerometroa + giroskopioa)"), ("Algoritmoak", "Madgwick · ZUPT")],
