@@ -1,52 +1,95 @@
 # Portfolio — Jon Gouspy
 
-Site statique (HTML/CSS, sans dépendance) prêt pour **GitHub Pages**.
+React portfolio (Vite + React 18 + React Router), in three languages (FR · EN · EU) with light/dark mode.
+Deployed to **GitHub Pages** at `https://jon-gouspy.github.io`.
 
 ```
-index.html, projets/          version française (par défaut)
-en/index.html, en/projects/   version anglaise
-eu/index.html, eu/proiektuak/ version basque
-assets/style.css              styles, thèmes, mode clair/sombre
-assets/img/                   (à créer) tes photos / schémas
+app/                 the React site (source of truth)
+  src/pages/         Home, Project
+  src/components/    Layout (top bar, footer), Deco, Section
+  src/data/          content.json — all text, generated from _build (see below)
+  src/style.css      styles, per-project themes, light/dark mode
+_build/              Python content sources + JSON exporter (legacy static generator)
+.github/workflows/   build and deploy to GitHub Pages
 ```
 
-## Langues et mode clair/sombre
+## Develop
 
-- Le sélecteur **FR · EN · EU** (en haut à droite) renvoie vers la même page dans l'autre langue.
-  Le choix est mémorisé : la page d'accueil racine redirige vers la langue choisie.
-- Le bouton ☀/☾ bascule entre clair et sombre. Par défaut, le site suit le réglage du système ;
-  le choix de l'utilisateur est ensuite mémorisé.
-- Chaque thème de projet a sa variante claire (bloc `html[data-mode="light"] .theme-…` dans le CSS).
-- Les pages sont générées par `_build/build3.py` à partir de `projects_data.py` (FR) et `i18n.py` (EN, EU) :
-  modifie le texte là, lance `cd _build && python3 build3.py`, puis recopie `_build/site/` à la racine — ou édite directement les fichiers HTML.
+```bash
+cd app
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # -> app/dist
+```
 
-## Thèmes
+No Node installed (NixOS)? Prefix with `nix-shell -p nodejs_22 --run "…"`.
 
-Chaque page projet porte une classe sur `<body>` :
+## URLs
 
-| Classe                | Ambiance                                   | Projets                    |
+| Language | Home     | Project                     |
+|----------|----------|-----------------------------|
+| FR       | `/`      | `/projets/<slug>`           |
+| EN       | `/en`    | `/en/projects/<slug>`       |
+| EU       | `/eu`    | `/eu/proiektuak/<slug>`     |
+
+GitHub Pages has no server-side routing, so the build also writes `404.html` (a copy of `index.html`)
+and React Router resolves the path on the client.
+
+## Languages and light/dark mode
+
+- The **FR · EN · EU** switcher links to the same page in the other language. The choice is saved in
+  `localStorage`; opening `/` then redirects to the saved language.
+- The ☀/☾ button toggles light/dark. By default the site follows the system setting; the choice is saved.
+  The mode is set on `<html data-mode>` by a small script in `app/index.html` (no flash on load).
+- Each project theme has its own light variant (`html[data-mode="light"] .theme-…` blocks in the CSS).
+
+## Content
+
+All text is in `app/src/data/content.json`, generated from the Python sources:
+
+- `_build/projects_data.py` — projects (French)
+- `_build/i18n.py` — UI strings and EN / EU translations
+- `_build/build2.py` — per-theme decorative SVGs and fonts
+
+After editing them:
+
+```bash
+cd _build && python3 export_json.py
+```
+
+You can also drop the Python and edit `content.json` directly.
+Project `context` fields are HTML (rendered with `dangerouslySetInnerHTML`): it is your own content, keep it that way.
+
+## Styles
+
+Edit `app/src/style.css`. (`_build/style.css` is only used by the old static generator and is no longer needed.)
+
+## Themes
+
+Each page sets a class on `<body>`:
+
+| Class                 | Mood                                       | Projects                   |
 |-----------------------|--------------------------------------------|----------------------------|
-| `theme-compilation`   | éditeur de code, violet, arbre syntaxique  | Tiger Compiler             |
-| `theme-hardware`      | PCB vert, pistes et pastilles cuivre       | Light Tracker, PCB Snake   |
-| `theme-software`      | GPU, cyan/violet, grille de pixels         | Object Detection GPU       |
-| `theme-systeme`       | oscilloscope, vert phosphore, signaux      | Dériscage ESP32            |
-| `theme-architecture`  | plan bleu, chronogramme d'horloge          | CPU Monocycle              |
+| `theme-home`          | default home page                          | —                          |
+| `theme-compilation`   | code editor, purple, syntax tree           | Tiger Compiler             |
+| `theme-hardware`      | green PCB, copper traces and pads          | Light Tracker, PCB Snake   |
+| `theme-software`      | GPU, cyan/purple, pixel grid               | Object Detection GPU       |
+| `theme-systeme`       | oscilloscope, phosphor green, signals      | Dériscage ESP32            |
+| `theme-architecture`  | blueprint, clock timing diagram            | CPU Monocycle              |
 
-## Mise en ligne
+A project's theme is set by `THEME_OF` in `_build/build2.py`. For a new theme, copy a `.theme-…` block in
+the CSS, adjust its variables (`--bg`, `--accent`, `--pattern`, fonts…), and add its SVG and fonts in `build2.py`.
 
-1. Crée un dépôt nommé **`jon-gouspy.github.io`** (remplace par ton pseudo).
-2. Copie le contenu de ce dossier à la racine du dépôt, puis :
-   ```bash
-   git add . && git commit -m "Portfolio" && git push
-   ```
-3. Dans *Settings → Pages*, choisis la branche `main` / dossier `/ (root)`.
-4. Le site est en ligne sur `https://jon-gouspy.github.io`.
+## Deployment
 
-## À personnaliser
+`.github/workflows/deploy.yml` builds `app/` and publishes `app/dist` on every push to `main`.
 
-- Remplace partout `jon-gouspy` et `jon-gouspy-futur-ingenieur` (rechercher/remplacer dans tout le dossier).
-- Les boutons « Voir le code » pointent vers `github.com/jon-gouspy/<nom-du-projet>` :
-  adapte-les au vrai nom de tes dépôts.
-- Chaque page projet contient un commentaire `<!-- Add image here -->`
-  pour insérer une photo, un GIF ou une capture.
-- Vérifie les détails techniques et ajoute tes chiffres (gains de perf GPU, dérive mesurée…).
+One-time setup: *Settings → Pages → Source: **GitHub Actions***.
+
+## To customize
+
+- "View code" buttons point to `github.com/jon-gouspy/<slug>`: adapt `<slug>` to your real repository names
+  (`app/src/pages/Project.jsx`).
+- To add a photo, GIF or screenshot to a project page, put it in `app/public/img/` and add an `<img>`
+  in `Project.jsx` (served at `/img/<file>`).
+- Check the technical details and add your numbers (GPU speed-ups, measured drift…).

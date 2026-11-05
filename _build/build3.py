@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Portfolio multilingue (FR/EN/EU) + thèmes par projet + mode clair/sombre."""
+"""Multilingual portfolio (FR/EN/EU) + per-project themes + light/dark mode."""
 import html, os, shutil
 from projects_data import NAME, GITHUB, EMAIL, LINKEDIN, PROJECTS
 from build2 import THEME_OF, THEMES, ALL_FONTS
@@ -20,12 +20,12 @@ def localized(p, lang):
     return q
 
 def rel_root(lang, is_project):
-    """Chemin relatif vers la racine du site."""
+    """Relative path to the site root."""
     depth = (0 if lang == "fr" else 1) + (1 if is_project else 0)
     return "../" * depth
 
 def page_path(lang, slug=None):
-    """Chemin d'une page depuis la racine du site."""
+    """Path of a page from the site root."""
     pre = "" if lang == "fr" else f"{lang}/"
     return pre + (f"{PROJ_DIR[lang]}/{slug}.html" if slug else "index.html")
 
@@ -35,7 +35,7 @@ def head(title, desc, lang, slug, fonts, body_class, redirect=False):
     root = rel_root(lang, slug is not None)
     alts = "".join(f'<link rel="alternate" hreflang="{l}" href="{BASE}{page_path(l, slug)}">' for l in LANGS)
     redir = ""
-    if redirect:  # page d'accueil FR : renvoie vers la langue mémorisée
+    if redirect:  # FR home page: redirects to the remembered language
         redir = "try{var l=localStorage.getItem('lang');if(l==='en'||l==='eu')location.replace(l+'/index.html'+location.hash)}catch(e){}"
     return f"""<!DOCTYPE html>
 <html lang="{lang}">

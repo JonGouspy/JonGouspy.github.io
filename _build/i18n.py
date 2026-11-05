@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Textes d'interface et traductions des projets (EN, EU)."""
+"""Interface texts and project translations (EN, EU)."""
 
 LANGS = ["fr", "en", "eu"]
 LANG_NAMES = {"fr": "Français", "en": "English", "eu": "Euskara"}
@@ -73,7 +73,7 @@ UI = {
   ),
 }
 
-# Commentaires de code traduits (EN et EU utilisent l'anglais dans le code)
+# Translated code comments (EN and EU use English in code)
 CODE_EN = [
     ("// en g", "// in g"), ("// en rad/s", "// in rad/s"), ("// retire la gravité", "// remove gravity"),
     ("// Allume la LED reliée entre la broche `hi` (anode) et `lo` (cathode)", "// Turn on the LED between pin `hi` (anode) and `lo` (cathode)"),

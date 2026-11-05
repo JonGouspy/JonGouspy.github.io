@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Génère le portfolio statique (GitHub Pages) dans ./site"""
+"""Generates the static portfolio (GitHub Pages) in ./site"""
 import html, os
 
 NAME = "Jon Gouspy"

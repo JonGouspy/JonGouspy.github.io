@@ -1,0 +1,1703 @@
+{
+ "site": {
+  "name": "Jon Gouspy",
+  "github": "https://github.com/jon-gouspy",
+  "email": "jon.gouspy@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/jon-gouspy-futur-ingenieur",
+  "fonts": "family=JetBrains+Mono:wght@400;500;700&family=Chakra+Petch:wght@600;700&family=Sora:wght@600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600"
+ },
+ "langs": [
+  "fr",
+  "en",
+  "eu"
+ ],
+ "langNames": {
+  "fr": "Français",
+  "en": "English",
+  "eu": "Euskara"
+ },
+ "projDir": {
+  "fr": "projets",
+  "en": "projects",
+  "eu": "proiektuak"
+ },
+ "themeLabels": {
+  "compilation": {
+   "fr": "Compilation",
+   "en": "Compilers",
+   "eu": "Konpilazioa"
+  },
+  "hardware": {
+   "fr": "Hardware",
+   "en": "Hardware",
+   "eu": "Hardwarea"
+  },
+  "software": {
+   "fr": "Software",
+   "en": "Software",
+   "eu": "Softwarea"
+  },
+  "systeme": {
+   "fr": "Système",
+   "en": "Systems",
+   "eu": "Sistemak"
+  },
+  "architecture": {
+   "fr": "Architecture",
+   "en": "Architecture",
+   "eu": "Arkitektura"
+  }
+ },
+ "ui": {
+  "fr": {
+   "nav_projects": "Projets",
+   "nav_about": "À propos",
+   "nav_contact": "Contact",
+   "site_desc": "Portfolio : systèmes embarqués, électronique, compilation et calcul GPU.",
+   "hero_a": "Je construis des systèmes,",
+   "hero_b": "du transistor au compilateur.",
+   "hero_lead": "Je m'appelle {name}. J'aime les projets où le logiciel rencontre le matériel : firmware embarqué, conception de PCB, processeurs en VHDL, compilateurs et calcul sur GPU.",
+   "btn_projects": "Voir les projets",
+   "filter_all": "Tous",
+   "discover": "Découvrir →",
+   "about": [
+    "Mes projets couvrent toute la pile : concevoir une carte électronique, écrire le firmware qui tourne dessus, décrire un processeur en VHDL, ou au contraire monter dans les couches pour écrire un compilateur.",
+    "Ce qui me motive : comprendre comment les choses fonctionnent vraiment, et les faire marcher en conditions réelles — avec du bruit, des contraintes de temps et des ressources limitées."
+   ],
+   "skills": [
+    [
+     "Embarqué",
+     [
+      "C",
+      "ESP32 / ESP-IDF",
+      "FreeRTOS",
+      "I²C · ADC · PWM"
+     ]
+    ],
+    [
+     "Électronique",
+     [
+      "Conception PCB",
+      "KiCad",
+      "Capteurs",
+      "Moteurs"
+     ]
+    ],
+    [
+     "Matériel numérique",
+     [
+      "VHDL",
+      "Architecture CPU",
+      "Simulation",
+      "FPGA"
+     ]
+    ],
+    [
+     "Logiciel",
+     [
+      "C++",
+      "CUDA",
+      "Compilation",
+      "Flex · Bison"
+     ]
+    ]
+   ],
+   "contact_h": "On en parle ?",
+   "contact_p": "Stage, projet ou simple question technique : écris-moi.",
+   "footer": "Fait main · hébergé sur GitHub Pages",
+   "back": "← Tous les projets",
+   "view_code": "Voir le code ↗",
+   "s_context": "Contexte",
+   "s_arch": "Architecture",
+   "s_points": "Points techniques",
+   "s_code": "Extrait de code",
+   "s_learned": "Ce que j'en retiens",
+   "prev": "← Précédent",
+   "next": "Suivant →",
+   "mode": "Basculer entre thème clair et sombre",
+   "lang": "Langue"
+  },
+  "en": {
+   "nav_projects": "Projects",
+   "nav_about": "About",
+   "nav_contact": "Contact",
+   "site_desc": "Portfolio: embedded systems, electronics, compilers and GPU computing.",
+   "hero_a": "I build systems,",
+   "hero_b": "from transistors to compilers.",
+   "hero_lead": "I'm {name}. I love projects where software meets hardware: embedded firmware, PCB design, VHDL processors, compilers and GPU computing.",
+   "btn_projects": "See projects",
+   "filter_all": "All",
+   "discover": "Explore →",
+   "about": [
+    "My projects span the whole stack: designing a circuit board, writing the firmware that runs on it, describing a processor in VHDL, or climbing up the layers to write a compiler.",
+    "What drives me: understanding how things really work, and making them work in real conditions — with noise, timing constraints and limited resources."
+   ],
+   "skills": [
+    [
+     "Embedded",
+     [
+      "C",
+      "ESP32 / ESP-IDF",
+      "FreeRTOS",
+      "I²C · ADC · PWM"
+     ]
+    ],
+    [
+     "Electronics",
+     [
+      "PCB design",
+      "KiCad",
+      "Sensors",
+      "Motors"
+     ]
+    ],
+    [
+     "Digital hardware",
+     [
+      "VHDL",
+      "CPU architecture",
+      "Simulation",
+      "FPGA"
+     ]
+    ],
+    [
+     "Software",
+     [
+      "C++",
+      "CUDA",
+      "Compilers",
+      "Flex · Bison"
+     ]
+    ]
+   ],
+   "contact_h": "Let's talk",
+   "contact_p": "Internship, project or just a technical question: drop me a line.",
+   "footer": "Handmade · hosted on GitHub Pages",
+   "back": "← All projects",
+   "view_code": "View code ↗",
+   "s_context": "Context",
+   "s_arch": "Architecture",
+   "s_points": "Technical highlights",
+   "s_code": "Code excerpt",
+   "s_learned": "Key takeaways",
+   "prev": "← Previous",
+   "next": "Next →",
+   "mode": "Toggle light / dark theme",
+   "lang": "Language"
+  },
+  "eu": {
+   "nav_projects": "Proiektuak",
+   "nav_about": "Niri buruz",
+   "nav_contact": "Harremana",
+   "site_desc": "Portfolioa: sistema txertatuak, elektronika, konpilazioa eta GPU bidezko kalkulua.",
+   "hero_a": "Sistemak eraikitzen ditut,",
+   "hero_b": "transistoretik konpilatzaileraino.",
+   "hero_lead": "{name} naiz. Softwarea eta hardwarea elkartzen diren proiektuak gustatzen zaizkit: firmware txertatua, PCB diseinua, VHDL prozesadoreak, konpilatzaileak eta GPU bidezko kalkulua.",
+   "btn_projects": "Proiektuak ikusi",
+   "filter_all": "Denak",
+   "discover": "Ezagutu →",
+   "about": [
+    "Nire proiektuek pila osoa hartzen dute: txartel elektroniko bat diseinatzea, haren gainean dabilen firmwarea idaztea, prozesadore bat VHDLz deskribatzea, edo, alderantziz, geruzetan gora igo eta konpilatzaile bat idaztea.",
+    "Motibatzen nauena: gauzak benetan nola dabiltzan ulertzea, eta baldintza errealetan funtzionaraztea — zaratarekin, denbora-mugekin eta baliabide mugatuekin."
+   ],
+   "skills": [
+    [
+     "Txertatua",
+     [
+      "C",
+      "ESP32 / ESP-IDF",
+      "FreeRTOS",
+      "I²C · ADC · PWM"
+     ]
+    ],
+    [
+     "Elektronika",
+     [
+      "PCB diseinua",
+      "KiCad",
+      "Sentsoreak",
+      "Motorrak"
+     ]
+    ],
+    [
+     "Hardware digitala",
+     [
+      "VHDL",
+      "CPU arkitektura",
+      "Simulazioa",
+      "FPGA"
+     ]
+    ],
+    [
+     "Softwarea",
+     [
+      "C++",
+      "CUDA",
+      "Konpilazioa",
+      "Flex · Bison"
+     ]
+    ]
+   ],
+   "contact_h": "Hitz egingo dugu?",
+   "contact_p": "Praktikak, proiektu bat edo galdera tekniko soil bat: idatzidazu.",
+   "footer": "Eskuz egina · GitHub Pages-en ostatatua",
+   "back": "← Proiektu guztiak",
+   "view_code": "Kodea ikusi ↗",
+   "s_context": "Testuingurua",
+   "s_arch": "Arkitektura",
+   "s_points": "Puntu teknikoak",
+   "s_code": "Kode-zatia",
+   "s_learned": "Zer ikasi dudan",
+   "prev": "← Aurrekoa",
+   "next": "Hurrengoa →",
+   "mode": "Gai argia / iluna aldatu",
+   "lang": "Hizkuntza"
+  }
+ },
+ "themes": {
+  "compilation": {
+   "font": "family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600",
+   "svg": "<svg viewBox=\"0 0 320 270\"><path d=\"M170 46 C170 69.0, 80 69.0, 80 92\" class=\"d-line\"/><path d=\"M170 46 C170 69.0, 262 69.0, 262 92\" class=\"d-line\"/><path d=\"M80 116 C80 140.0, 36 140.0, 36 164\" class=\"d-line\"/><path d=\"M80 116 C80 140.0, 124 140.0, 124 164\" class=\"d-line\"/><path d=\"M262 116 C262 140.0, 262 140.0, 262 164\" class=\"d-line\"/><path d=\"M124 188 C124 208.0, 124 208.0, 124 228\" class=\"d-line\"/><path d=\"M262 188 C262 208.0, 262 208.0, 262 228\" class=\"d-line\"/><rect x=\"138.2\" y=\"22\" width=\"63.599999999999994\" height=\"24\" rx=\"3\" class=\"d-node d-hl\"/><text x=\"170\" y=\"38\" class=\"d-txt\">LetExp</text><rect x=\"55.8\" y=\"92\" width=\"48.4\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"80\" y=\"108\" class=\"d-txt\">Decs</text><rect x=\"226.4\" y=\"92\" width=\"71.19999999999999\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"262\" y=\"108\" class=\"d-txt\">CallExp</text><rect x=\"0.4000000000000057\" y=\"164\" width=\"71.19999999999999\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"36\" y=\"180\" class=\"d-txt\">TypeDec</text><rect x=\"92.2\" y=\"164\" width=\"63.599999999999994\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"124\" y=\"180\" class=\"d-txt\">FunDec</text><rect x=\"218.8\" y=\"164\" width=\"86.39999999999999\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"262\" y=\"180\" class=\"d-txt\">print_int</text><rect x=\"96.0\" y=\"228\" width=\"56.0\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"124\" y=\"244\" class=\"d-txt\">IfExp</text><rect x=\"230.2\" y=\"228\" width=\"63.599999999999994\" height=\"24\" rx=\"3\" class=\"d-node\"/><text x=\"262\" y=\"244\" class=\"d-txt\">sum(l)</text></svg>"
+  },
+  "hardware": {
+   "font": "family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600",
+   "svg": "<svg viewBox=\"0 0 320 270\">\n<g class=\"d-trace\">\n<path d=\"M0 60 H80 L110 90 H150\"/><path d=\"M0 120 H60 L90 150 H150\"/><path d=\"M0 200 H100 L130 170 H150\"/>\n<path d=\"M250 90 H280 L320 50\"/><path d=\"M250 130 H320\"/><path d=\"M250 170 H270 L310 210 V270\"/>\n<path d=\"M190 70 V30 L220 0\"/><path d=\"M210 190 V240 L240 270\"/>\n</g>\n<rect x=\"150\" y=\"70\" width=\"100\" height=\"120\" rx=\"4\" class=\"d-chip\"/>\n<g class=\"d-pin\"><rect x=\"142\" y=\"82\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"82\" width=\"10\" height=\"6\"/><rect x=\"142\" y=\"98\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"98\" width=\"10\" height=\"6\"/><rect x=\"142\" y=\"114\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"114\" width=\"10\" height=\"6\"/><rect x=\"142\" y=\"130\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"130\" width=\"10\" height=\"6\"/><rect x=\"142\" y=\"146\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"146\" width=\"10\" height=\"6\"/><rect x=\"142\" y=\"162\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"162\" width=\"10\" height=\"6\"/><rect x=\"142\" y=\"178\" width=\"10\" height=\"6\"/><rect x=\"248\" y=\"178\" width=\"10\" height=\"6\"/></g>\n<circle cx=\"163\" cy=\"83\" r=\"4\" class=\"d-dot\"/>\n<text x=\"200\" y=\"135\" class=\"d-txt\">MCU</text>\n<g class=\"d-via\"><circle cx=\"80\" cy=\"60\" r=\"6\"/><circle cx=\"60\" cy=\"120\" r=\"6\"/><circle cx=\"100\" cy=\"200\" r=\"6\"/><circle cx=\"280\" cy=\"90\" r=\"6\"/><circle cx=\"270\" cy=\"170\" r=\"6\"/><circle cx=\"190\" cy=\"30\" r=\"6\"/><circle cx=\"210\" cy=\"240\" r=\"6\"/></g>\n</svg>"
+  },
+  "software": {
+   "font": "family=Sora:wght@400;600;700&family=Inter:wght@400;500;600",
+   "svg": "<svg viewBox=\"0 0 320 270\"><rect x=\"10\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.14\"/><rect x=\"35\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.43\"/><rect x=\"60\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.56\"/><rect x=\"85\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.26\"/><rect x=\"110\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"135\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"160\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"185\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.15\"/><rect x=\"210\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.44\"/><rect x=\"235\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.56\"/><rect x=\"260\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.26\"/><rect x=\"285\" y=\"18\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"10\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.32\"/><rect x=\"35\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.58\"/><rect x=\"60\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.37\"/><rect x=\"85\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.12\"/><rect x=\"110\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"135\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"160\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.10\"/><rect x=\"185\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.33\"/><rect x=\"210\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.58\"/><rect x=\"235\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.37\"/><rect x=\"260\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.12\"/><rect x=\"285\" y=\"43\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"10\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.53\"/><rect x=\"35\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.48\"/><rect x=\"60\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.17\"/><rect x=\"85\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"110\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"135\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"160\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"185\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"210\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"235\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"260\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"285\" y=\"68\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"10\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.56\"/><rect x=\"35\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.26\"/><rect x=\"60\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"85\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"110\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"135\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"160\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"185\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"210\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"235\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"260\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"285\" y=\"93\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"10\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.37\"/><rect x=\"35\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.12\"/><rect x=\"60\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"85\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"110\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.10\"/><rect x=\"135\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"160\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"185\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"210\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"235\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"260\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"285\" y=\"118\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.10\"/><rect x=\"10\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.17\"/><rect x=\"35\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"60\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"85\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"110\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.22\"/><rect x=\"135\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"160\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"185\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"210\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"235\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"260\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"285\" y=\"143\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.23\"/><rect x=\"10\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"35\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"60\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"85\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.15\"/><rect x=\"110\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.44\"/><rect x=\"135\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"160\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"185\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.68\"/><rect x=\"210\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.82\"/><rect x=\"235\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.55\"/><rect x=\"260\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.15\"/><rect x=\"285\" y=\"168\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.45\"/><rect x=\"10\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"35\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"60\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.10\"/><rect x=\"85\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.33\"/><rect x=\"110\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.58\"/><rect x=\"135\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.37\"/><rect x=\"160\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.12\"/><rect x=\"185\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"210\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"235\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.10\"/><rect x=\"260\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.33\"/><rect x=\"285\" y=\"193\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.58\"/><rect x=\"10\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"35\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"60\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.22\"/><rect x=\"85\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.53\"/><rect x=\"110\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.48\"/><rect x=\"135\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.17\"/><rect x=\"160\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"185\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.08\"/><rect x=\"210\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.09\"/><rect x=\"235\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.23\"/><rect x=\"260\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.54\"/><rect x=\"285\" y=\"218\" width=\"21\" height=\"21\" rx=\"4\" class=\"d-px\" style=\"opacity:0.47\"/>\n<rect x=\"131\" y=\"64\" width=\"128\" height=\"128\" rx=\"6\" class=\"d-box\"/>\n<rect x=\"131\" y=\"44\" width=\"78\" height=\"18\" rx=\"4\" class=\"d-tagbg\"/><text x=\"170\" y=\"57\" class=\"d-txt\">object</text></svg>"
+  },
+  "systeme": {
+   "font": "family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@400;500;600",
+   "svg": "<svg viewBox=\"0 0 320 270\"><path d=\"M0 0 V270\" class=\"d-grid\"/><path d=\"M40 0 V270\" class=\"d-grid\"/><path d=\"M80 0 V270\" class=\"d-grid\"/><path d=\"M120 0 V270\" class=\"d-grid\"/><path d=\"M160 0 V270\" class=\"d-grid\"/><path d=\"M200 0 V270\" class=\"d-grid\"/><path d=\"M240 0 V270\" class=\"d-grid\"/><path d=\"M280 0 V270\" class=\"d-grid\"/><path d=\"M320 0 V270\" class=\"d-grid\"/><path d=\"M0 15 H320\" class=\"d-grid\"/><path d=\"M0 55 H320\" class=\"d-grid\"/><path d=\"M0 95 H320\" class=\"d-grid\"/><path d=\"M0 135 H320\" class=\"d-grid\"/><path d=\"M0 175 H320\" class=\"d-grid\"/><path d=\"M0 215 H320\" class=\"d-grid\"/><path d=\"M0 255 H320\" class=\"d-grid\"/>\n<path d=\"M160 0 V270 M0 135 H320\" class=\"d-axis\"/>\n<path d=\"M0.0,95.0 L2.0,96.3 L4.0,97.1 L6.0,97.1 L8.0,96.1 L10.0,94.0 L12.0,91.0 L14.0,87.2 L16.0,82.7 L18.0,77.8 L20.0,72.6 L22.0,67.6 L24.0,63.4 L26.0,60.5 L28.0,59.5 L30.0,60.5 L32.0,63.3 L34.0,67.5 L36.0,72.5 L38.0,77.7 L40.0,82.7 L42.0,87.2 L44.0,91.1 L46.0,94.1 L48.0,96.1 L50.0,97.1 L52.0,97.0 L54.0,96.2 L56.0,94.9 L58.0,93.6 L60.0,92.7 L62.0,92.5 L64.0,93.1 L66.0,94.3 L68.0,95.7 L70.0,96.9 L72.0,97.5 L74.0,97.3 L76.0,96.4 L78.0,95.1 L80.0,93.8 L82.0,92.7 L84.0,92.3 L86.0,92.6 L88.0,93.2 L90.0,93.6 L92.0,93.2 L94.0,91.4 L96.0,87.5 L98.0,81.8 L100.0,74.5 L102.0,66.9 L104.0,60.2 L106.0,55.9 L108.0,54.8 L110.0,57.2 L112.0,62.5 L114.0,69.4 L116.0,76.5 L118.0,82.6 L120.0,87.0 L122.0,89.6 L124.0,90.8 L126.0,91.3 L128.0,91.6 L130.0,92.3 L132.0,93.5 L134.0,94.9 L136.0,96.3 L138.0,97.2 L140.0,97.5 L142.0,97.0 L144.0,95.8 L146.0,94.4 L148.0,93.2 L150.0,92.6 L152.0,92.6 L154.0,93.4 L156.0,94.7 L158.0,96.1 L160.0,97.1 L162.0,97.4 L164.0,96.9 L166.0,95.7 L168.0,93.8 L170.0,91.6 L172.0,89.2 L174.0,86.5 L176.0,83.4 L178.0,79.6 L180.0,75.0 L182.0,69.9 L184.0,64.8 L186.0,60.6 L188.0,58.3 L190.0,58.3 L192.0,60.9 L194.0,65.6 L196.0,71.7 L198.0,78.2 L200.0,84.4 L202.0,89.6 L204.0,93.4 L206.0,95.6 L208.0,96.4 L210.0,96.1 L212.0,95.0 L214.0,93.7 L216.0,92.8 L218.0,92.5 L220.0,93.0 L222.0,94.0 L224.0,95.4 L226.0,96.7 L228.0,97.4 L230.0,97.4 L232.0,96.7 L234.0,95.4 L236.0,94.0 L238.0,92.9 L240.0,92.5 L242.0,92.8 L244.0,93.7 L246.0,94.8 L248.0,95.6 L250.0,95.5 L252.0,94.0 L254.0,90.8 L256.0,85.8 L258.0,79.4 L260.0,72.2 L262.0,65.4 L264.0,60.0 L266.0,57.0 L268.0,56.9 L270.0,59.7 L272.0,64.5 L274.0,70.4 L276.0,76.1 L278.0,81.0 L280.0,84.6 L282.0,87.2 L284.0,89.1 L286.0,90.8 L288.0,92.5 L290.0,94.3 L292.0,95.9 L294.0,97.0 L296.0,97.5 L298.0,97.1 L300.0,96.1 L302.0,94.7 L304.0,93.4 L306.0,92.6 L308.0,92.6 L310.0,93.2 L312.0,94.5 L314.0,95.9 L316.0,97.0 L318.0,97.5 L320.0,97.2\" class=\"d-ch1\"/>\n<path d=\"M0.0,215.0 L2.0,211.3 L4.0,207.8 L6.0,204.3 L8.0,201.0 L10.0,198.0 L12.0,195.2 L14.0,192.8 L16.0,190.8 L18.0,189.1 L20.0,188.0 L22.0,187.2 L24.0,187.0 L26.0,187.2 L28.0,188.0 L30.0,189.1 L32.0,190.8 L34.0,192.8 L36.0,195.2 L38.0,198.0 L40.0,201.0 L42.0,204.3 L44.0,207.8 L46.0,211.3 L48.0,215.0 L50.0,215.0 L52.0,215.0 L54.0,215.0 L56.0,215.0 L58.0,215.0 L60.0,215.0 L62.0,215.0 L64.0,215.0 L66.0,215.0 L68.0,215.0 L70.0,215.0 L72.0,215.0 L74.0,215.0 L76.0,215.0 L78.0,215.0 L80.0,215.0 L82.0,211.3 L84.0,207.8 L86.0,204.3 L88.0,201.0 L90.0,198.0 L92.0,195.2 L94.0,192.8 L96.0,190.8 L98.0,189.1 L100.0,188.0 L102.0,187.2 L104.0,187.0 L106.0,187.2 L108.0,188.0 L110.0,189.1 L112.0,190.8 L114.0,192.8 L116.0,195.2 L118.0,198.0 L120.0,201.0 L122.0,204.3 L124.0,207.8 L126.0,211.3 L128.0,215.0 L130.0,215.0 L132.0,215.0 L134.0,215.0 L136.0,215.0 L138.0,215.0 L140.0,215.0 L142.0,215.0 L144.0,215.0 L146.0,215.0 L148.0,215.0 L150.0,215.0 L152.0,215.0 L154.0,215.0 L156.0,215.0 L158.0,215.0 L160.0,215.0 L162.0,211.3 L164.0,207.8 L166.0,204.3 L168.0,201.0 L170.0,198.0 L172.0,195.2 L174.0,192.8 L176.0,190.8 L178.0,189.1 L180.0,188.0 L182.0,187.2 L184.0,187.0 L186.0,187.2 L188.0,188.0 L190.0,189.1 L192.0,190.8 L194.0,192.8 L196.0,195.2 L198.0,198.0 L200.0,201.0 L202.0,204.3 L204.0,207.8 L206.0,211.3 L208.0,215.0 L210.0,215.0 L212.0,215.0 L214.0,215.0 L216.0,215.0 L218.0,215.0 L220.0,215.0 L222.0,215.0 L224.0,215.0 L226.0,215.0 L228.0,215.0 L230.0,215.0 L232.0,215.0 L234.0,215.0 L236.0,215.0 L238.0,215.0 L240.0,215.0 L242.0,211.3 L244.0,207.8 L246.0,204.3 L248.0,201.0 L250.0,198.0 L252.0,195.2 L254.0,192.8 L256.0,190.8 L258.0,189.1 L260.0,188.0 L262.0,187.2 L264.0,187.0 L266.0,187.2 L268.0,188.0 L270.0,189.1 L272.0,190.8 L274.0,192.8 L276.0,195.2 L278.0,198.0 L280.0,201.0 L282.0,204.3 L284.0,207.8 L286.0,211.3 L288.0,215.0 L290.0,215.0 L292.0,215.0 L294.0,215.0 L296.0,215.0 L298.0,215.0 L300.0,215.0 L302.0,215.0 L304.0,215.0 L306.0,215.0 L308.0,215.0 L310.0,215.0 L312.0,215.0 L314.0,215.0 L316.0,215.0 L318.0,215.0 L320.0,215.0\" class=\"d-ch2\"/>\n<text x=\"8\" y=\"30\" class=\"d-txt d-c1\">CH1 a_z</text><text x=\"8\" y=\"160\" class=\"d-txt d-c2\">CH2 v · ZUPT</text></svg>"
+  },
+  "architecture": {
+   "font": "family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600",
+   "svg": "<svg viewBox=\"0 0 320 270\">\n<text x=\"10\" y=\"8\" class=\"d-lbl\">CLK</text><path d=\"M10 40 H30 V15 H50 V40 H70 V15 H90 V40 H110 V15 H130 V40 H150 V15 H170 V40 H190 V15 H210 V40 H230 V15 H250 V40 H270 V15 H290 V40 H310\" class=\"d-wave\"/>\n<text x=\"10\" y=\"72\" class=\"d-lbl\">PC</text><path d=\"M10 95 L16 83 H84 L90 95 L84 107 H16 Z\" class=\"d-bus\"/><text x=\"50\" y=\"99\" class=\"d-txt\">0x00</text><path d=\"M90 95 L96 83 H164 L170 95 L164 107 H96 Z\" class=\"d-bus\"/><text x=\"130\" y=\"99\" class=\"d-txt\">0x04</text><path d=\"M170 95 L176 83 H244 L250 95 L244 107 H176 Z\" class=\"d-bus\"/><text x=\"210\" y=\"99\" class=\"d-txt\">0x08</text><path d=\"M250 95 L256 83 H324 L330 95 L324 107 H256 Z\" class=\"d-bus\"/><text x=\"290\" y=\"99\" class=\"d-txt\">0x0C</text>\n<text x=\"10\" y=\"137\" class=\"d-lbl\">INSTR</text><path d=\"M10 160 L16 148 H84 L90 160 L84 172 H16 Z\" class=\"d-bus\"/><text x=\"50\" y=\"164\" class=\"d-txt\">ADD</text><path d=\"M90 160 L96 148 H164 L170 160 L164 172 H96 Z\" class=\"d-bus\"/><text x=\"130\" y=\"164\" class=\"d-txt\">LDR</text><path d=\"M170 160 L176 148 H244 L250 160 L244 172 H176 Z\" class=\"d-bus\"/><text x=\"210\" y=\"164\" class=\"d-txt\">SUB</text><path d=\"M250 160 L256 148 H324 L330 160 L324 172 H256 Z\" class=\"d-bus\"/><text x=\"290\" y=\"164\" class=\"d-txt\">BEQ</text>\n<text x=\"10\" y=\"202\" class=\"d-lbl\">WE</text><path d=\"M10 250 H90 V225 H170 V250 H250 V225 H310\" class=\"d-wave d-w2\"/>\n</svg>"
+  }
+ },
+ "projects": {
+  "fr": [
+   {
+    "slug": "tiger-compiler",
+    "num": "01",
+    "title": "Tiger Compiler",
+    "tagline": "Un compilateur complet pour le langage Tiger, écrit en C++.",
+    "domain": "Compilation",
+    "tags": [
+     "C++",
+     "Flex",
+     "Bison",
+     "AST",
+     "IR"
+    ],
+    "facts": [
+     [
+      "Langage",
+      "C++17"
+     ],
+     [
+      "Outils",
+      "Flex · Bison · Make"
+     ],
+     [
+      "Cible",
+      "Assembleur / IR"
+     ],
+     [
+      "Type",
+      "Projet d'équipe"
+     ]
+    ],
+    "context": "<p>Tiger est un petit langage impératif typé, issu du livre <em>Modern Compiler Implementation</em> d'Andrew Appel. Il possède des types structurés (records, tableaux), des fonctions imbriquées, des portées lexicales et une gestion explicite de <code>let … in … end</code>.</p>\n<p>L'objectif : partir d'un fichier source <code>.tig</code> et produire du code exécutable, en traversant toutes les étapes d'un vrai compilateur — de l'analyse lexicale jusqu'à l'allocation de registres.</p>",
+    "pipeline": [
+     "Source .tig",
+     "Lexer (Flex)",
+     "Parser (Bison)",
+     "AST",
+     "Binding",
+     "Type-checking",
+     "Traduction IR",
+     "Canonisation",
+     "Sélection d'instructions",
+     "Allocation de registres",
+     "Assembleur"
+    ],
+    "pipeline_caption": "Chaîne de compilation, du texte source au code machine.",
+    "points": [
+     [
+      "Analyse lexicale & syntaxique",
+      "Scanner Flex et grammaire Bison, avec gestion des conflits, des priorités d'opérateurs et des messages d'erreur localisés (ligne / colonne)."
+     ],
+     [
+      "AST & visiteurs",
+      "Arbre syntaxique abstrait en C++ parcouru via le design pattern Visitor : pretty-printer, binder, type-checker et traducteur partagent la même hiérarchie."
+     ],
+     [
+      "Liaison des noms",
+      "Résolution des identifiants avec tables de symboles à portées imbriquées, détection des variables qui « s'échappent » vers des fonctions internes."
+     ],
+     [
+      "Vérification de types",
+      "Typage des expressions, des records récursifs et des tableaux ; erreurs sémantiques claires plutôt qu'un crash."
+     ],
+     [
+      "Représentation intermédiaire",
+      "Traduction en arbre IR, linéarisation et canonisation des blocs de base avant la génération de code."
+     ],
+     [
+      "Back-end",
+      "Sélection d'instructions par tuilage de motifs, analyse de vivacité et allocation de registres par coloration de graphe."
+     ]
+    ],
+    "code_lang": "Tiger",
+    "code": "let\n  type intlist = { head: int, tail: intlist }\n  function sum(l: intlist): int =\n    if l = nil then 0\n    else l.head + sum(l.tail)\n  var l := intlist { head = 1,\n           tail = intlist { head = 2, tail = nil } }\nin\n  print_int(sum(l))\nend",
+    "learned": [
+     "Comprendre ce qui se passe réellement entre le code source et le binaire.",
+     "Concevoir une grosse base de code C++ modulaire et testable (suites de tests par étape).",
+     "Travailler en équipe sur un projet long avec revues de code et intégration continue."
+    ],
+    "theme": "compilation"
+   },
+   {
+    "slug": "light-tracker",
+    "num": "02",
+    "title": "Light Tracker",
+    "tagline": "Un robot qui s'oriente tout seul vers la source de lumière la plus intense.",
+    "domain": "Robotique",
+    "tags": [
+     "Microcontrôleur",
+     "C",
+     "ADC",
+     "Moteur",
+     "Asservissement"
+    ],
+    "facts": [
+     [
+      "Capteurs",
+      "2 photorésistances"
+     ],
+     [
+      "Actionneur",
+      "Moteur + pont en H"
+     ],
+     [
+      "Langage",
+      "C embarqué"
+     ],
+     [
+      "Type",
+      "Projet matériel"
+     ]
+    ],
+    "context": "<p>Le principe est simple : deux capteurs de lumière placés de part et d'autre du robot mesurent l'intensité lumineuse. Si un côté reçoit plus de lumière que l'autre, le moteur tourne pour rééquilibrer — le robot finit pointé vers la source.</p>\n<p>Derrière cette simplicité : acquisition analogique, filtrage du bruit, zone morte pour éviter les oscillations et pilotage d'un moteur dans les deux sens.</p>",
+    "pipeline": [
+     "Capteur gauche",
+     "Capteur droit",
+     "Diviseurs de tension",
+     "ADC",
+     "Filtrage",
+     "Erreur = G − D",
+     "Commande",
+     "Pont en H",
+     "Moteur"
+    ],
+    "pipeline_caption": "Boucle de contrôle : de la mesure de lumière à la rotation du moteur.",
+    "points": [
+     [
+      "Acquisition",
+      "Chaque photorésistance forme un pont diviseur ; la tension est lue par le convertisseur analogique-numérique du microcontrôleur."
+     ],
+     [
+      "Calibration",
+      "Les deux capteurs n'ont jamais exactement la même réponse : un offset mesuré au démarrage compense l'écart."
+     ],
+     [
+      "Filtrage",
+      "Moyenne glissante sur plusieurs échantillons pour lisser le bruit (néons, scintillement 50 Hz)."
+     ],
+     [
+      "Zone morte",
+      "En dessous d'un seuil d'écart, le moteur reste à l'arrêt : le robot ne « tremble » pas une fois aligné."
+     ],
+     [
+      "Commande proportionnelle",
+      "La vitesse (PWM) dépend de l'écart : rotation rapide quand la lumière est loin, ralentissement à l'approche."
+     ],
+     [
+      "Puissance",
+      "Un pont en H isole le microcontrôleur du courant moteur et permet d'inverser le sens de rotation."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "#define DEADBAND 20\n\nvoid loop(void) {\n    int left  = read_avg(ADC_LEFT,  8);\n    int right = read_avg(ADC_RIGHT, 8) + calib_offset;\n    int err   = left - right;\n\n    if (abs(err) < DEADBAND) {\n        motor_stop();\n    } else {\n        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);\n        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);\n    }\n}",
+    "learned": [
+     "Passer d'une idée simple à un système physique qui marche vraiment (bruit, tolérances, mécanique).",
+     "Les bases de l'asservissement : erreur, gain, zone morte, stabilité.",
+     "Séparer proprement la logique de commande et l'étage de puissance."
+    ],
+    "theme": "hardware"
+   },
+   {
+    "slug": "object-detection-gpu",
+    "num": "03",
+    "title": "Object Detection GPU",
+    "tagline": "Détection d'objets en mouvement par soustraction de fond, accélérée sur GPU.",
+    "domain": "Vision · GPU",
+    "tags": [
+     "CUDA",
+     "C++",
+     "Traitement d'image",
+     "Parallélisme"
+    ],
+    "facts": [
+     [
+      "Langage",
+      "C++ / CUDA"
+     ],
+     [
+      "Méthode",
+      "Soustraction de fond"
+     ],
+     [
+      "Cible",
+      "GPU NVIDIA"
+     ],
+     [
+      "Type",
+      "Projet de performance"
+     ]
+    ],
+    "context": "<p>Sur une vidéo filmée par une caméra fixe, tout ce qui ne fait pas partie du décor est un objet d'intérêt. L'idée : apprendre un modèle du fond (background), puis isoler pour chaque image les pixels qui s'en écartent.</p>\n<p>Le calcul étant indépendant pour chaque pixel, il se prête parfaitement au GPU. Le projet consiste à écrire une version CPU de référence, puis à la porter en kernels CUDA et à mesurer le gain.</p>",
+    "pipeline": [
+     "Frame vidéo",
+     "Modèle de fond",
+     "Différence |I − B|",
+     "Seuillage (hystérésis)",
+     "Morphologie (ouverture)",
+     "Composantes connexes",
+     "Boîtes englobantes"
+    ],
+    "pipeline_caption": "Pipeline de détection, chaque étape étant un ou plusieurs kernels CUDA.",
+    "points": [
+     [
+      "Modèle de fond",
+      "Fond estimé et mis à jour au fil de la vidéo (moyenne glissante), pour s'adapter aux changements lents d'éclairage."
+     ],
+     [
+      "Masque de mouvement",
+      "Distance entre l'image courante et le fond, puis seuillage avec hystérésis : un seuil haut pour amorcer, un seuil bas pour propager."
+     ],
+     [
+      "Morphologie",
+      "Érosion puis dilatation pour supprimer le bruit isolé et reboucher les trous dans les objets."
+     ],
+     [
+      "Un thread par pixel",
+      "Chaque kernel associe un thread à un pixel ; grilles 2D, accès mémoire coalescés."
+     ],
+     [
+      "Mémoire partagée",
+      "Les opérations à voisinage (morphologie) chargent une tuile + son halo en shared memory pour éviter les relectures en mémoire globale."
+     ],
+     [
+      "Benchmark",
+      "Comparaison CPU vs GPU et profilage (Nsight) pour identifier les kernels limités par la bande passante."
+     ]
+    ],
+    "code_lang": "CUDA",
+    "code": "__global__ void diff_threshold(const uchar3* frame, const float3* bg,\n                               uint8_t* mask, int w, int h, float th)\n{\n    int x = blockIdx.x * blockDim.x + threadIdx.x;\n    int y = blockIdx.y * blockDim.y + threadIdx.y;\n    if (x >= w || y >= h) return;\n\n    int i = y * w + x;\n    float3 d = make_float3(frame[i].x - bg[i].x,\n                           frame[i].y - bg[i].y,\n                           frame[i].z - bg[i].z);\n    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);\n    mask[i] = dist > th ? 255 : 0;\n}",
+    "learned": [
+     "Penser un algorithme en termes de parallélisme massif.",
+     "L'impact énorme des accès mémoire sur les performances GPU.",
+     "Mesurer avant d'optimiser : profiler, comparer, itérer."
+    ],
+    "theme": "software"
+   },
+   {
+    "slug": "deriscage-esp32",
+    "num": "04",
+    "title": "Dériscage sur ESP32",
+    "tagline": "Estimation de mouvement par IMU : filtre de Madgwick + correction ZUPT, sur ESP32.",
+    "domain": "Systèmes embarqués",
+    "tags": [
+     "ESP32",
+     "ESP-IDF",
+     "FreeRTOS",
+     "MPU6050",
+     "I²C",
+     "Fusion de capteurs"
+    ],
+    "facts": [
+     [
+      "Carte",
+      "ESP32"
+     ],
+     [
+      "Framework",
+      "ESP-IDF · FreeRTOS"
+     ],
+     [
+      "Capteur",
+      "MPU6050 (accéléro + gyro)"
+     ],
+     [
+      "Algorithmes",
+      "Madgwick · ZUPT"
+     ]
+    ],
+    "context": "<p>Un MPU6050 fournit des accélérations et des vitesses angulaires sur 3 axes. En théorie, il suffit d'intégrer deux fois l'accélération pour obtenir la position. En pratique, le moindre biais explose : après quelques secondes la position dérive de plusieurs mètres.</p>\n<p>Ce projet combine deux techniques pour rendre l'estimation exploitable : le <strong>filtre de Madgwick</strong> pour connaître l'orientation du capteur, et la correction <strong>ZUPT</strong> (Zero Velocity Update) pour remettre la vitesse à zéro dès que le capteur est immobile.</p>",
+    "pipeline": [
+     "MPU6050",
+     "Lecture I²C",
+     "Calibration des biais",
+     "Filtre de Madgwick",
+     "Accél. repère monde",
+     "− gravité",
+     "∫ vitesse",
+     "Détection immobilité",
+     "ZUPT : v = 0",
+     "∫ position"
+    ],
+    "pipeline_caption": "Chaîne de traitement exécutée en temps réel sur l'ESP32.",
+    "points": [
+     [
+      "Driver I²C",
+      "Communication avec le MPU6050 via l'API I²C d'ESP-IDF : configuration des plages (±g, °/s), lecture en rafale des registres."
+     ],
+     [
+      "Tâches FreeRTOS",
+      "Une tâche d'acquisition à fréquence fixe, une tâche de traitement ; échange par file (queue) pour un échantillonnage régulier."
+     ],
+     [
+      "Filtre de Madgwick",
+      "Fusion gyro + accéléromètre par descente de gradient sur un quaternion d'orientation, réglée par le paramètre β."
+     ],
+     [
+      "Repère monde",
+      "L'accélération est tournée dans le repère terrestre grâce au quaternion, puis la gravité est soustraite pour garder l'accélération linéaire."
+     ],
+     [
+      "Détection d'immobilité",
+      "Sur une fenêtre glissante : norme de l'accélération proche de g et rotation quasi nulle → le capteur est considéré à l'arrêt."
+     ],
+     [
+      "Correction ZUPT",
+      "À chaque phase d'arrêt, la vitesse est forcée à zéro : l'erreur accumulée est coupée, la dérive de position reste bornée."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "static bool is_stationary(const imu_sample_t *s)\n{\n    float a_norm = vec3_norm(s->acc);          // en g\n    float w_norm = vec3_norm(s->gyro);         // en rad/s\n    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;\n}\n\nvoid process(imu_sample_t *s, float dt)\n{\n    madgwick_update(&q, s->gyro, s->acc, BETA, dt);\n    vec3 a_world = quat_rotate(q, s->acc);\n    a_world.z -= 1.0f;                         // retire la gravité\n\n    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT\n    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));\n\n    pos = vec3_add(pos, vec3_scale(vel, dt));\n}",
+    "learned": [
+     "Développer sur ESP-IDF et structurer une application temps réel avec FreeRTOS.",
+     "Comprendre la fusion de capteurs et les limites physiques d'une centrale inertielle bas coût.",
+     "Corriger une dérive par des connaissances a priori (ici : les phases d'arrêt)."
+    ],
+    "theme": "systeme"
+   },
+   {
+    "slug": "pcb-snake",
+    "num": "05",
+    "title": "PCB Snake",
+    "tagline": "Une console Snake sur PCB maison : microcontrôleur, matrice de LEDs en charlieplexing.",
+    "domain": "Électronique",
+    "tags": [
+     "PCB",
+     "KiCad",
+     "Microcontrôleur",
+     "Charlieplexing",
+     "C"
+    ],
+    "facts": [
+     [
+      "Conception",
+      "Schéma + routage PCB"
+     ],
+     [
+      "Affichage",
+      "LEDs en charlieplexing"
+     ],
+     [
+      "Firmware",
+      "C embarqué"
+     ],
+     [
+      "Type",
+      "Projet matériel complet"
+     ]
+    ],
+    "context": "<p>Le but : concevoir de A à Z une petite console qui fait tourner Snake — schéma électronique, routage du PCB, soudure, puis firmware du jeu.</p>\n<p>La contrainte intéressante : piloter beaucoup de LEDs avec très peu de broches. C'est là qu'intervient le <strong>charlieplexing</strong>, qui exploite l'état haute impédance des GPIO pour adresser <code>n × (n − 1)</code> LEDs avec seulement <code>n</code> broches.</p>",
+    "pipeline": [
+     "Schéma",
+     "Empreintes",
+     "Routage PCB",
+     "Fabrication",
+     "Soudure",
+     "Firmware",
+     "Jeu Snake"
+    ],
+    "pipeline_caption": "Du schéma à la console fonctionnelle.",
+    "points": [
+     [
+      "Charlieplexing",
+      "Pour allumer une LED, une broche est mise à 1, une autre à 0, toutes les autres en entrée (haute impédance). Avec 9 broches : 9 × 8 = 72 LEDs adressables, assez pour une grille 8 × 8."
+     ],
+     [
+      "Balayage",
+      "Une seule LED (ou une ligne) est allumée à la fois, mais le balayage est assez rapide pour que la persistance rétinienne affiche une image stable."
+     ],
+     [
+      "Routage",
+      "Le câblage du charlieplexing est dense et peu intuitif : le placement des LEDs et des pistes a demandé un soin particulier."
+     ],
+     [
+      "Entrées",
+      "Boutons de direction avec anti-rebond logiciel, lus entre deux cycles de rafraîchissement."
+     ],
+     [
+      "Logique de jeu",
+      "Serpent stocké dans un buffer circulaire, génération de la pomme, détection des collisions et accélération progressive."
+     ],
+     [
+      "Alimentation",
+      "Dimensionnement des résistances de limitation et de l'alimentation pour une luminosité homogène."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "// Allume la LED reliée entre la broche `hi` (anode) et `lo` (cathode)\nstatic void led_on(uint8_t hi, uint8_t lo)\n{\n    PIN_DDR  = 0;                    // toutes les broches en haute impédance\n    PIN_PORT = 0;\n    PIN_DDR  = (1 << hi) | (1 << lo);// seules hi et lo deviennent des sorties\n    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> courant dans la LED\n}\n\nISR(TIMER_vect)                       // rafraîchissement de l'écran\n{\n    static uint8_t i = 0;\n    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);\n    else                PIN_DDR = 0;\n    i = (i + 1) % NB_LEDS;\n}",
+    "learned": [
+     "Concevoir un PCB complet, du schéma au produit soudé.",
+     "Une technique de multiplexage élégante qui économise les broches.",
+     "Le lien très concret entre contraintes matérielles et architecture logicielle."
+    ],
+    "theme": "hardware"
+   },
+   {
+    "slug": "cpu-monocycle",
+    "num": "06",
+    "title": "CPU Monocycle",
+    "tagline": "Un processeur monocycle décrit en VHDL : chaque instruction s'exécute en un cycle d'horloge.",
+    "domain": "Architecture · FPGA",
+    "tags": [
+     "VHDL",
+     "Architecture",
+     "ALU",
+     "Simulation",
+     "FPGA"
+    ],
+    "facts": [
+     [
+      "Langage",
+      "VHDL"
+     ],
+     [
+      "Architecture",
+      "Monocycle"
+     ],
+     [
+      "Vérification",
+      "Testbenchs / simulation"
+     ],
+     [
+      "Type",
+      "Conception numérique"
+     ]
+    ],
+    "context": "<p>Un processeur monocycle exécute chaque instruction entière — lecture, décodage, exécution, accès mémoire, écriture — en un seul cycle d'horloge. C'est l'architecture la plus simple à raisonner, et la base pour comprendre ensuite le pipeline.</p>\n<p>Le projet consiste à décrire chaque bloc du chemin de données en VHDL, à les assembler avec une unité de contrôle, puis à valider le tout en simulation sur de vrais programmes.</p>",
+    "pipeline": [
+     "PC",
+     "Mémoire d'instructions",
+     "Décodeur / Contrôle",
+     "Banc de registres",
+     "Extension de signe",
+     "ALU",
+     "Mémoire de données",
+     "Write-back"
+    ],
+    "pipeline_caption": "Chemin de données du processeur monocycle.",
+    "points": [
+     [
+      "ALU",
+      "Opérations arithmétiques et logiques, drapeaux (N, Z, C, V) utilisés pour les branchements conditionnels."
+     ],
+     [
+      "Banc de registres",
+      "Deux ports de lecture asynchrones, un port d'écriture synchrone sur front d'horloge."
+     ],
+     [
+      "Unité de contrôle",
+      "Décodage de l'opcode en signaux de commande : sélection des multiplexeurs, écriture registre / mémoire, opération ALU."
+     ],
+     [
+      "Mémoires",
+      "Mémoire d'instructions initialisée avec le programme, mémoire de données séparée (architecture Harvard)."
+     ],
+     [
+      "Gestion du PC",
+      "Incrément, branchements relatifs et sauts, sélectionnés par multiplexeur selon les drapeaux."
+     ],
+     [
+      "Vérification",
+      "Un testbench par entité, puis un testbench global exécutant un programme et vérifiant les registres en fin d'exécution."
+     ]
+    ],
+    "code_lang": "VHDL",
+    "code": "entity alu is\n  port (\n    op     : in  std_logic_vector(1 downto 0);\n    a, b   : in  std_logic_vector(31 downto 0);\n    s      : out std_logic_vector(31 downto 0);\n    n_flag : out std_logic\n  );\nend entity;\n\narchitecture rtl of alu is\n  signal res : signed(31 downto 0);\nbegin\n  with op select res <=\n    signed(a) + signed(b) when \"00\",\n    signed(b)             when \"01\",\n    signed(a) - signed(b) when \"10\",\n    signed(a)             when others;\n\n  s      <= std_logic_vector(res);\n  n_flag <= res(31);\nend architecture;",
+    "learned": [
+     "Penser en matériel : concurrence, signaux, timing, plutôt qu'en séquence d'instructions.",
+     "Comprendre concrètement comment une instruction devient des signaux électriques.",
+     "L'importance de la vérification par simulation avant toute synthèse."
+    ],
+    "theme": "architecture"
+   }
+  ],
+  "en": [
+   {
+    "slug": "tiger-compiler",
+    "num": "01",
+    "title": "Tiger Compiler",
+    "tagline": "A complete compiler for the Tiger language, written in C++.",
+    "domain": "Compilers",
+    "tags": [
+     "C++",
+     "Flex",
+     "Bison",
+     "AST",
+     "IR"
+    ],
+    "facts": [
+     [
+      "Language",
+      "C++17"
+     ],
+     [
+      "Tools",
+      "Flex · Bison · Make"
+     ],
+     [
+      "Target",
+      "Assembly / IR"
+     ],
+     [
+      "Type",
+      "Team project"
+     ]
+    ],
+    "context": "<p>Tiger is a small, statically typed imperative language from Andrew Appel's book <em>Modern Compiler Implementation</em>. It has structured types (records, arrays), nested functions, lexical scoping and explicit <code>let … in … end</code> blocks.</p>\n<p>The goal: take a <code>.tig</code> source file and produce executable code, going through every stage of a real compiler — from lexical analysis all the way to register allocation.</p>",
+    "pipeline": [
+     "Source .tig",
+     "Lexer (Flex)",
+     "Parser (Bison)",
+     "AST",
+     "Binding",
+     "Type checking",
+     "IR translation",
+     "Canonicalization",
+     "Instruction selection",
+     "Register allocation",
+     "Assembly"
+    ],
+    "pipeline_caption": "Compilation pipeline, from source text to machine code.",
+    "points": [
+     [
+      "Lexing & parsing",
+      "Flex scanner and Bison grammar, with conflict resolution, operator precedence and located error messages (line / column)."
+     ],
+     [
+      "AST & visitors",
+      "C++ abstract syntax tree traversed with the Visitor pattern: pretty-printer, binder, type checker and translator share the same hierarchy."
+     ],
+     [
+      "Name binding",
+      "Identifier resolution with nested-scope symbol tables, and detection of variables that escape into inner functions."
+     ],
+     [
+      "Type checking",
+      "Typing of expressions, recursive records and arrays; clear semantic errors instead of crashes."
+     ],
+     [
+      "Intermediate representation",
+      "Translation to an IR tree, then linearization and canonicalization into basic blocks before code generation."
+     ],
+     [
+      "Back end",
+      "Instruction selection by tree-pattern tiling, liveness analysis and register allocation by graph coloring."
+     ]
+    ],
+    "code_lang": "Tiger",
+    "code": "let\n  type intlist = { head: int, tail: intlist }\n  function sum(l: intlist): int =\n    if l = nil then 0\n    else l.head + sum(l.tail)\n  var l := intlist { head = 1,\n           tail = intlist { head = 2, tail = nil } }\nin\n  print_int(sum(l))\nend",
+    "learned": [
+     "Understanding what really happens between source code and binary.",
+     "Designing a large, modular and testable C++ codebase (test suites for every stage).",
+     "Working as a team on a long project with code reviews and continuous integration."
+    ],
+    "theme": "compilation"
+   },
+   {
+    "slug": "light-tracker",
+    "num": "02",
+    "title": "Light Tracker",
+    "tagline": "A robot that turns on its own toward the brightest light source.",
+    "domain": "Robotics",
+    "tags": [
+     "Microcontroller",
+     "C",
+     "ADC",
+     "Motor",
+     "Control loop"
+    ],
+    "facts": [
+     [
+      "Sensors",
+      "2 photoresistors"
+     ],
+     [
+      "Actuator",
+      "Motor + H-bridge"
+     ],
+     [
+      "Language",
+      "Embedded C"
+     ],
+     [
+      "Type",
+      "Hardware project"
+     ]
+    ],
+    "context": "<p>The principle is simple: two light sensors on either side of the robot measure light intensity. If one side gets more light than the other, the motor turns to rebalance — and the robot ends up pointing at the source.</p>\n<p>Behind that simplicity: analog acquisition, noise filtering, a dead zone to avoid oscillations, and bidirectional motor control.</p>",
+    "pipeline": [
+     "Left sensor",
+     "Right sensor",
+     "Voltage dividers",
+     "ADC",
+     "Filtering",
+     "Error = L − R",
+     "Command",
+     "H-bridge",
+     "Motor"
+    ],
+    "pipeline_caption": "Control loop: from light measurement to motor rotation.",
+    "points": [
+     [
+      "Acquisition",
+      "Each photoresistor forms a voltage divider; the voltage is read by the microcontroller's analog-to-digital converter."
+     ],
+     [
+      "Calibration",
+      "The two sensors never respond exactly the same: an offset measured at startup compensates for the difference."
+     ],
+     [
+      "Filtering",
+      "Moving average over several samples to smooth out noise (fluorescent lights, 50 Hz flicker)."
+     ],
+     [
+      "Dead zone",
+      "Below a threshold, the motor stays still: the robot doesn't jitter once it's aligned."
+     ],
+     [
+      "Proportional control",
+      "Speed (PWM) depends on the error: fast rotation when the light is far off, slowing down as it gets aligned."
+     ],
+     [
+      "Power stage",
+      "An H-bridge isolates the microcontroller from the motor current and allows reversing the direction."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "#define DEADBAND 20\n\nvoid loop(void) {\n    int left  = read_avg(ADC_LEFT,  8);\n    int right = read_avg(ADC_RIGHT, 8) + calib_offset;\n    int err   = left - right;\n\n    if (abs(err) < DEADBAND) {\n        motor_stop();\n    } else {\n        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);\n        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);\n    }\n}",
+    "learned": [
+     "Turning a simple idea into a physical system that actually works (noise, tolerances, mechanics).",
+     "Control basics: error, gain, dead zone, stability.",
+     "Cleanly separating control logic from the power stage."
+    ],
+    "theme": "hardware"
+   },
+   {
+    "slug": "object-detection-gpu",
+    "num": "03",
+    "title": "Object Detection GPU",
+    "tagline": "Moving-object detection through background subtraction, GPU-accelerated.",
+    "domain": "Vision · GPU",
+    "tags": [
+     "CUDA",
+     "C++",
+     "Image processing",
+     "Parallelism"
+    ],
+    "facts": [
+     [
+      "Language",
+      "C++ / CUDA"
+     ],
+     [
+      "Method",
+      "Background subtraction"
+     ],
+     [
+      "Target",
+      "NVIDIA GPU"
+     ],
+     [
+      "Type",
+      "Performance project"
+     ]
+    ],
+    "context": "<p>In a video shot by a fixed camera, anything that isn't part of the scenery is an object of interest. The idea: learn a model of the background, then isolate, in each frame, the pixels that deviate from it.</p>\n<p>Since the computation is independent for each pixel, it's a perfect fit for the GPU. The project consists of writing a reference CPU version, porting it to CUDA kernels and measuring the speed-up.</p>",
+    "pipeline": [
+     "Video frame",
+     "Background model",
+     "Difference |I − B|",
+     "Thresholding (hysteresis)",
+     "Morphology (opening)",
+     "Connected components",
+     "Bounding boxes"
+    ],
+    "pipeline_caption": "Detection pipeline, each stage being one or more CUDA kernels.",
+    "points": [
+     [
+      "Background model",
+      "Background estimated and updated over the video (running average) to adapt to slow lighting changes."
+     ],
+     [
+      "Motion mask",
+      "Distance between the current frame and the background, then hysteresis thresholding: a high threshold to seed, a low one to propagate."
+     ],
+     [
+      "Morphology",
+      "Erosion then dilation to remove isolated noise and fill holes in objects."
+     ],
+     [
+      "One thread per pixel",
+      "Each kernel maps one thread to one pixel; 2D grids and coalesced memory accesses."
+     ],
+     [
+      "Shared memory",
+      "Neighborhood operations (morphology) load a tile plus its halo into shared memory to avoid re-reading global memory."
+     ],
+     [
+      "Benchmark",
+      "CPU vs GPU comparison and profiling (Nsight) to identify bandwidth-bound kernels."
+     ]
+    ],
+    "code_lang": "CUDA",
+    "code": "__global__ void diff_threshold(const uchar3* frame, const float3* bg,\n                               uint8_t* mask, int w, int h, float th)\n{\n    int x = blockIdx.x * blockDim.x + threadIdx.x;\n    int y = blockIdx.y * blockDim.y + threadIdx.y;\n    if (x >= w || y >= h) return;\n\n    int i = y * w + x;\n    float3 d = make_float3(frame[i].x - bg[i].x,\n                           frame[i].y - bg[i].y,\n                           frame[i].z - bg[i].z);\n    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);\n    mask[i] = dist > th ? 255 : 0;\n}",
+    "learned": [
+     "Thinking about an algorithm in terms of massive parallelism.",
+     "The huge impact of memory access patterns on GPU performance.",
+     "Measure before optimizing: profile, compare, iterate."
+    ],
+    "theme": "software"
+   },
+   {
+    "slug": "deriscage-esp32",
+    "num": "04",
+    "title": "Dériscage on ESP32",
+    "tagline": "IMU motion estimation: Madgwick filter + ZUPT correction, on ESP32.",
+    "domain": "Embedded systems",
+    "tags": [
+     "ESP32",
+     "ESP-IDF",
+     "FreeRTOS",
+     "MPU6050",
+     "I²C",
+     "Sensor fusion"
+    ],
+    "facts": [
+     [
+      "Board",
+      "ESP32"
+     ],
+     [
+      "Framework",
+      "ESP-IDF · FreeRTOS"
+     ],
+     [
+      "Sensor",
+      "MPU6050 (accel + gyro)"
+     ],
+     [
+      "Algorithms",
+      "Madgwick · ZUPT"
+     ]
+    ],
+    "context": "<p>An MPU6050 provides 3-axis accelerations and angular rates. In theory, integrating acceleration twice gives you position. In practice, the slightest bias blows up: after a few seconds, the position drifts by several meters.</p>\n<p>This project combines two techniques to make the estimate usable: the <strong>Madgwick filter</strong> to know the sensor's orientation, and <strong>ZUPT</strong> (Zero Velocity Update) correction to reset velocity to zero whenever the sensor is still.</p>",
+    "pipeline": [
+     "MPU6050",
+     "I²C read",
+     "Bias calibration",
+     "Madgwick filter",
+     "World-frame accel.",
+     "− gravity",
+     "∫ velocity",
+     "Stillness detection",
+     "ZUPT: v = 0",
+     "∫ position"
+    ],
+    "pipeline_caption": "Processing chain running in real time on the ESP32.",
+    "points": [
+     [
+      "I²C driver",
+      "Communication with the MPU6050 through the ESP-IDF I²C API: range configuration (±g, °/s), burst register reads."
+     ],
+     [
+      "FreeRTOS tasks",
+      "A fixed-rate acquisition task and a processing task, exchanging data through a queue for regular sampling."
+     ],
+     [
+      "Madgwick filter",
+      "Gyro + accelerometer fusion via gradient descent on an orientation quaternion, tuned by the β parameter."
+     ],
+     [
+      "World frame",
+      "Acceleration is rotated into the Earth frame using the quaternion, then gravity is subtracted to keep only linear acceleration."
+     ],
+     [
+      "Stillness detection",
+      "Over a sliding window: acceleration norm close to g and near-zero rotation → the sensor is considered stationary."
+     ],
+     [
+      "ZUPT correction",
+      "At each stationary phase, velocity is forced to zero: accumulated error is cut off and position drift stays bounded."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "static bool is_stationary(const imu_sample_t *s)\n{\n    float a_norm = vec3_norm(s->acc);          // in g\n    float w_norm = vec3_norm(s->gyro);         // in rad/s\n    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;\n}\n\nvoid process(imu_sample_t *s, float dt)\n{\n    madgwick_update(&q, s->gyro, s->acc, BETA, dt);\n    vec3 a_world = quat_rotate(q, s->acc);\n    a_world.z -= 1.0f;                         // remove gravity\n\n    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT\n    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));\n\n    pos = vec3_add(pos, vec3_scale(vel, dt));\n}",
+    "learned": [
+     "Developing with ESP-IDF and structuring a real-time application with FreeRTOS.",
+     "Understanding sensor fusion and the physical limits of a low-cost IMU.",
+     "Correcting drift with prior knowledge (here: stationary phases)."
+    ],
+    "theme": "systeme"
+   },
+   {
+    "slug": "pcb-snake",
+    "num": "05",
+    "title": "PCB Snake",
+    "tagline": "A Snake console on a custom PCB: microcontroller and charlieplexed LED matrix.",
+    "domain": "Electronics",
+    "tags": [
+     "PCB",
+     "KiCad",
+     "Microcontroller",
+     "Charlieplexing",
+     "C"
+    ],
+    "facts": [
+     [
+      "Design",
+      "Schematic + PCB layout"
+     ],
+     [
+      "Display",
+      "Charlieplexed LEDs"
+     ],
+     [
+      "Firmware",
+      "Embedded C"
+     ],
+     [
+      "Type",
+      "Full hardware project"
+     ]
+    ],
+    "context": "<p>The goal: design from scratch a small console that runs Snake — schematic, PCB layout, soldering, then the game firmware.</p>\n<p>The interesting constraint: driving many LEDs with very few pins. That's where <strong>charlieplexing</strong> comes in: it uses the high-impedance state of GPIOs to address <code>n × (n − 1)</code> LEDs with only <code>n</code> pins.</p>",
+    "pipeline": [
+     "Schematic",
+     "Footprints",
+     "PCB layout",
+     "Fabrication",
+     "Soldering",
+     "Firmware",
+     "Snake game"
+    ],
+    "pipeline_caption": "From schematic to a working console.",
+    "points": [
+     [
+      "Charlieplexing",
+      "To light an LED, one pin is driven high, another low, and all others are set as inputs (high impedance). With 9 pins: 9 × 8 = 72 addressable LEDs, enough for an 8 × 8 grid."
+     ],
+     [
+      "Scanning",
+      "Only one LED (or one row) is on at a time, but scanning is fast enough for persistence of vision to show a stable image."
+     ],
+     [
+      "Layout",
+      "Charlieplexing wiring is dense and counter-intuitive: LED placement and trace routing required particular care."
+     ],
+     [
+      "Inputs",
+      "Direction buttons with software debouncing, read between refresh cycles."
+     ],
+     [
+      "Game logic",
+      "Snake stored in a circular buffer, apple generation, collision detection and progressive speed-up."
+     ],
+     [
+      "Power",
+      "Sizing of current-limiting resistors and power supply for even brightness."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "// Turn on the LED between pin `hi` (anode) and `lo` (cathode)\nstatic void led_on(uint8_t hi, uint8_t lo)\n{\n    PIN_DDR  = 0;                    // all pins high-impedance\n    PIN_PORT = 0;\n    PIN_DDR  = (1 << hi) | (1 << lo);// only hi and lo become outputs\n    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> current through LED\n}\n\nISR(TIMER_vect)                       // display refresh\n{\n    static uint8_t i = 0;\n    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);\n    else                PIN_DDR = 0;\n    i = (i + 1) % NB_LEDS;\n}",
+    "learned": [
+     "Designing a complete PCB, from schematic to soldered product.",
+     "An elegant multiplexing technique that saves pins.",
+     "The very concrete link between hardware constraints and software architecture."
+    ],
+    "theme": "hardware"
+   },
+   {
+    "slug": "cpu-monocycle",
+    "num": "06",
+    "title": "Single-Cycle CPU",
+    "tagline": "A single-cycle processor described in VHDL: every instruction executes in one clock cycle.",
+    "domain": "Architecture · FPGA",
+    "tags": [
+     "VHDL",
+     "Architecture",
+     "ALU",
+     "Simulation",
+     "FPGA"
+    ],
+    "facts": [
+     [
+      "Language",
+      "VHDL"
+     ],
+     [
+      "Architecture",
+      "Single-cycle"
+     ],
+     [
+      "Verification",
+      "Testbenches / simulation"
+     ],
+     [
+      "Type",
+      "Digital design"
+     ]
+    ],
+    "context": "<p>A single-cycle processor executes each whole instruction — fetch, decode, execute, memory access, write-back — in one clock cycle. It's the simplest architecture to reason about, and the foundation for understanding pipelining later on.</p>\n<p>The project consists of describing each datapath block in VHDL, wiring them together with a control unit, then validating everything in simulation on real programs.</p>",
+    "pipeline": [
+     "PC",
+     "Instruction memory",
+     "Decoder / Control",
+     "Register file",
+     "Sign extension",
+     "ALU",
+     "Data memory",
+     "Write-back"
+    ],
+    "pipeline_caption": "Datapath of the single-cycle processor.",
+    "points": [
+     [
+      "ALU",
+      "Arithmetic and logic operations, with flags (N, Z, C, V) used for conditional branches."
+     ],
+     [
+      "Register file",
+      "Two asynchronous read ports, one write port synchronous on the clock edge."
+     ],
+     [
+      "Control unit",
+      "Decodes the opcode into control signals: mux selection, register / memory write, ALU operation."
+     ],
+     [
+      "Memories",
+      "Instruction memory initialized with the program, separate data memory (Harvard architecture)."
+     ],
+     [
+      "PC logic",
+      "Increment, relative branches and jumps, selected by a multiplexer based on the flags."
+     ],
+     [
+      "Verification",
+      "One testbench per entity, then a global testbench that runs a program and checks the registers at the end of execution."
+     ]
+    ],
+    "code_lang": "VHDL",
+    "code": "entity alu is\n  port (\n    op     : in  std_logic_vector(1 downto 0);\n    a, b   : in  std_logic_vector(31 downto 0);\n    s      : out std_logic_vector(31 downto 0);\n    n_flag : out std_logic\n  );\nend entity;\n\narchitecture rtl of alu is\n  signal res : signed(31 downto 0);\nbegin\n  with op select res <=\n    signed(a) + signed(b) when \"00\",\n    signed(b)             when \"01\",\n    signed(a) - signed(b) when \"10\",\n    signed(a)             when others;\n\n  s      <= std_logic_vector(res);\n  n_flag <= res(31);\nend architecture;",
+    "learned": [
+     "Thinking in hardware: concurrency, signals, timing, rather than a sequence of instructions.",
+     "Understanding concretely how an instruction turns into electrical signals.",
+     "The importance of simulation-based verification before any synthesis."
+    ],
+    "theme": "architecture"
+   }
+  ],
+  "eu": [
+   {
+    "slug": "tiger-compiler",
+    "num": "01",
+    "title": "Tiger Compiler",
+    "tagline": "Tiger lengoaiarako konpilatzaile osoa, C++-n idatzia.",
+    "domain": "Konpilazioa",
+    "tags": [
+     "C++",
+     "Flex",
+     "Bison",
+     "AST",
+     "IR"
+    ],
+    "facts": [
+     [
+      "Lengoaia",
+      "C++17"
+     ],
+     [
+      "Tresnak",
+      "Flex · Bison · Make"
+     ],
+     [
+      "Helburua",
+      "Mihiztadura / IR"
+     ],
+     [
+      "Mota",
+      "Talde-proiektua"
+     ]
+    ],
+    "context": "<p>Tiger lengoaia inperatibo txiki eta tipatua da, Andrew Appel-en <em>Modern Compiler Implementation</em> liburutik datorrena. Datu-mota egituratuak (erregistroak, arrayak), funtzio habiaratuak, esparru lexikoak eta <code>let … in … end</code> blokeak ditu.</p>\n<p>Helburua: <code>.tig</code> iturburu-fitxategi batetik abiatuta kode exekutagarria sortzea, benetako konpilatzaile baten urrats guztiak zeharkatuz — analisi lexikotik erregistroen esleipeneraino.</p>",
+    "pipeline": [
+     "Iturburua .tig",
+     "Lexerra (Flex)",
+     "Parserra (Bison)",
+     "AST",
+     "Izenen lotura",
+     "Tipo-egiaztapena",
+     "IR itzulpena",
+     "Kanonizazioa",
+     "Agindu-hautaketa",
+     "Erregistro-esleipena",
+     "Mihiztadura"
+    ],
+    "pipeline_caption": "Konpilazio-katea, iturburu-testutik makina-kodera.",
+    "points": [
+     [
+      "Analisi lexikoa eta sintaktikoa",
+      "Flex eskanerra eta Bison gramatika, gatazken kudeaketarekin, eragileen lehentasunekin eta kokatutako errore-mezuekin (lerroa / zutabea)."
+     ],
+     [
+      "AST eta bisitariak",
+      "C++-ko zuhaitz sintaktiko abstraktua, Visitor diseinu-ereduaren bidez korritua: pretty-printerrak, binderrak, tipo-egiaztatzaileak eta itzultzaileak hierarkia bera partekatzen dute."
+     ],
+     [
+      "Izenen lotura",
+      "Identifikatzaileen ebazpena esparru habiaratuetako ikur-taulekin, eta barneko funtzioetara «ihes egiten» duten aldagaien detekzioa."
+     ],
+     [
+      "Tipo-egiaztapena",
+      "Adierazpenen, erregistro errekurtsiboen eta arrayen tipatzea; errore semantiko argiak, programa kraskatu beharrean."
+     ],
+     [
+      "Tarteko adierazpena",
+      "IR zuhaitzera itzultzea, eta ondoren oinarrizko blokeen linealizazioa eta kanonizazioa, kodea sortu aurretik."
+     ],
+     [
+      "Back-enda",
+      "Agindu-hautaketa zuhaitz-ereduen bidez, bizitasun-analisia eta erregistro-esleipena grafoen koloreztatzearen bidez."
+     ]
+    ],
+    "code_lang": "Tiger",
+    "code": "let\n  type intlist = { head: int, tail: intlist }\n  function sum(l: intlist): int =\n    if l = nil then 0\n    else l.head + sum(l.tail)\n  var l := intlist { head = 1,\n           tail = intlist { head = 2, tail = nil } }\nin\n  print_int(sum(l))\nend",
+    "learned": [
+     "Iturburu-kodearen eta bitarraren artean benetan gertatzen dena ulertzea.",
+     "C++ kode-base handi, modular eta probagarri bat diseinatzea (proba-multzoak urrats bakoitzeko).",
+     "Taldean lan egitea proiektu luze batean, kode-berrikuspenekin eta integrazio jarraituarekin."
+    ],
+    "theme": "compilation"
+   },
+   {
+    "slug": "light-tracker",
+    "num": "02",
+    "title": "Light Tracker",
+    "tagline": "Argi-iturri biziena dagoen aldera bere kabuz biratzen den robota.",
+    "domain": "Robotika",
+    "tags": [
+     "Mikrokontrolagailua",
+     "C",
+     "ADC",
+     "Motorra",
+     "Kontrol-begizta"
+    ],
+    "facts": [
+     [
+      "Sentsoreak",
+      "2 fotoerresistentzia"
+     ],
+     [
+      "Eragingailua",
+      "Motorra + H zubia"
+     ],
+     [
+      "Lengoaia",
+      "C txertatua"
+     ],
+     [
+      "Mota",
+      "Hardware-proiektua"
+     ]
+    ],
+    "context": "<p>Printzipioa sinplea da: robotaren alde banatan jarritako bi argi-sentsorek argi-intentsitatea neurtzen dute. Alde batek besteak baino argi gehiago jasotzen badu, motorrak biratu egiten du oreka berreskuratzeko — eta robota iturriari begira geratzen da.</p>\n<p>Sinpletasun horren atzean: eskuratze analogikoa, zarataren iragazketa, oszilazioak saihesteko zona hila eta bi noranzkoetan dabilen motorraren kontrola.</p>",
+    "pipeline": [
+     "Ezkerreko sentsorea",
+     "Eskuineko sentsorea",
+     "Tentsio-zatitzaileak",
+     "ADC",
+     "Iragazketa",
+     "Errorea = Ezk − Esk",
+     "Agindua",
+     "H zubia",
+     "Motorra"
+    ],
+    "pipeline_caption": "Kontrol-begizta: argiaren neurketatik motorraren biraketara.",
+    "points": [
+     [
+      "Eskuratzea",
+      "Fotoerresistentzia bakoitzak tentsio-zatitzaile bat osatzen du; tentsioa mikrokontrolagailuaren bihurgailu analogiko-digitalak irakurtzen du."
+     ],
+     [
+      "Kalibrazioa",
+      "Bi sentsoreek ez dute inoiz erantzun berdin-berdina: abiaraztean neurtutako desplazamendu batek aldea konpentsatzen du."
+     ],
+     [
+      "Iragazketa",
+      "Batez besteko mugikorra hainbat laginen gainean, zarata leuntzeko (fluoreszenteak, 50 Hz-ko keinua)."
+     ],
+     [
+      "Zona hila",
+      "Atalase batetik behera, motorra geldi geratzen da: lerrokatuta dagoenean robota ez da dardaraka ibiltzen."
+     ],
+     [
+      "Kontrol proportzionala",
+      "Abiadura (PWM) errorearen araberakoa da: biraketa azkarra argia urrun dagoenean, motelagoa hurbiltzean."
+     ],
+     [
+      "Potentzia",
+      "H zubi batek mikrokontrolagailua motorraren korrontetik isolatzen du eta biraketa-noranzkoa aldatzea ahalbidetzen du."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "#define DEADBAND 20\n\nvoid loop(void) {\n    int left  = read_avg(ADC_LEFT,  8);\n    int right = read_avg(ADC_RIGHT, 8) + calib_offset;\n    int err   = left - right;\n\n    if (abs(err) < DEADBAND) {\n        motor_stop();\n    } else {\n        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);\n        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);\n    }\n}",
+    "learned": [
+     "Ideia sinple bat benetan funtzionatzen duen sistema fisiko bihurtzea (zarata, tolerantziak, mekanika).",
+     "Kontrolaren oinarriak: errorea, irabazia, zona hila, egonkortasuna.",
+     "Kontrol-logika eta potentzia-etapa garbiki bereiztea."
+    ],
+    "theme": "hardware"
+   },
+   {
+    "slug": "object-detection-gpu",
+    "num": "03",
+    "title": "Object Detection GPU",
+    "tagline": "Mugitzen diren objektuen detekzioa hondoaren kenketaren bidez, GPUan azeleratua.",
+    "domain": "Ikusmena · GPU",
+    "tags": [
+     "CUDA",
+     "C++",
+     "Irudi-prozesamendua",
+     "Paralelismoa"
+    ],
+    "facts": [
+     [
+      "Lengoaia",
+      "C++ / CUDA"
+     ],
+     [
+      "Metodoa",
+      "Hondoaren kenketa"
+     ],
+     [
+      "Helburua",
+      "NVIDIA GPUa"
+     ],
+     [
+      "Mota",
+      "Errendimendu-proiektua"
+     ]
+    ],
+    "context": "<p>Kamera finko batek grabatutako bideo batean, dekoratuaren parte ez den guztia objektu interesgarria da. Ideia: hondoaren eredu bat ikastea, eta ondoren irudi bakoitzean hartatik aldentzen diren pixelak isolatzea.</p>\n<p>Kalkulua pixel bakoitzerako independentea denez, ezin hobeto egokitzen zaio GPUari. Proiektuan CPU erreferentziazko bertsio bat idatzi, CUDA kernel-etara eraman eta irabazia neurtzen da.</p>",
+    "pipeline": [
+     "Bideo-irudia",
+     "Hondoaren eredua",
+     "Aldea |I − B|",
+     "Atalasea (histeresia)",
+     "Morfologia (irekiera)",
+     "Osagai konexuak",
+     "Muga-kutxak"
+    ],
+    "pipeline_caption": "Detekzio-katea; urrats bakoitza CUDA kernel bat edo gehiago da.",
+    "points": [
+     [
+      "Hondoaren eredua",
+      "Hondoa bideoan zehar estimatu eta eguneratzen da (batez besteko mugikorra), argiztapenaren aldaketa geldoetara egokitzeko."
+     ],
+     [
+      "Mugimendu-maskara",
+      "Uneko irudiaren eta hondoaren arteko distantzia, eta ondoren histeresidun atalasea: atalase altua abiatzeko, baxua hedatzeko."
+     ],
+     [
+      "Morfologia",
+      "Higadura eta ondoren dilatazioa, zarata isolatua kentzeko eta objektuetako zuloak betetzeko."
+     ],
+     [
+      "Hari bat pixel bakoitzeko",
+      "Kernel bakoitzak hari bat lotzen dio pixel bakoitzari; 2D sareak eta memoria-sarbide bateratuak."
+     ],
+     [
+      "Memoria partekatua",
+      "Auzo-eragiketek (morfologia) lauza bat eta haren ertza memoria partekatuan kargatzen dituzte, memoria globala berriro ez irakurtzeko."
+     ],
+     [
+      "Benchmarka",
+      "CPU eta GPU arteko konparazioa eta profilatzea (Nsight), banda-zabaleraren mende dauden kernelak identifikatzeko."
+     ]
+    ],
+    "code_lang": "CUDA",
+    "code": "__global__ void diff_threshold(const uchar3* frame, const float3* bg,\n                               uint8_t* mask, int w, int h, float th)\n{\n    int x = blockIdx.x * blockDim.x + threadIdx.x;\n    int y = blockIdx.y * blockDim.y + threadIdx.y;\n    if (x >= w || y >= h) return;\n\n    int i = y * w + x;\n    float3 d = make_float3(frame[i].x - bg[i].x,\n                           frame[i].y - bg[i].y,\n                           frame[i].z - bg[i].z);\n    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);\n    mask[i] = dist > th ? 255 : 0;\n}",
+    "learned": [
+     "Algoritmo bat paralelismo masiboaren ikuspegitik pentsatzea.",
+     "Memoria-sarbideek GPUaren errendimenduan duten eragin izugarria.",
+     "Optimizatu aurretik neurtu: profilatu, konparatu, iteratu."
+    ],
+    "theme": "software"
+   },
+   {
+    "slug": "deriscage-esp32",
+    "num": "04",
+    "title": "Dériscage ESP32an",
+    "tagline": "Mugimenduaren estimazioa IMU bidez: Madgwick iragazkia + ZUPT zuzenketa, ESP32an.",
+    "domain": "Sistema txertatuak",
+    "tags": [
+     "ESP32",
+     "ESP-IDF",
+     "FreeRTOS",
+     "MPU6050",
+     "I²C",
+     "Sentsore-fusioa"
+    ],
+    "facts": [
+     [
+      "Txartela",
+      "ESP32"
+     ],
+     [
+      "Lan-markoa",
+      "ESP-IDF · FreeRTOS"
+     ],
+     [
+      "Sentsorea",
+      "MPU6050 (azelerometroa + giroskopioa)"
+     ],
+     [
+      "Algoritmoak",
+      "Madgwick · ZUPT"
+     ]
+    ],
+    "context": "<p>MPU6050 batek 3 ardatzeko azelerazioak eta abiadura angeluarrak ematen ditu. Teorian, azelerazioa bi aldiz integratzea nahikoa da posizioa lortzeko. Praktikan, alborapenik txikiena ere lehertu egiten da: segundo gutxiren buruan posizioa hainbat metro desbideratzen da.</p>\n<p>Proiektu honek bi teknika uztartzen ditu estimazioa erabilgarria izan dadin: <strong>Madgwick iragazkia</strong>, sentsorearen orientazioa ezagutzeko, eta <strong>ZUPT</strong> zuzenketa (Zero Velocity Update), sentsorea geldi dagoen bakoitzean abiadura zerora itzultzeko.</p>",
+    "pipeline": [
+     "MPU6050",
+     "I²C irakurketa",
+     "Alborapenen kalibrazioa",
+     "Madgwick iragazkia",
+     "Azel. munduko erreferentzian",
+     "− grabitatea",
+     "∫ abiadura",
+     "Geldiune-detekzioa",
+     "ZUPT: v = 0",
+     "∫ posizioa"
+    ],
+    "pipeline_caption": "ESP32an denbora errealean exekutatzen den prozesamendu-katea.",
+    "points": [
+     [
+      "I²C driverra",
+      "MPU6050arekiko komunikazioa ESP-IDFren I²C APIaren bidez: tarteen konfigurazioa (±g, °/s) eta erregistroen irakurketa jarraitua."
+     ],
+     [
+      "FreeRTOS atazak",
+      "Maiztasun finkoko eskuratze-ataza bat eta prozesamendu-ataza bat; ilara baten bidez trukatzen dituzte datuak, laginketa erregularra bermatzeko."
+     ],
+     [
+      "Madgwick iragazkia",
+      "Giroskopioaren eta azelerometroaren fusioa, orientazio-kuaternioi baten gaineko gradiente-jaitsieraren bidez, β parametroaz doitua."
+     ],
+     [
+      "Munduko erreferentzia",
+      "Azelerazioa Lurraren erreferentzia-sistemara biratzen da kuaternioiari esker, eta grabitatea kentzen zaio azelerazio lineala soilik gordetzeko."
+     ],
+     [
+      "Geldiune-detekzioa",
+      "Leiho irristakor batean: azelerazioaren norma g-tik hurbil eta biraketa ia nulua → sentsorea geldi dagoela jotzen da."
+     ],
+     [
+      "ZUPT zuzenketa",
+      "Geldiune bakoitzean abiadura zerora behartzen da: metatutako errorea mozten da eta posizioaren desbideratzea mugatuta geratzen da."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "static bool is_stationary(const imu_sample_t *s)\n{\n    float a_norm = vec3_norm(s->acc);          // in g\n    float w_norm = vec3_norm(s->gyro);         // in rad/s\n    return fabsf(a_norm - 1.0f) < ACC_TH && w_norm < GYRO_TH;\n}\n\nvoid process(imu_sample_t *s, float dt)\n{\n    madgwick_update(&q, s->gyro, s->acc, BETA, dt);\n    vec3 a_world = quat_rotate(q, s->acc);\n    a_world.z -= 1.0f;                         // remove gravity\n\n    if (window_all(is_stationary)) vel = VEC3_ZERO;   // ZUPT\n    else vel = vec3_add(vel, vec3_scale(a_world, G * dt));\n\n    pos = vec3_add(pos, vec3_scale(vel, dt));\n}",
+    "learned": [
+     "ESP-IDFrekin garatzea eta denbora errealeko aplikazio bat FreeRTOSekin egituratzea.",
+     "Sentsore-fusioa eta kostu baxuko IMU baten muga fisikoak ulertzea.",
+     "Desbideratze bat aurretiazko ezagutzaren bidez zuzentzea (hemen: geldiuneak)."
+    ],
+    "theme": "systeme"
+   },
+   {
+    "slug": "pcb-snake",
+    "num": "05",
+    "title": "PCB Snake",
+    "tagline": "Snake kontsola bat PCB propioan: mikrokontrolagailua eta charlieplexing bidezko LED matrizea.",
+    "domain": "Elektronika",
+    "tags": [
+     "PCB",
+     "KiCad",
+     "Mikrokontrolagailua",
+     "Charlieplexing",
+     "C"
+    ],
+    "facts": [
+     [
+      "Diseinua",
+      "Eskema + PCB bideratzea"
+     ],
+     [
+      "Pantaila",
+      "Charlieplexing LEDak"
+     ],
+     [
+      "Firmwarea",
+      "C txertatua"
+     ],
+     [
+      "Mota",
+      "Hardware-proiektu osoa"
+     ]
+    ],
+    "context": "<p>Helburua: Snake jokoa exekutatzen duen kontsola txiki bat hutsetik diseinatzea — eskema elektronikoa, PCBaren bideratzea, soldadura, eta ondoren jokoaren firmwarea.</p>\n<p>Erronka interesgarria: LED asko pin gutxirekin gidatzea. Hor sartzen da <strong>charlieplexing</strong>-a, GPIOen inpedantzia altuko egoera baliatzen duena <code>n × (n − 1)</code> LED <code>n</code> pin bakarrik erabiliz helbideratzeko.</p>",
+    "pipeline": [
+     "Eskema",
+     "Aztarnak",
+     "PCB bideratzea",
+     "Fabrikazioa",
+     "Soldadura",
+     "Firmwarea",
+     "Snake jokoa"
+    ],
+    "pipeline_caption": "Eskematik kontsola funtzionalera.",
+    "points": [
+     [
+      "Charlieplexing",
+      "LED bat pizteko, pin bat 1era jartzen da, beste bat 0ra, eta gainerako guztiak sarrera gisa (inpedantzia altua). 9 pinekin: 9 × 8 = 72 LED helbideragarri, 8 × 8 sare baterako nahikoa."
+     ],
+     [
+      "Ekorketa",
+      "LED bakarra (edo lerro bakarra) pizten da aldi berean, baina ekorketa nahikoa azkarra da ikusmenaren iraunkortasunak irudi egonkorra erakusteko."
+     ],
+     [
+      "Bideratzea",
+      "Charlieplexing-aren kableatua trinkoa eta ez oso intuitiboa da: LEDen kokapenak eta pisten bideratzeak arreta berezia eskatu dute."
+     ],
+     [
+      "Sarrerak",
+      "Norabide-botoiak, software bidezko errebote-iragazkiarekin, freskatze-zikloen artean irakurriak."
+     ],
+     [
+      "Jokoaren logika",
+      "Sugea buffer zirkular batean gordeta, sagarraren sorrera, talken detekzioa eta abiaduraren igoera mailakatua."
+     ],
+     [
+      "Elikadura",
+      "Korronte-mugatzeko erresistentzien eta elikaduraren dimentsionamendua, distira homogeneoa lortzeko."
+     ]
+    ],
+    "code_lang": "C",
+    "code": "// Turn on the LED between pin `hi` (anode) and `lo` (cathode)\nstatic void led_on(uint8_t hi, uint8_t lo)\n{\n    PIN_DDR  = 0;                    // all pins high-impedance\n    PIN_PORT = 0;\n    PIN_DDR  = (1 << hi) | (1 << lo);// only hi and lo become outputs\n    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> current through LED\n}\n\nISR(TIMER_vect)                       // display refresh\n{\n    static uint8_t i = 0;\n    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);\n    else                PIN_DDR = 0;\n    i = (i + 1) % NB_LEDS;\n}",
+    "learned": [
+     "PCB oso bat diseinatzea, eskematik soldatutako produktura arte.",
+     "Pinak aurrezten dituen multiplexazio-teknika dotorea.",
+     "Hardware-mugen eta software-arkitekturaren arteko lotura oso zehatza."
+    ],
+    "theme": "hardware"
+   },
+   {
+    "slug": "cpu-monocycle",
+    "num": "06",
+    "title": "Ziklo bakarreko CPUa",
+    "tagline": "VHDLz deskribatutako ziklo bakarreko prozesadorea: agindu bakoitza erloju-ziklo bakar batean exekutatzen da.",
+    "domain": "Arkitektura · FPGA",
+    "tags": [
+     "VHDL",
+     "Arkitektura",
+     "ALU",
+     "Simulazioa",
+     "FPGA"
+    ],
+    "facts": [
+     [
+      "Lengoaia",
+      "VHDL"
+     ],
+     [
+      "Arkitektura",
+      "Ziklo bakarrekoa"
+     ],
+     [
+      "Egiaztapena",
+      "Testbench-ak / simulazioa"
+     ],
+     [
+      "Mota",
+      "Diseinu digitala"
+     ]
+    ],
+    "context": "<p>Ziklo bakarreko prozesadore batek agindu bakoitza osorik — bilaketa, deskodetzea, exekuzioa, memoria-sarbidea, idazketa — erloju-ziklo bakar batean exekutatzen du. Arrazoitzeko arkitekturarik sinpleena da, eta ondoren pipeline-a ulertzeko oinarria.</p>\n<p>Proiektuan datu-bideko bloke bakoitza VHDLz deskribatu, kontrol-unitate batekin elkartu eta dena simulazioan balioztatzen da benetako programekin.</p>",
+    "pipeline": [
+     "PC",
+     "Agindu-memoria",
+     "Deskodetzailea / Kontrola",
+     "Erregistro-bankua",
+     "Zeinu-hedapena",
+     "ALU",
+     "Datu-memoria",
+     "Idazketa (write-back)"
+    ],
+    "pipeline_caption": "Ziklo bakarreko prozesadorearen datu-bidea.",
+    "points": [
+     [
+      "ALU",
+      "Eragiketa aritmetiko eta logikoak, eta baldintzapeko jauzietarako erabiltzen diren adierazleak (N, Z, C, V)."
+     ],
+     [
+      "Erregistro-bankua",
+      "Bi irakurketa-ataka asinkrono eta idazketa-ataka bat, erloju-ertzean sinkronoa."
+     ],
+     [
+      "Kontrol-unitatea",
+      "Opcode-a kontrol-seinaletan deskodetzea: multiplexoreen hautaketa, erregistro / memoria idazketa, ALU eragiketa."
+     ],
+     [
+      "Memoriak",
+      "Programarekin hasieratutako agindu-memoria eta datu-memoria bereizia (Harvard arkitektura)."
+     ],
+     [
+      "PCaren kudeaketa",
+      "Inkrementua, jauzi erlatiboak eta saltoak, adierazleen arabera multiplexore batek hautatuak."
+     ],
+     [
+      "Egiaztapena",
+      "Testbench bat entitate bakoitzeko, eta ondoren testbench global bat, programa bat exekutatu eta amaieran erregistroak egiaztatzen dituena."
+     ]
+    ],
+    "code_lang": "VHDL",
+    "code": "entity alu is\n  port (\n    op     : in  std_logic_vector(1 downto 0);\n    a, b   : in  std_logic_vector(31 downto 0);\n    s      : out std_logic_vector(31 downto 0);\n    n_flag : out std_logic\n  );\nend entity;\n\narchitecture rtl of alu is\n  signal res : signed(31 downto 0);\nbegin\n  with op select res <=\n    signed(a) + signed(b) when \"00\",\n    signed(b)             when \"01\",\n    signed(a) - signed(b) when \"10\",\n    signed(a)             when others;\n\n  s      <= std_logic_vector(res);\n  n_flag <= res(31);\nend architecture;",
+    "learned": [
+     "Hardwarean pentsatzea: konkurrentzia, seinaleak, denbora, agindu-sekuentzia baten ordez.",
+     "Agindu bat seinale elektriko bihurtzen den modua zehazki ulertzea.",
+     "Simulazio bidezko egiaztapenaren garrantzia edozein sintesi egin aurretik."
+    ],
+    "theme": "architecture"
+   }
+  ]
+ }
+}
