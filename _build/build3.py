@@ -3,7 +3,7 @@
 import html, os, shutil
 from projects_data import NAME, GITHUB, EMAIL, LINKEDIN, PROJECTS
 from build2 import THEME_OF, THEMES, ALL_FONTS
-from i18n import LANGS, LANG_NAMES, PROJ_DIR, THEME_LABELS, UI, CODE_EN, TR
+from i18n import LANGS, LANG_NAMES, PROJ_DIR, THEME_LABELS, UI, CODE_EN, CODE_EU, TR
 
 OUT = "site"
 e = html.escape
@@ -14,7 +14,7 @@ def localized(p, lang):
         return p
     q = dict(p); q.update(TR[lang].get(p["slug"], {}))
     code = q["code"]
-    for a, b in CODE_EN:
+    for a, b in (CODE_EU if lang == "eu" else []) + CODE_EN:
         code = code.replace(a, b)
     q["code"] = code
     return q

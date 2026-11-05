@@ -76,11 +76,20 @@ UI = {
 # Translated code comments (EN and EU use English in code)
 CODE_EN = [
     ("// en g", "// in g"), ("// en rad/s", "// in rad/s"), ("// retire la gravité", "// remove gravity"),
-    ("// Allume la LED reliée entre la broche `hi` (anode) et `lo` (cathode)", "// Turn on the LED between pin `hi` (anode) and `lo` (cathode)"),
-    ("// toutes les broches en haute impédance", "// all pins high-impedance"),
-    ("// seules hi et lo deviennent des sorties", "// only hi and lo become outputs"),
-    ("// hi = 1, lo = 0 -> courant dans la LED", "// hi = 1, lo = 0 -> current through LED"),
-    ("// rafraîchissement de l'écran", "// display refresh"),
+    ("// Broche « flottante » : entrée sans pull-up ni pull-down (haute impédance)", "// \"Floating\" pin: input with no pull-up or pull-down (high impedance)"),
+    ("// Allume une LED : anode à 1, cathode à 0, les autres broches restent flottantes", "// Turn on an LED: anode high, cathode low, all other pins stay floating"),
+    ("// Balayage : une seule LED allumée à la fois, ~1 ms chacune", "// Scan: only one LED on at a time, ~1 ms each"),
+    ("// éteint la LED précédente", "// turn off the previous LED"),
+    ("// persistance rétinienne", "// persistence of vision"),
+]
+
+# Basque code comments (applied before CODE_EN for the EU pages; other comments fall back to CODE_EN)
+CODE_EU = [
+    ("// Broche « flottante » : entrée sans pull-up ni pull-down (haute impédance)", "// Pin \"flotatzailea\": pull-up edo pull-down gabeko sarrera (inpedantzia altua)"),
+    ("// Allume une LED : anode à 1, cathode à 0, les autres broches restent flottantes", "// LED bat piztu: anodoa 1ean, katodoa 0an, gainerako pinak flotatzen"),
+    ("// Balayage : une seule LED allumée à la fois, ~1 ms chacune", "// Ekorketa: LED bakarra piztuta aldi berean, ~1 ms bakoitza"),
+    ("// éteint la LED précédente", "// aurreko LEDa itzali"),
+    ("// persistance rétinienne", "// ikusmenaren iraunkortasuna"),
 ]
 
 TR = {"en": {}, "eu": {}}

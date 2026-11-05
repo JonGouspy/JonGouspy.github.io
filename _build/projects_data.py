@@ -143,7 +143,7 @@ void process(imu_sample_t *s, float dt)
     learned=["Développer sur ESP-IDF et structurer une application temps réel avec FreeRTOS.", "Comprendre la fusion de capteurs et les limites physiques d'une centrale inertielle bas coût.", "Corriger une dérive par des connaissances a priori (ici : les phases d'arrêt)."],
   ),
   dict(
-    slug="pcb-snake", num="05", title="PCB Snake",
+    slug="pcb-snake", num="05", title="PCB Snake", repo="https://github.com/JonGouspy/Snake",
     tagline="Une console Snake sur PCB maison : microcontrôleur, matrice de LEDs en charlieplexing.",
     domain="Électronique", tags=["PCB", "KiCad", "Microcontrôleur", "Charlieplexing", "C"],
     facts=[("Conception", "Schéma + routage PCB"), ("Affichage", "LEDs en charlieplexing"), ("Firmware", "C embarqué"), ("Type", "Projet matériel complet")],
@@ -159,21 +159,44 @@ void process(imu_sample_t *s, float dt)
       ("Logique de jeu", "Serpent stocké dans un buffer circulaire, génération de la pomme, détection des collisions et accélération progressive."),
       ("Alimentation", "Dimensionnement des résistances de limitation et de l'alimentation pour une luminosité homogène."),
     ],
-    code_lang="C", code="""// Allume la LED reliée entre la broche `hi` (anode) et `lo` (cathode)
-static void led_on(uint8_t hi, uint8_t lo)
+    code_lang="C", code="""// Broche « flottante » : entrée sans pull-up ni pull-down (haute impédance)
+static void pin_hiz(uint16_t pin)
 {
-    PIN_DDR  = 0;                    // toutes les broches en haute impédance
-    PIN_PORT = 0;
-    PIN_DDR  = (1 << hi) | (1 << lo);// seules hi et lo deviennent des sorties
-    PIN_PORT = (1 << hi);            // hi = 1, lo = 0 -> courant dans la LED
+    GPIO_InitTypeDef cfg = {0};
+    cfg.Pin  = pin;
+    cfg.Mode = GPIO_MODE_INPUT;
+    cfg.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &cfg);
 }
 
-ISR(TIMER_vect)                       // rafraîchissement de l'écran
+// Allume une LED : anode à 1, cathode à 0, les autres broches restent flottantes
+void light_up(led_info *led)
 {
-    static uint8_t i = 0;
-    if (framebuffer[i]) led_on(led_map[i].hi, led_map[i].lo);
-    else                PIN_DDR = 0;
-    i = (i + 1) % NB_LEDS;
+    pin_output(led->anode);
+    HAL_GPIO_WritePin(GPIOA, led->anode, GPIO_PIN_SET);
+
+    pin_output(led->cathode);
+    HAL_GPIO_WritePin(GPIOA, led->cathode, GPIO_PIN_RESET);
+}
+
+// Balayage : une seule LED allumée à la fois, ~1 ms chacune
+void print_matrix(const bool number[LED_COUNT])
+{
+    led_info prev = LEDS[LED_COUNT - 1];
+
+    for (int i = 0; i < LED_COUNT; ++i)
+    {
+        led_info curr = LEDS[i];
+
+        if (number[i])
+        {
+            turn_off(&prev);     // éteint la LED précédente
+            light_up(&curr);
+            prev = curr;
+            HAL_Delay(1);        // persistance rétinienne
+        }
+    }
+    turn_off(&prev);
 }""",
     learned=["Concevoir un PCB complet, du schéma au produit soudé.", "Une technique de multiplexage élégante qui économise les broches.", "Le lien très concret entre contraintes matérielles et architecture logicielle."],
   ),
