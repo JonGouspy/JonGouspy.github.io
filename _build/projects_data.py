@@ -40,7 +40,7 @@ end""",
     learned=["Comprendre ce qui se passe réellement entre le code source et le binaire.", "Concevoir une grosse base de code C++ modulaire et testable (suites de tests par étape).", "Travailler en équipe sur un projet long avec revues de code et intégration continue."],
   ),
   dict(
-    slug="light-tracker", num="02", title="Light Tracker",
+    slug="light-tracker", num="02", title="Light Tracker", repo="https://github.com/JonGouspy/light-tracker", image="/img/light-tracker.png",
     tagline="Un robot qui s'oriente tout seul vers la source de lumière la plus intense.",
     domain="Robotique", tags=["Microcontrôleur", "C", "ADC", "Moteur", "Asservissement"],
     facts=[("Capteurs", "2 photorésistances"), ("Actionneur", "Moteur + pont en H"), ("Langage", "C embarqué"), ("Type", "Projet matériel")],
@@ -56,19 +56,43 @@ end""",
       ("Commande proportionnelle", "La vitesse (PWM) dépend de l'écart : rotation rapide quand la lumière est loin, ralentissement à l'approche."),
       ("Puissance", "Un pont en H isole le microcontrôleur du courant moteur et permet d'inverser le sens de rotation."),
     ],
-    code_lang="C", code="""#define DEADBAND 20
+    code_lang="C", code="""// TIM2 : interruption périodique qui cadence les mesures
+void initTimer(void)
+{
+    __TIM2_CLK_ENABLE();
 
-void loop(void) {
-    int left  = read_avg(ADC_LEFT,  8);
-    int right = read_avg(ADC_RIGHT, 8) + calib_offset;
-    int err   = left - right;
+    gTimHandle.Instance = TIM2;
+    gTimHandle.Init.Period = 1000 - 1;
+    gTimHandle.Init.Prescaler = (90000000 / 40000000) - 1;
+    gTimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
+    HAL_TIM_Base_Init(&gTimHandle);
 
-    if (abs(err) < DEADBAND) {
-        motor_stop();
-    } else {
-        int speed = clamp(abs(err) * KP, PWM_MIN, PWM_MAX);
-        motor_set(err > 0 ? DIR_LEFT : DIR_RIGHT, speed);
-    }
+    __HAL_TIM_ENABLE_IT(&gTimHandle, TIM_IT_UPDATE);
+    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(TIM2_IRQn);
+    HAL_TIM_Base_Start_IT(&gTimHandle);
+}
+
+// ADC1, canal 11 (PC1) : conversions lues par interruption
+void initADC(void)
+{
+    GPIO_InitStruct.Pin  = GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;   // PC1 en entrée analogique
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+    HAL_NVIC_SetPriority(ADC_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(ADC_IRQn);
+
+    gAdcHandle.Instance = ADC1;
+    gAdcHandle.Init.Resolution = ADC_RESOLUTION_12B;
+    gAdcHandle.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;  // TIM2 déclenche la conversion
+    HAL_ADC_Init(&gAdcHandle);
+
+    ADC_ChannelStruct.Channel = ADC_CHANNEL_11;
+    ADC_ChannelStruct.SamplingTime = ADC_SAMPLETIME_480CYCLES;  // temps d'échantillonnage maximal
+    HAL_ADC_ConfigChannel(&gAdcHandle, &ADC_ChannelStruct);
+
+    HAL_ADC_Start_IT(&gAdcHandle);
 }""",
     learned=["Passer d'une idée simple à un système physique qui marche vraiment (bruit, tolérances, mécanique).", "Les bases de l'asservissement : erreur, gain, zone morte, stabilité.", "Séparer proprement la logique de commande et l'étage de puissance."],
   ),

@@ -75,6 +75,11 @@ UI = {
 
 # Translated code comments (EN and EU use English in code)
 CODE_EN = [
+    ("// TIM2 : interruption périodique qui cadence les mesures", "// TIM2: periodic interrupt that paces the measurements"),
+    ("// ADC1, canal 11 (PC1) : conversions lues par interruption", "// ADC1, channel 11 (PC1): conversions read through an interrupt"),
+    ("// PC1 en entrée analogique", "// PC1 as analog input"),
+    ("// TIM2 déclenche la conversion", "// TIM2 triggers the conversion"),
+    ("// temps d'échantillonnage maximal", "// maximum sampling time"),
     ("// en g", "// in g"), ("// en rad/s", "// in rad/s"), ("// retire la gravité", "// remove gravity"),
     ("// Broche « flottante » : entrée sans pull-up ni pull-down (haute impédance)", "// \"Floating\" pin: input with no pull-up or pull-down (high impedance)"),
     ("// Allume une LED : anode à 1, cathode à 0, les autres broches restent flottantes", "// Turn on an LED: anode high, cathode low, all other pins stay floating"),
@@ -85,6 +90,11 @@ CODE_EN = [
 
 # Basque code comments (applied before CODE_EN for the EU pages; other comments fall back to CODE_EN)
 CODE_EU = [
+    ("// TIM2 : interruption périodique qui cadence les mesures", "// TIM2: neurketak kadentziatzen dituen eten periodikoa"),
+    ("// ADC1, canal 11 (PC1) : conversions lues par interruption", "// ADC1, 11. kanala (PC1): bihurketak etenen bidez irakurtzen dira"),
+    ("// PC1 en entrée analogique", "// PC1 sarrera analogiko gisa"),
+    ("// TIM2 déclenche la conversion", "// TIM2-k bihurketa abiarazten du"),
+    ("// temps d'échantillonnage maximal", "// laginketa-denbora maximoa"),
     ("// Broche « flottante » : entrée sans pull-up ni pull-down (haute impédance)", "// Pin \"flotatzailea\": pull-up edo pull-down gabeko sarrera (inpedantzia altua)"),
     ("// Allume une LED : anode à 1, cathode à 0, les autres broches restent flottantes", "// LED bat piztu: anodoa 1ean, katodoa 0an, gainerako pinak flotatzen"),
     ("// Balayage : une seule LED allumée à la fois, ~1 ms chacune", "// Ekorketa: LED bakarra piztuta aldi berean, ~1 ms bakoitza"),
