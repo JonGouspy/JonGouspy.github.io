@@ -97,37 +97,39 @@ void initADC(void)
     learned=["Passer d'une idée simple à un système physique qui marche vraiment (bruit, tolérances, mécanique).", "Les bases de l'asservissement : erreur, gain, zone morte, stabilité.", "Séparer proprement la logique de commande et l'étage de puissance."],
   ),
   dict(
-    slug="object-detection-gpu", num="03", title="Object Detection GPU",
-    tagline="Détection d'objets en mouvement par soustraction de fond, accélérée sur GPU.",
-    domain="Vision · GPU", tags=["CUDA", "C++", "Traitement d'image", "Parallélisme"],
-    facts=[("Langage", "C++ / CUDA"), ("Méthode", "Soustraction de fond"), ("Cible", "GPU NVIDIA"), ("Type", "Projet de performance")],
-    context="""<p>Sur une vidéo filmée par une caméra fixe, tout ce qui ne fait pas partie du décor est un objet d'intérêt. L'idée : apprendre un modèle du fond (background), puis isoler pour chaque image les pixels qui s'en écartent.</p>
-<p>Le calcul étant indépendant pour chaque pixel, il se prête parfaitement au GPU. Le projet consiste à écrire une version CPU de référence, puis à la porter en kernels CUDA et à mesurer le gain.</p>""",
-    pipeline=["Frame vidéo", "Modèle de fond", "Différence |I − B|", "Seuillage (hystérésis)", "Morphologie (ouverture)", "Composantes connexes", "Boîtes englobantes"],
-    pipeline_caption="Pipeline de détection, chaque étape étant un ou plusieurs kernels CUDA.",
+    slug="object-detection-gpu", num="03", title="Object Detection GPU", repo="https://github.com/JonGouspy/gpgpu",
+    tagline="Détection d'objets en mouvement par soustraction de fond : un filtre GStreamer CUDA, 30 à 41× plus rapide que le CPU.",
+    domain="Vision · GPU", tags=["CUDA", "C++20", "GStreamer", "Nsight", "CMake"],
+    facts=[("Langage", "C++ / CUDA"), ("Résultat", "×30 à ×41 vs CPU (1080p)"), ("Profilage", "Nsight Systems"), ("Type", "Projet de groupe (4)")],
+    context="""<p>Projet GPGPU à l'EPITA, en groupe de quatre : écrire un filtre GStreamer CUDA qui sépare le fond des objets mobiles dans un flux vidéo, puis affiche les pixels en mouvement en rouge. C'est une étape préliminaire de nombreuses chaînes de traitement vidéo.</p>
+<p>Nous avons d'abord écrit une version CPU de référence, puis un portage GPU naïf, que nous avons optimisé en huit étapes (v1.1.0 → v1.1.8). Chaque étape a été mesurée avec Nsight Systems avant d'en choisir la suivante.</p>""",
+    pipeline=["Frame vidéo", "Estimation du fond (réservoirs)", "Masque max(|I − B|)", "Ouverture (érosion + dilatation)", "Hystérésis", "Surbrillance rouge"],
+    pipeline_caption="Pipeline du filtre, chaque étape étant un ou plusieurs kernels CUDA.",
     points=[
-      ("Modèle de fond", "Fond estimé et mis à jour au fil de la vidéo (moyenne glissante), pour s'adapter aux changements lents d'éclairage."),
-      ("Masque de mouvement", "Distance entre l'image courante et le fond, puis seuillage avec hystérésis : un seuil haut pour amorcer, un seuil bas pour propager."),
-      ("Morphologie", "Érosion puis dilatation pour supprimer le bruit isolé et reboucher les trous dans les objets."),
-      ("Un thread par pixel", "Chaque kernel associe un thread à un pixel ; grilles 2D, accès mémoire coalescés."),
-      ("Mémoire partagée", "Les opérations à voisinage (morphologie) chargent une tuile + son halo en shared memory pour éviter les relectures en mémoire globale."),
-      ("Benchmark", "Comparaison CPU vs GPU et profilage (Nsight) pour identifier les kernels limités par la bande passante."),
+      ("Estimation du fond", "Chaque pixel garde k couleurs candidates pondérées (réservoir), mises à jour par tirage aléatoire cuRAND ; la couleur de plus fort poids est le fond."),
+      ("Masque et hystérésis", "Écart maximal sur les canaux RGB, puis seuil bas / seuil haut : un pixel moyen n'est retenu que s'il est connecté à un pixel fort."),
+      ("Hystérésis en mémoire partagée", "Propagation dans une tuile jusqu'à stabilité avec __syncthreads_or, puis saut des blocs inactifs : de 172 lancements par frame à environ 11, hystérésis de 12,7 à 0,55 ms."),
+      ("Ouverture séparable", "Un min / max sur fenêtre carrée devient un passage horizontal puis vertical : 81 lectures par pixel ramenées à 18, puis fusionné en un kernel en mémoire partagée avec halo."),
+      ("Données sur le GPU", "Frame et fond restent en mémoire GPU, buffers alloués une seule fois, masque en uint8_t au lieu de float, et réservoir en structure de tableaux pour des accès contigus."),
+      ("Benchmark honnête", "Trois vidéos, mêmes paramètres, même machine. Au-delà de v1.1.3 le calcul ne pèse plus que ~2,4 ms sur 14,6 ms par frame : le décodage et les transferts dominent."),
     ],
-    code_lang="CUDA", code="""__global__ void diff_threshold(const uchar3* frame, const float3* bg,
-                               uint8_t* mask, int w, int h, float th)
+    code_lang="CUDA", code="""// Un thread par pixel : écart maximal sur les trois canaux entre l'image et le fond
+__global__ void mask_kernel(ImageView<rgb8> in, ImageView<rgb8> bg,
+                            ImageView<uint8_t> mask)
 {
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-    if (x >= w || y >= h) return;
+    const int x = blockDim.x * blockIdx.x + threadIdx.x;
+    const int y = blockDim.y * blockIdx.y + threadIdx.y;
 
-    int i = y * w + x;
-    float3 d = make_float3(frame[i].x - bg[i].x,
-                           frame[i].y - bg[i].y,
-                           frame[i].z - bg[i].z);
-    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);
-    mask[i] = dist > th ? 255 : 0;
+    if (x >= in.width || y >= in.height)
+        return;
+
+    const int dr = std::abs(int(in.at(x, y).r) - int(bg.at(x, y).r));
+    const int dg = std::abs(int(in.at(x, y).g) - int(bg.at(x, y).g));
+    const int db = std::abs(int(in.at(x, y).b) - int(bg.at(x, y).b));
+
+    mask.at(x, y) = max(dr, max(dg, db));
 }""",
-    learned=["Penser un algorithme en termes de parallélisme massif.", "L'impact énorme des accès mémoire sur les performances GPU.", "Mesurer avant d'optimiser : profiler, comparer, itérer."],
+    learned=["Penser un algorithme en termes de parallélisme massif.", "Profiler avant d'optimiser : nous avions d'abord optimisé les copies (1,3 ms) alors que l'hystérésis en coûtait 12,7.", "Lire un résultat sans se mentir : une optimisation peut être neutre (v1.1.4) et rester utile pour la clarté du code."],
   ),
   dict(
     slug="deriscage-esp32", num="04", title="Dérisquage sur ESP32", repo="https://github.com/JonGouspy/gap",
