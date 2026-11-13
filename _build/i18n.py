@@ -124,17 +124,17 @@ TR = {"en": {}, "eu": {}}
 # ============================ ENGLISH ============================
 TR["en"]["tiger-compiler"] = dict(
   tagline="A complete compiler for the Tiger language, written in C++.", domain="Compilers",
-  facts=[("Language", "C++17"), ("Tools", "Flex · Bison · Make"), ("Target", "Assembly / IR"), ("Type", "Team project")],
+  facts=[("Language", "C++17"), ("Tools", "Flex · Bison · Make"), ("Target", "LLVM or own back end"), ("Type", "Team project")],
   context="""<p>Tiger is a small, statically typed imperative language from Andrew Appel's book <em>Modern Compiler Implementation</em>. It has structured types (records, arrays), nested functions, lexical scoping and explicit <code>let … in … end</code> blocks.</p>
 <p>The goal: take a <code>.tig</code> source file and produce executable code, going through every stage of a real compiler — from lexical analysis all the way to register allocation.</p>""",
-  pipeline=["Source .tig", "Lexer (Flex)", "Parser (Bison)", "AST", "Binding", "Type checking", "IR translation", "Canonicalization", "Instruction selection", "Register allocation", "Assembly"],
+  pipeline=["Source .tig", "Lexer (Flex)", "Parser (Bison)", "AST", "Binding", "Type checking", "Pattern matching", "IR translation", "Canonicalization", "Instruction selection", "Register allocation", "Assembly"],
   pipeline_caption="Compilation pipeline, from source text to machine code.",
   points=[("Lexing & parsing", "Flex scanner and Bison grammar, with conflict resolution, operator precedence and located error messages (line / column)."),
           ("AST & visitors", "C++ abstract syntax tree traversed with the Visitor pattern: pretty-printer, binder, type checker and translator share the same hierarchy."),
           ("Name binding", "Identifier resolution with nested-scope symbol tables, and detection of variables that escape into inner functions."),
           ("Type checking", "Typing of expressions, recursive records and arrays; clear semantic errors instead of crashes."),
-          ("Intermediate representation", "Translation to an IR tree, then linearization and canonicalization into basic blocks before code generation."),
-          ("Back end", "Instruction selection by tree-pattern tiling, liveness analysis and register allocation by graph coloring.")],
+          ("Pattern matching & IR", "After type checking, my own pattern matching destructures records and reorders conditions from most used to least used (only available with LLVM). Then translation to an IR tree, linearization and canonicalization into basic blocks before code generation."),
+          ("Two back ends", "The project can be linked either with LLVM or with my own back end: instruction selection by tree-pattern tiling, liveness analysis and register allocation by graph coloring.")],
   learned=["Understanding what really happens between source code and binary.", "Designing a large, modular and testable C++ codebase (test suites for every stage).", "Working as a team on a long project with code reviews and continuous integration."])
 
 TR["en"]["light-tracker"] = dict(
@@ -222,17 +222,17 @@ TR["en"]["cpu-monocycle"] = dict(
 # ============================ EUSKARA ============================
 TR["eu"]["tiger-compiler"] = dict(
   tagline="Tiger lengoaiarako konpilatzaile osoa, C++-n idatzia.", domain="Konpilazioa",
-  facts=[("Lengoaia", "C++17"), ("Tresnak", "Flex · Bison · Make"), ("Helburua", "Mihiztadura / IR"), ("Mota", "Talde-proiektua")],
+  facts=[("Lengoaia", "C++17"), ("Tresnak", "Flex · Bison · Make"), ("Helburua", "LLVM edo back-end propioa"), ("Mota", "Talde-proiektua")],
   context="""<p>Tiger lengoaia inperatibo txiki eta tipatua da, Andrew Appel-en <em>Modern Compiler Implementation</em> liburutik datorrena. Datu-mota egituratuak (erregistroak, arrayak), funtzio habiaratuak, esparru lexikoak eta <code>let … in … end</code> blokeak ditu.</p>
 <p>Helburua: <code>.tig</code> iturburu-fitxategi batetik abiatuta kode exekutagarria sortzea, benetako konpilatzaile baten urrats guztiak zeharkatuz — analisi lexikotik erregistroen esleipeneraino.</p>""",
-  pipeline=["Iturburua .tig", "Lexerra (Flex)", "Parserra (Bison)", "AST", "Izenen lotura", "Tipo-egiaztapena", "IR itzulpena", "Kanonizazioa", "Agindu-hautaketa", "Erregistro-esleipena", "Mihiztadura"],
+  pipeline=["Iturburua .tig", "Lexerra (Flex)", "Parserra (Bison)", "AST", "Izenen lotura", "Tipo-egiaztapena", "Pattern matching", "IR itzulpena", "Kanonizazioa", "Agindu-hautaketa", "Erregistro-esleipena", "Mihiztadura"],
   pipeline_caption="Konpilazio-katea, iturburu-testutik makina-kodera.",
   points=[("Analisi lexikoa eta sintaktikoa", "Flex eskanerra eta Bison gramatika, gatazken kudeaketarekin, eragileen lehentasunekin eta kokatutako errore-mezuekin (lerroa / zutabea)."),
           ("AST eta bisitariak", "C++-ko zuhaitz sintaktiko abstraktua, Visitor diseinu-ereduaren bidez korritua: pretty-printerrak, binderrak, tipo-egiaztatzaileak eta itzultzaileak hierarkia bera partekatzen dute."),
           ("Izenen lotura", "Identifikatzaileen ebazpena esparru habiaratuetako ikur-taulekin, eta barneko funtzioetara «ihes egiten» duten aldagaien detekzioa."),
           ("Tipo-egiaztapena", "Adierazpenen, erregistro errekurtsiboen eta arrayen tipatzea; errore semantiko argiak, programa kraskatu beharrean."),
-          ("Tarteko adierazpena", "IR zuhaitzera itzultzea, eta ondoren oinarrizko blokeen linealizazioa eta kanonizazioa, kodea sortu aurretik."),
-          ("Back-enda", "Agindu-hautaketa zuhaitz-ereduen bidez, bizitasun-analisia eta erregistro-esleipena grafoen koloreztatzearen bidez.")],
+          ("Pattern matching eta IR", "Tipo-egiaztapenaren ondoren, neuk egindako pattern matching-ak erregistroak deskonposatzen ditu eta baldintzak berrordenatzen ditu, gehien erabiltzenetik gutxien erabiltzenera (LLVMrekin soilik erabilgarri). Ondoren IR zuhaitzera itzultzea, eta ondoren oinarrizko blokeen linealizazioa eta kanonizazioa, kodea sortu aurretik."),
+          ("Bi back-end", "Proiektua LLVMrekin edo neure back-endarekin lotu daiteke: agindu-hautaketa zuhaitz-ereduen bidez, bizitasun-analisia eta erregistro-esleipena grafoen koloreztatzearen bidez.")],
   learned=["Iturburu-kodearen eta bitarraren artean benetan gertatzen dena ulertzea.", "C++ kode-base handi, modular eta probagarri bat diseinatzea (proba-multzoak urrats bakoitzeko).", "Taldean lan egitea proiektu luze batean, kode-berrikuspenekin eta integrazio jarraituarekin."])
 
 TR["eu"]["light-tracker"] = dict(

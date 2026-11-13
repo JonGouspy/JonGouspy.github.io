@@ -47,9 +47,11 @@ export default function Project({ lang }) {
               <h1>{p.title}</h1>
               <p className="lead">{p.tagline}</p>
               <Tags items={p.tags} />
-              <div className="actions">
-                <a className="btn" href={p.repo ?? `${site.github}/${p.slug}`} target="_blank" rel="noopener noreferrer">{U.view_code}</a>
-              </div>
+              {p.repo && (
+                <div className="actions">
+                  <a className="btn" href={p.repo} target="_blank" rel="noopener noreferrer">{U.view_code}</a>
+                </div>
+              )}
             </div>
             <div className="p-hero-side">
               <Deco theme={p.theme} className="deco" />

@@ -302,7 +302,7 @@
      ],
      [
       "Cible",
-      "Assembleur / IR"
+      "LLVM ou back-end maison"
      ],
      [
       "Type",
@@ -317,6 +317,7 @@
      "AST",
      "Binding",
      "Type-checking",
+     "Pattern matching",
      "Traduction IR",
      "Canonisation",
      "Sélection d'instructions",
@@ -342,12 +343,12 @@
       "Typage des expressions, des records récursifs et des tableaux ; erreurs sémantiques claires plutôt qu'un crash."
      ],
      [
-      "Représentation intermédiaire",
-      "Traduction en arbre IR, linéarisation et canonisation des blocs de base avant la génération de code."
+      "Pattern matching & IR",
+      "Après le typage, mon propre pattern matching déstructure les records et réordonne les conditions des plus utilisées aux moins utilisées (disponible uniquement avec LLVM). Puis traduction en arbre IR, linéarisation et canonisation des blocs de base avant la génération de code."
      ],
      [
-      "Back-end",
-      "Sélection d'instructions par tuilage de motifs, analyse de vivacité et allocation de registres par coloration de graphe."
+      "Deux back-ends",
+      "Le projet se lie soit à LLVM, soit à mon propre back-end : sélection d'instructions par tuilage de motifs, analyse de vivacité et allocation de registres par coloration de graphe."
      ]
     ],
     "code_lang": "Tiger",
@@ -781,7 +782,7 @@
      ],
      [
       "Target",
-      "Assembly / IR"
+      "LLVM or own back end"
      ],
      [
       "Type",
@@ -796,6 +797,7 @@
      "AST",
      "Binding",
      "Type checking",
+     "Pattern matching",
      "IR translation",
      "Canonicalization",
      "Instruction selection",
@@ -821,12 +823,12 @@
       "Typing of expressions, recursive records and arrays; clear semantic errors instead of crashes."
      ],
      [
-      "Intermediate representation",
-      "Translation to an IR tree, then linearization and canonicalization into basic blocks before code generation."
+      "Pattern matching & IR",
+      "After type checking, my own pattern matching destructures records and reorders conditions from most used to least used (only available with LLVM). Then translation to an IR tree, linearization and canonicalization into basic blocks before code generation."
      ],
      [
-      "Back end",
-      "Instruction selection by tree-pattern tiling, liveness analysis and register allocation by graph coloring."
+      "Two back ends",
+      "The project can be linked either with LLVM or with my own back end: instruction selection by tree-pattern tiling, liveness analysis and register allocation by graph coloring."
      ]
     ],
     "code_lang": "Tiger",
@@ -1260,7 +1262,7 @@
      ],
      [
       "Helburua",
-      "Mihiztadura / IR"
+      "LLVM edo back-end propioa"
      ],
      [
       "Mota",
@@ -1275,6 +1277,7 @@
      "AST",
      "Izenen lotura",
      "Tipo-egiaztapena",
+     "Pattern matching",
      "IR itzulpena",
      "Kanonizazioa",
      "Agindu-hautaketa",
@@ -1300,12 +1303,12 @@
       "Adierazpenen, erregistro errekurtsiboen eta arrayen tipatzea; errore semantiko argiak, programa kraskatu beharrean."
      ],
      [
-      "Tarteko adierazpena",
-      "IR zuhaitzera itzultzea, eta ondoren oinarrizko blokeen linealizazioa eta kanonizazioa, kodea sortu aurretik."
+      "Pattern matching eta IR",
+      "Tipo-egiaztapenaren ondoren, neuk egindako pattern matching-ak erregistroak deskonposatzen ditu eta baldintzak berrordenatzen ditu, gehien erabiltzenetik gutxien erabiltzenera (LLVMrekin soilik erabilgarri). Ondoren IR zuhaitzera itzultzea, eta ondoren oinarrizko blokeen linealizazioa eta kanonizazioa, kodea sortu aurretik."
      ],
      [
-      "Back-enda",
-      "Agindu-hautaketa zuhaitz-ereduen bidez, bizitasun-analisia eta erregistro-esleipena grafoen koloreztatzearen bidez."
+      "Bi back-end",
+      "Proiektua LLVMrekin edo neure back-endarekin lotu daiteke: agindu-hautaketa zuhaitz-ereduen bidez, bizitasun-analisia eta erregistro-esleipena grafoen koloreztatzearen bidez."
      ]
     ],
     "code_lang": "Tiger",
