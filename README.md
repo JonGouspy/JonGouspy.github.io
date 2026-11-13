@@ -1,7 +1,7 @@
 # Portfolio — Jon Gouspy
 
 React portfolio (Vite + React 18 + React Router), in three languages (FR · EN · EU) with light/dark mode.
-Deployed to **GitHub Pages** at `https://jon-gouspy.github.io`.
+Deployed to **GitHub Pages** at `https://jongouspy.github.io/jon-gouspy.github.io/`.
 
 ```
 app/                 the React site (source of truth)
@@ -91,8 +91,6 @@ block in the CSS and adjust its variables (`--bg`, `--accent`, `--pattern`…), 
 ## Deployment
 
 `.github/workflows/deploy.yml` builds `app/` and publishes `app/dist` on every push to `main`.
-
-One-time setup: *Settings → Pages → Source: **GitHub Actions***.
 
 ## To customize
 
