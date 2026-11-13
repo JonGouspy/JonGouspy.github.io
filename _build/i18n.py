@@ -75,6 +75,8 @@ UI = {
 
 # Translated code comments (EN and EU use English in code)
 CODE_EN = [
+    ("-- Signaux de commande de chaque instruction", "-- Control signals of each instruction"),
+    ("-- branche si N = 1", "-- branch if N = 1"),
     ("// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »", "// Kalman update: virtual measurement \"velocity = 0\""),
     ("// amag, gmag : normes de l'accélération et du gyroscope", "// amag, gmag: norms of the acceleration and of the gyroscope"),
     ("// Immobile : accélération ≈ g et rotation quasi nulle, ZUPT_WINDOW échantillons de suite", "// Stationary: acceleration ≈ g and almost no rotation, for ZUPT_WINDOW samples in a row"),
@@ -95,6 +97,8 @@ CODE_EN = [
 
 # Basque code comments (applied before CODE_EN for the EU pages; other comments fall back to CODE_EN)
 CODE_EU = [
+    ("-- Signaux de commande de chaque instruction", "-- Aginduen kontrol-seinaleak"),
+    ("-- branche si N = 1", "-- jauzi egin N = 1 bada"),
     ("// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »", "// Kalman eguneraketa: \"abiadura = 0\" neurketa birtuala"),
     ("// amag, gmag : normes de l'accélération et du gyroscope", "// amag, gmag: azelerazioaren eta giroskopioaren moduluak"),
     ("// Immobile : accélération ≈ g et rotation quasi nulle, ZUPT_WINDOW échantillons de suite", "// Geldirik: azelerazioa ≈ g eta ia biraketarik gabe, ZUPT_WINDOW lagin jarraian"),
@@ -198,19 +202,20 @@ TR["en"]["pcb-snake"] = dict(
 
 TR["en"]["cpu-monocycle"] = dict(
   title="Single-Cycle CPU",
-  tagline="A single-cycle processor described in VHDL: every instruction executes in one clock cycle.", domain="Architecture · FPGA",
-  facts=[("Language", "VHDL"), ("Architecture", "Single-cycle"), ("Verification", "Testbenches / simulation"), ("Type", "Digital design")],
-  context="""<p>A single-cycle processor executes each whole instruction — fetch, decode, execute, memory access, write-back — in one clock cycle. It's the simplest architecture to reason about, and the foundation for understanding pipelining later on.</p>
-<p>The project consists of describing each datapath block in VHDL, wiring them together with a control unit, then validating everything in simulation on real programs.</p>""",
-  pipeline=["PC", "Instruction memory", "Decoder / Control", "Register file", "Sign extension", "ALU", "Data memory", "Write-back"],
+  tagline="A 32-bit ARM-style single-cycle processor described in VHDL, validated in simulation and targeted at a MAX 10 board.", domain="Architecture · FPGA",
+  tags=["VHDL", "Architecture", "ModelSim", "Quartus", "FPGA"],
+  facts=[("Language", "VHDL"), ("Instruction set", "32-bit ARM subset"), ("Target", "DE10-Lite (MAX 10)"), ("Verification", "One testbench per block")],
+  context="""<p>A single-cycle processor executes each instruction — fetch, decode, execute, memory access, write-back — in one clock cycle. It's the simplest architecture to reason about, and the foundation for understanding pipelining later on.</p>
+<p>The project, done in two steps, describes each datapath block in VHDL with its unit tests, wires them together with an instruction decoder, then runs a real assembly program. The Quartus project targets a DE10-Lite board, with the result shown on its 7-segment displays.</p>""",
+  pipeline=["PC + instruction memory", "Decoder", "Register file", "Sign extension", "ALU", "Data memory", "Write-back"],
   pipeline_caption="Datapath of the single-cycle processor.",
-  points=[("ALU", "Arithmetic and logic operations, with flags (N, Z, C, V) used for conditional branches."),
-          ("Register file", "Two asynchronous read ports, one write port synchronous on the clock edge."),
-          ("Control unit", "Decodes the opcode into control signals: mux selection, register / memory write, ALU operation."),
-          ("Memories", "Instruction memory initialized with the program, separate data memory (Harvard architecture)."),
-          ("PC logic", "Increment, relative branches and jumps, selected by a multiplexer based on the flags."),
-          ("Verification", "One testbench per entity, then a global testbench that runs a program and checks the registers at the end of execution.")],
-  learned=["Thinking in hardware: concurrency, signals, timing, rather than a sequence of instructions.", "Understanding concretely how an instruction turns into electrical signals.", "The importance of simulation-based verification before any synthesis."])
+  points=[("ALU", "Four operations (A + B, A − B, A, B) and two flags, N (negative) and Z (zero), stored in a status register."),
+          ("Register file", "16 registers of 32 bits, two asynchronous read ports, one write port synchronous on the clock edge."),
+          ("Decoder", "Recognizes MOV, ADD (register or immediate), CMP, LDR, STR, B and BLT from the ARM condition, type and opcode fields, and drives nine control signals."),
+          ("Separate memories", "64 words for instructions, 64 words for data (Harvard). The test program sums an array in memory with an LDR / ADD / CMP / BLT loop."),
+          ("PC logic", "PC + 1 or a relative branch from a sign-extended 24-bit offset; BLT only branches when the N flag is set."),
+          ("Verification", "A testbench and ModelSim script for each block (ALU, mux, extender, registers, memory, decoder, PC unit), then for the whole processor.")],
+  learned=["Thinking in hardware: concurrency, signals, timing, rather than a sequence of instructions.", "Understanding concretely how a 32-bit word becomes control signals.", "Validating each block alone, then in integration, before assembling everything."])
 
 # ============================ EUSKARA ============================
 TR["eu"]["tiger-compiler"] = dict(
@@ -295,17 +300,17 @@ TR["eu"]["pcb-snake"] = dict(
 
 TR["eu"]["cpu-monocycle"] = dict(
   title="Ziklo bakarreko CPUa",
-  tagline="VHDLz deskribatutako ziklo bakarreko prozesadorea: agindu bakoitza erloju-ziklo bakar batean exekutatzen da.", domain="Arkitektura · FPGA",
-  tags=["VHDL", "Arkitektura", "ALU", "Simulazioa", "FPGA"],
-  facts=[("Lengoaia", "VHDL"), ("Arkitektura", "Ziklo bakarrekoa"), ("Egiaztapena", "Testbench-ak / simulazioa"), ("Mota", "Diseinu digitala")],
-  context="""<p>Ziklo bakarreko prozesadore batek agindu bakoitza osorik — bilaketa, deskodetzea, exekuzioa, memoria-sarbidea, idazketa — erloju-ziklo bakar batean exekutatzen du. Arrazoitzeko arkitekturarik sinpleena da, eta ondoren pipeline-a ulertzeko oinarria.</p>
-<p>Proiektuan datu-bideko bloke bakoitza VHDLz deskribatu, kontrol-unitate batekin elkartu eta dena simulazioan balioztatzen da benetako programekin.</p>""",
-  pipeline=["PC", "Agindu-memoria", "Deskodetzailea / Kontrola", "Erregistro-bankua", "Zeinu-hedapena", "ALU", "Datu-memoria", "Idazketa (write-back)"],
+  tagline="VHDLz deskribatutako ARM motako 32 biteko ziklo bakarreko prozesadorea, simulazioan balioztatua eta MAX 10 txartel baterako pentsatua.", domain="Arkitektura · FPGA",
+  tags=["VHDL", "Arkitektura", "ModelSim", "Quartus", "FPGA"],
+  facts=[("Lengoaia", "VHDL"), ("Agindu-multzoa", "ARM 32 biteko azpimultzoa"), ("Helburua", "DE10-Lite (MAX 10)"), ("Egiaztapena", "Testbench bat bloke bakoitzeko")],
+  context="""<p>Ziklo bakarreko prozesadore batek agindu bakoitza — bilaketa, deskodetzea, exekuzioa, memoria-sarbidea, idazketa — erloju-ziklo bakar batean exekutatzen du. Arrazoitzeko arkitekturarik sinpleena da, eta ondoren pipeline-a ulertzeko oinarria.</p>
+<p>Bi urratsetan egindako proiektuak datu-bideko bloke bakoitza VHDLz deskribatzen du bere proba unitarioekin, agindu-deskodetzaile batekin elkartzen ditu, eta gero benetako programa bat exekutatzen du mihiztadura-lengoaian. Quartus proiektuak DE10-Lite txartel bat du helburu, emaitza 7 segmentuko pantailetan erakutsiz.</p>""",
+  pipeline=["PC + agindu-memoria", "Deskodetzailea", "Erregistro-bankua", "Zeinu-hedapena", "ALU", "Datu-memoria", "Idazketa (write-back)"],
   pipeline_caption="Ziklo bakarreko prozesadorearen datu-bidea.",
-  points=[("ALU", "Eragiketa aritmetiko eta logikoak, eta baldintzapeko jauzietarako erabiltzen diren adierazleak (N, Z, C, V)."),
-          ("Erregistro-bankua", "Bi irakurketa-ataka asinkrono eta idazketa-ataka bat, erloju-ertzean sinkronoa."),
-          ("Kontrol-unitatea", "Opcode-a kontrol-seinaletan deskodetzea: multiplexoreen hautaketa, erregistro / memoria idazketa, ALU eragiketa."),
-          ("Memoriak", "Programarekin hasieratutako agindu-memoria eta datu-memoria bereizia (Harvard arkitektura)."),
-          ("PCaren kudeaketa", "Inkrementua, jauzi erlatiboak eta saltoak, adierazleen arabera multiplexore batek hautatuak."),
-          ("Egiaztapena", "Testbench bat entitate bakoitzeko, eta ondoren testbench global bat, programa bat exekutatu eta amaieran erregistroak egiaztatzen dituena.")],
-  learned=["Hardwarean pentsatzea: konkurrentzia, seinaleak, denbora, agindu-sekuentzia baten ordez.", "Agindu bat seinale elektriko bihurtzen den modua zehazki ulertzea.", "Simulazio bidezko egiaztapenaren garrantzia edozein sintesi egin aurretik."])
+  points=[("ALU", "Lau eragiketa (A + B, A − B, A, B) eta bi adierazle, N (negatiboa) eta Z (nulua), egoera-erregistro batean gordeak."),
+          ("Erregistro-bankua", "32 biteko 16 erregistro, bi irakurketa-ataka asinkrono eta idazketa-ataka bat, erloju-ertzean sinkronoa."),
+          ("Deskodetzailea", "MOV, ADD (erregistroa edo berehalakoa), CMP, LDR, STR, B eta BLT ezagutzen ditu ARM baldintza, mota eta opcode eremuetatik, eta bederatzi kontrol-seinale sortzen ditu."),
+          ("Memoria bereiziak", "64 hitz aginduentzat, 64 hitz datuentzat (Harvard). Proba-programak memoriako array bat batzen du LDR / ADD / CMP / BLT begizta batekin."),
+          ("PCaren kudeaketa", "PC + 1 edo zeinuz hedatutako 24 biteko desplazamendu batetik jauzi erlatiboa; BLT-k N adierazlea altxatuta dagoenean soilik egiten du jauzi."),
+          ("Egiaztapena", "Testbench eta ModelSim script bat bloke bakoitzeko (ALU, mux, hedatzailea, erregistroak, memoria, deskodetzailea, PC unitatea), eta gero prozesadore osoarentzat.")],
+  learned=["Hardwarean pentsatzea: konkurrentzia, seinaleak, denbora, agindu-sekuentzia baten ordez.", "32 biteko hitz bat kontrol-seinale bihurtzen den modua zehazki ulertzea.", "Bloke bakoitza bakarka eta gero integrazioan balioztatzea, dena elkartu aurretik."])
