@@ -7,9 +7,9 @@ Deployed to **GitHub Pages** at `https://jon-gouspy.github.io`.
 app/                 the React site (source of truth)
   src/pages/         Home, Project
   src/components/    Layout (top bar, footer), Deco, Section
-  src/data/          content.json — all text, generated from _build (see below)
+  src/content/       all text and data, plain files you edit by hand (see Content)
+  src/content.js     loads src/content/* for the pages (rarely needs editing)
   src/style.css      styles, per-project themes, light/dark mode
-_build/              Python content sources + JSON exporter (legacy static generator)
 .github/workflows/   build and deploy to GitHub Pages
 ```
 
@@ -45,24 +45,31 @@ and React Router resolves the path on the client.
 
 ## Content
 
-All text is in `app/src/data/content.json`, generated from the Python sources:
+Everything you read on the site is in `app/src/content/`, as plain JS files you edit by hand. There is no
+generator and no build step for content: save, and the dev server reloads.
 
-- `_build/projects_data.py` — projects (French)
-- `_build/i18n.py` — UI strings and EN / EU translations
-- `_build/build2.py` — per-theme decorative SVGs and fonts
+| File | What it holds |
+|------|---------------|
+| `site.js` | name, GitHub / e-mail / LinkedIn links, languages |
+| `ui/fr.js`, `ui/en.js`, `ui/eu.js` | interface text: menu, hero, about, skills, buttons |
+| `projects/NN-<slug>.js` | one project, with its French, English and Basque text side by side |
+| `future.js` | the greyed-out "upcoming projects" cards |
+| `themes/` | the label of each theme and its decorative `.svg` |
 
-After editing them:
+**Edit a project**: open its file in `content/projects/`. Fields are grouped per language (`fr`, `en`, `eu`).
+Text with several lines (`context`, `code`) goes between backticks. `context` is HTML (rendered with
+`dangerouslySetInnerHTML`): it is your own content, keep it that way.
 
-```bash
-cd _build && python3 export_json.py
-```
+**Add a project**: copy `content/projects/_template.js` to `NN-<slug>.js` (`NN` sets the display order) and
+fill it in. It appears on the home page and gets its own page automatically. Delete the `repo` line to hide
+the "View code" button (for a private repository). An optional `image` shows a picture on the project page
+(put the file in `app/public/img/`).
 
-You can also drop the Python and edit `content.json` directly.
-Project `context` fields are HTML (rendered with `dangerouslySetInnerHTML`): it is your own content, keep it that way.
+**Add an upcoming project**: add an entry to `content/future.js`.
 
 ## Styles
 
-Edit `app/src/style.css`. (`_build/style.css` is only used by the old static generator and is no longer needed.)
+Edit `app/src/style.css`.
 
 ## Themes
 
@@ -77,8 +84,9 @@ Each page sets a class on `<body>`:
 | `theme-systeme`       | oscilloscope, phosphor green, signals      | Dérisquage ESP32           |
 | `theme-architecture`  | blueprint, clock timing diagram            | CPU Monocycle              |
 
-A project's theme is set by `THEME_OF` in `_build/build2.py`. For a new theme, copy a `.theme-…` block in
-the CSS, adjust its variables (`--bg`, `--accent`, `--pattern`, fonts…), and add its SVG and fonts in `build2.py`.
+A project's theme is the `theme` field of its file in `content/projects/`. For a new theme, copy a `.theme-…`
+block in the CSS and adjust its variables (`--bg`, `--accent`, `--pattern`…), then add its label and its SVG
+(`content/themes/<name>.svg`) in `content/themes/index.js`. The font is JetBrains Mono everywhere (`:root` in the CSS).
 
 ## Deployment
 
@@ -88,8 +96,5 @@ One-time setup: *Settings → Pages → Source: **GitHub Actions***.
 
 ## To customize
 
-- "View code" buttons point to `github.com/jon-gouspy/<slug>`: adapt `<slug>` to your real repository names
-  (`app/src/pages/Project.jsx`).
-- To add a photo, GIF or screenshot to a project page, put it in `app/public/img/` and add an `<img>`
-  in `Project.jsx` (served at `/img/<file>`).
+- The "View code" button of a project points to its `repo` field (see Content).
 - Check the technical details and add your numbers (GPU speed-ups, measured drift…).

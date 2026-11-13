@@ -1,0 +1,52 @@
+// Interface text (Français): navigation, home page, section titles.
+export default {
+  nav_projects: "Projets",
+  nav_about: "À propos",
+  nav_contact: "Contact",
+  site_desc: "Portfolio : systèmes embarqués, électronique, compilation et calcul GPU.",
+  hero_a: "Je construis des systèmes,",
+  hero_b: "du transistor au compilateur.",
+  hero_lead: "Je suis {name}, développeur logiciel de systèmes embarqués et temps réel, basé à Paris. Passionné d'informatique, de travail manuel et de sujets complexes, je réalise des projets de firmware embarqué, de conception de PCB, de processeurs en VHDL, de compilateurs et de calcul sur GPU.",
+  btn_projects: "Voir les projets",
+  filter_all: "Tous",
+  discover: "Découvrir →",
+  soon_title: "Prochains projets",
+  soon_lead: "Ce que je prévois de construire ensuite.",
+  soon_badge: "À venir",
+  about: [
+    "Mes projets couvrent toute la pile : concevoir une carte électronique, écrire le firmware qui tourne dessus, décrire un processeur en VHDL, ou au contraire monter dans les couches pour écrire un compilateur.",
+    "Ce qui me motive : comprendre comment les choses fonctionnent vraiment, et les faire marcher en conditions réelles — avec du bruit, des contraintes de temps et des ressources limitées.",
+  ],
+  skills: [
+    [
+      "Embarqué",
+      ["C", "ESP32 / ESP-IDF", "FreeRTOS", "I²C · ADC · PWM"],
+    ],
+    [
+      "Électronique",
+      ["Conception PCB", "KiCad", "Capteurs", "Moteurs"],
+    ],
+    [
+      "Matériel numérique",
+      ["VHDL", "Architecture CPU", "Simulation", "FPGA"],
+    ],
+    [
+      "Logiciel",
+      ["C++", "CUDA", "Compilation", "Flex · Bison"],
+    ],
+  ],
+  contact_h: "On en parle ?",
+  contact_p: "Stage, projet ou simple question technique : écris-moi.",
+  footer: "Fait main · hébergé sur GitHub Pages",
+  back: "← Tous les projets",
+  view_code: "Voir le code ↗",
+  s_context: "Contexte",
+  s_arch: "Architecture",
+  s_points: "Points techniques",
+  s_code: "Extrait de code",
+  s_learned: "Ce que j'en retiens",
+  prev: "← Précédent",
+  next: "Suivant →",
+  mode: "Basculer entre thème clair et sombre",
+  lang: "Langue",
+};

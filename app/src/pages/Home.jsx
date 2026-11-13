@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Deco from "../components/Deco.jsx";
 import Layout from "../components/Layout.jsx";
 import SectionTitle, { Tags } from "../components/Section.jsx";
-import { projectPath, projects, site, themeLabels, ui } from "../content";
+import { future, projectPath, projects, site, themeLabels, ui } from "../content";
 
 export default function Home({ lang }) {
   const U = ui[lang];
@@ -17,7 +17,10 @@ export default function Home({ lang }) {
         <section className="hero wrap">
           <p className="eyebrow mono"><span className="pulse"></span> Portfolio · 2026</p>
           <h1>{U.hero_a}<br /><span className="accent">{U.hero_b}</span></h1>
-          <p className="lead">{U.hero_lead.replace("{name}", site.name)}</p>
+          <div className="hero-bio">
+            <p className="lead">{U.hero_lead.replace("{name}", site.name)}</p>
+            <img className="avatar" src="/img/avatar.jpg" width="400" height="400" alt={`Photo de profil de ${site.name}`} />
+          </div>
           <div className="actions">
             <a className="btn" href="#projets">{U.btn_projects}</a>
             <a className="btn ghost" href={site.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
@@ -50,6 +53,21 @@ export default function Home({ lang }) {
                 <Tags items={p.tags.slice(0, 4)} />
                 <span className="card-go mono">{U.discover}</span>
               </Link>
+            ))}
+          </div>
+        </section>
+
+        <section id="a-venir" className="wrap section">
+          <SectionTitle>{U.soon_title}</SectionTitle>
+          <p className="dim soon-lead">{U.soon_lead}</p>
+          <div className="grid">
+            {future[lang].map((f) => (
+              <div key={f.id} className={`card card-soon theme-${f.theme}`} aria-label={`${f.title} — ${U.soon_badge}`}>
+                <Deco theme={f.theme} className="card-deco" />
+                <div className="card-top"><span className="theme-badge">{themeLabels[f.theme][lang]}</span><span className="mono dim">{U.soon_badge}</span></div>
+                <h3>{f.title}</h3>
+                <p>{f.tagline}</p>
+              </div>
             ))}
           </div>
         </section>

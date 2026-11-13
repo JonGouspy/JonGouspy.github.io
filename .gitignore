@@ -3,10 +3,6 @@ node_modules/
 dist/
 *.log
 
-# Python (_build)
-__pycache__/
-*.pyc
-
 # Editors / OS
 .vscode/
 .idea/
