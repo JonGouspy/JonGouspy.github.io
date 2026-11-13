@@ -6,9 +6,9 @@
   --text:#e8eaed; --body:#cfd4da; --dim:#9aa3af;
   --accent:#ffb547; --accent2:#5fd4a8; --on-accent:#16120a;
   --code-bg:#0a0c0f; --code-text:#d6dbe1;
-  --head:"IBM Plex Sans",system-ui,sans-serif;
-  --sans:"IBM Plex Sans",system-ui,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --head:"JetBrains Mono",ui-monospace,monospace;
+  --sans:"JetBrains Mono",ui-monospace,monospace;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
   --r:10px; --r-sm:6px;
   --pattern:linear-gradient(#12151a 1px,transparent 1px),linear-gradient(90deg,#12151a 1px,transparent 1px);
   --pattern-size:32px 32px;
@@ -24,9 +24,6 @@
   --text:#efeaf7; --body:#d3cbe2; --dim:#9d93b3;
   --accent:#c792ea; --accent2:#82aaff; --on-accent:#140d1d;
   --code-bg:#0b0811; --code-text:#e4dcf2;
-  --head:"JetBrains Mono",ui-monospace,monospace;
-  --sans:"Inter",system-ui,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,monospace;
   --r:4px; --r-sm:3px;
   --pattern:repeating-linear-gradient(180deg,transparent 0 27px,rgba(199,146,234,.05) 27px 28px);
   --pattern-size:auto;
@@ -52,7 +49,6 @@ body.theme-compilation::before{ /* line-number gutter */
   --text:#eef5ef; --body:#cfe0d4; --dim:#93b4a0;
   --accent:#e3a857; --accent2:#f4f1e6; --on-accent:#1b1205;
   --code-bg:#06140c; --code-text:#e0ece3;
-  --head:"Chakra Petch",system-ui,sans-serif;
   --r:3px; --r-sm:2px;
   --pattern:radial-gradient(circle,rgba(227,168,87,.16) 1.6px,transparent 2.2px),
             linear-gradient(45deg,transparent 49.4%,rgba(227,168,87,.05) 49.5% 50.5%,transparent 50.6%);
@@ -79,8 +75,6 @@ body.theme-compilation::before{ /* line-number gutter */
   --text:#e8eef8; --body:#c7d2e3; --dim:#8fa0bb;
   --accent:#4fd1ff; --accent2:#9b8cff; --on-accent:#041019;
   --code-bg:#050913; --code-text:#d8e4f5;
-  --head:"Sora",system-ui,sans-serif;
-  --sans:"Inter",system-ui,sans-serif;
   --r:16px; --r-sm:10px;
   --pattern:radial-gradient(900px 500px at 85% -10%,rgba(79,209,255,.14),transparent 60%),
             radial-gradient(700px 500px at -10% 30%,rgba(155,140,255,.10),transparent 60%),
@@ -105,8 +99,6 @@ body.theme-compilation::before{ /* line-number gutter */
   --text:#e2f8ef; --body:#c3e2d6; --dim:#83ad9e;
   --accent:#3dffa8; --accent2:#ffd23d; --on-accent:#03140c;
   --code-bg:#030c09; --code-text:#bff5dc;
-  --head:"Share Tech Mono",ui-monospace,monospace;
-  --mono:"Share Tech Mono",ui-monospace,monospace;
   --r:6px; --r-sm:4px;
   --pattern:linear-gradient(rgba(61,255,168,.09) 1px,transparent 1px),
             linear-gradient(90deg,rgba(61,255,168,.09) 1px,transparent 1px),
@@ -131,7 +123,6 @@ body.theme-systeme::after{ /* scanlines */
   --text:#f2f7fd; --body:#d3e1f1; --dim:#9fbadb;
   --accent:#ffd166; --accent2:#7fd6ff; --on-accent:#1c1404;
   --code-bg:#081d36; --code-text:#e3eefa;
-  --head:"Space Grotesk",system-ui,sans-serif;
   --r:0px; --r-sm:0px;
   --pattern:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
             linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px),
@@ -150,6 +141,7 @@ body.theme-systeme::after{ /* scanlines */
    ========================================================= */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+html,body{overscroll-behavior-y:none} /* no elastic bounce: it exposes the page background above the header and below the footer */
 body{
   position:relative;
   background-color:var(--bg); color:var(--text); font-family:var(--sans); font-size:17px; line-height:1.65;
@@ -228,6 +220,11 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:var(--h-spacin
 .card p{color:var(--body);font-size:15.5px;flex:1}
 .card .tags{margin-top:18px}
 .card-go{margin-top:18px;font-size:13px;color:var(--accent)}
+/* Upcoming projects: same themed card, shaded and not clickable */
+.card-soon{min-height:220px;border-style:dashed;filter:grayscale(.9);opacity:.55;cursor:default}
+.card-soon:hover{border-color:var(--line2);transform:none;box-shadow:none}
+.card-soon:hover .card-deco{opacity:.28}
+.soon-lead{margin:-8px 0 22px}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
 .tag{font-family:var(--mono);font-size:12px;color:var(--body);background:color-mix(in srgb,var(--panel) 80%,transparent);border:1px solid var(--line);padding:3px 8px;border-radius:var(--r-sm)}
 
@@ -423,3 +420,22 @@ html[data-mode="light"] .theme-architecture .facts,
 html[data-mode="light"] .theme-architecture .code{box-shadow:6px 6px 0 rgba(12,39,71,.08)}
 html[data-mode="light"] .card:hover{box-shadow:0 18px 40px -26px var(--accent)}
 html[data-mode="light"] .theme-home .chip[data-f="all"].active{border-color:#b86a00}
+
+/* ---------- Typography: JetBrains Mono everywhere, sized down to fit its width ---------- */
+body{font-size:15.5px;line-height:1.7}
+h1{font-size:clamp(28px,4.4vw,48px);line-height:1.15;letter-spacing:-.04em}
+.p-hero h1{font-size:clamp(28px,4.2vw,44px)}
+.h-sec{font-size:22px}
+.card h3{font-size:19px;letter-spacing:-.02em}
+.lead{font-size:clamp(15.5px,1.5vw,17px)}
+
+/* ---------- Same label shape on every project ---------- */
+.tag,.theme-hardware .tag,.theme-architecture .tag{border-radius:4px;background:color-mix(in srgb,var(--panel) 80%,transparent);
+  border:1px solid var(--line);color:var(--body)}
+.theme-badge{border-radius:4px}
+
+/* ---------- Profile picture next to the description ---------- */
+.hero-bio{display:flex;align-items:flex-start;justify-content:space-between;gap:56px}
+.hero-bio .lead{flex:1;min-width:0}
+.avatar{flex:none;width:280px;height:280px;margin-top:6px;object-fit:cover;border-radius:50%;border:2px solid var(--line2);background:var(--panel)}
+@media (max-width:720px){.hero-bio{flex-direction:column-reverse;gap:22px}.avatar{width:180px;height:180px;margin-top:0}}

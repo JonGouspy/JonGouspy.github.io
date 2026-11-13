@@ -1,0 +1,52 @@
+// Interface text (Euskara): navigation, home page, section titles.
+export default {
+  nav_projects: "Proiektuak",
+  nav_about: "Niri buruz",
+  nav_contact: "Harremana",
+  site_desc: "Portfolioa: sistema txertatuak, elektronika, konpilazioa eta GPU bidezko kalkulua.",
+  hero_a: "Sistemak eraikitzen ditut,",
+  hero_b: "transistoretik konpilatzaileraino.",
+  hero_lead: "{name} naiz, sistema txertatuen eta denbora errealeko sistemen software garatzailea, Parisen finkatua. Informatikaz, esku-lanaz eta gai konplexuez sutsua naizenez, firmware txertatua, PCB diseinua, VHDL prozesadoreak, konpilatzaileak eta GPU bidezko kalkulua lantzen ditut.",
+  btn_projects: "Proiektuak ikusi",
+  filter_all: "Denak",
+  discover: "Ezagutu →",
+  soon_title: "Hurrengo proiektuak",
+  soon_lead: "Hurrena eraikitzeko asmoa dudana.",
+  soon_badge: "Laster",
+  about: [
+    "Nire proiektuek pila osoa hartzen dute: txartel elektroniko bat diseinatzea, haren gainean dabilen firmwarea idaztea, prozesadore bat VHDLz deskribatzea, edo, alderantziz, geruzetan gora igo eta konpilatzaile bat idaztea.",
+    "Motibatzen nauena: gauzak benetan nola dabiltzan ulertzea, eta baldintza errealetan funtzionaraztea — zaratarekin, denbora-mugekin eta baliabide mugatuekin.",
+  ],
+  skills: [
+    [
+      "Txertatua",
+      ["C", "ESP32 / ESP-IDF", "FreeRTOS", "I²C · ADC · PWM"],
+    ],
+    [
+      "Elektronika",
+      ["PCB diseinua", "KiCad", "Sentsoreak", "Motorrak"],
+    ],
+    [
+      "Hardware digitala",
+      ["VHDL", "CPU arkitektura", "Simulazioa", "FPGA"],
+    ],
+    [
+      "Softwarea",
+      ["C++", "CUDA", "Konpilazioa", "Flex · Bison"],
+    ],
+  ],
+  contact_h: "Hitz egingo dugu?",
+  contact_p: "Praktikak, proiektu bat edo galdera tekniko soil bat: idatzidazu.",
+  footer: "Eskuz egina · GitHub Pages-en ostatatua",
+  back: "← Proiektu guztiak",
+  view_code: "Kodea ikusi ↗",
+  s_context: "Testuingurua",
+  s_arch: "Arkitektura",
+  s_points: "Puntu teknikoak",
+  s_code: "Kode-zatia",
+  s_learned: "Zer ikasi dudan",
+  prev: "← Aurrekoa",
+  next: "Hurrengoa →",
+  mode: "Gai argia / iluna aldatu",
+  lang: "Hizkuntza",
+};

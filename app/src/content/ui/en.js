@@ -1,0 +1,52 @@
+// Interface text (English): navigation, home page, section titles.
+export default {
+  nav_projects: "Projects",
+  nav_about: "About",
+  nav_contact: "Contact",
+  site_desc: "Portfolio: embedded systems, electronics, compilers and GPU computing.",
+  hero_a: "I build systems,",
+  hero_b: "from transistors to compilers.",
+  hero_lead: "I'm {name}, an embedded and real-time systems software developer based in Paris, France. Passionate about IT, hands-on work and complex problems, I build embedded firmware, PCB designs, VHDL processors, compilers and GPU computing projects.",
+  btn_projects: "See projects",
+  filter_all: "All",
+  discover: "Explore →",
+  soon_title: "Upcoming projects",
+  soon_lead: "What I plan to build next.",
+  soon_badge: "Coming soon",
+  about: [
+    "My projects span the whole stack: designing a circuit board, writing the firmware that runs on it, describing a processor in VHDL, or climbing up the layers to write a compiler.",
+    "What drives me: understanding how things really work, and making them work in real conditions — with noise, timing constraints and limited resources.",
+  ],
+  skills: [
+    [
+      "Embedded",
+      ["C", "ESP32 / ESP-IDF", "FreeRTOS", "I²C · ADC · PWM"],
+    ],
+    [
+      "Electronics",
+      ["PCB design", "KiCad", "Sensors", "Motors"],
+    ],
+    [
+      "Digital hardware",
+      ["VHDL", "CPU architecture", "Simulation", "FPGA"],
+    ],
+    [
+      "Software",
+      ["C++", "CUDA", "Compilers", "Flex · Bison"],
+    ],
+  ],
+  contact_h: "Let's talk",
+  contact_p: "Internship, project or just a technical question: drop me a line.",
+  footer: "Handmade · hosted on GitHub Pages",
+  back: "← All projects",
+  view_code: "View code ↗",
+  s_context: "Context",
+  s_arch: "Architecture",
+  s_points: "Technical highlights",
+  s_code: "Code excerpt",
+  s_learned: "Key takeaways",
+  prev: "← Previous",
+  next: "Next →",
+  mode: "Toggle light / dark theme",
+  lang: "Language",
+};

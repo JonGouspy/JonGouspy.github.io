@@ -1,0 +1,6 @@
+<svg viewBox="0 0 320 270">
+<text x="10" y="8" class="d-lbl">CLK</text><path d="M10 40 H30 V15 H50 V40 H70 V15 H90 V40 H110 V15 H130 V40 H150 V15 H170 V40 H190 V15 H210 V40 H230 V15 H250 V40 H270 V15 H290 V40 H310" class="d-wave"/>
+<text x="10" y="72" class="d-lbl">PC</text><path d="M10 95 L16 83 H84 L90 95 L84 107 H16 Z" class="d-bus"/><text x="50" y="99" class="d-txt">0x00</text><path d="M90 95 L96 83 H164 L170 95 L164 107 H96 Z" class="d-bus"/><text x="130" y="99" class="d-txt">0x04</text><path d="M170 95 L176 83 H244 L250 95 L244 107 H176 Z" class="d-bus"/><text x="210" y="99" class="d-txt">0x08</text><path d="M250 95 L256 83 H324 L330 95 L324 107 H256 Z" class="d-bus"/><text x="290" y="99" class="d-txt">0x0C</text>
+<text x="10" y="137" class="d-lbl">INSTR</text><path d="M10 160 L16 148 H84 L90 160 L84 172 H16 Z" class="d-bus"/><text x="50" y="164" class="d-txt">ADD</text><path d="M90 160 L96 148 H164 L170 160 L164 172 H96 Z" class="d-bus"/><text x="130" y="164" class="d-txt">LDR</text><path d="M170 160 L176 148 H244 L250 160 L244 172 H176 Z" class="d-bus"/><text x="210" y="164" class="d-txt">SUB</text><path d="M250 160 L256 148 H324 L330 160 L324 172 H256 Z" class="d-bus"/><text x="290" y="164" class="d-txt">BEQ</text>
+<text x="10" y="202" class="d-lbl">WE</text><path d="M10 250 H90 V225 H170 V250 H250 V225 H310" class="d-wave d-w2"/>
+</svg>
