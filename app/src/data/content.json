@@ -680,13 +680,14 @@
     "slug": "cpu-monocycle",
     "num": "06",
     "title": "CPU Monocycle",
-    "tagline": "Un processeur monocycle décrit en VHDL : chaque instruction s'exécute en un cycle d'horloge.",
+    "repo": "https://github.com/JonGouspy/cpu-monocycle",
+    "tagline": "Un processeur 32 bits monocycle de type ARM décrit en VHDL, validé en simulation et prévu pour une carte MAX 10.",
     "domain": "Architecture · FPGA",
     "tags": [
      "VHDL",
      "Architecture",
-     "ALU",
-     "Simulation",
+     "ModelSim",
+     "Quartus",
      "FPGA"
     ],
     "facts": [
@@ -695,23 +696,22 @@
       "VHDL"
      ],
      [
-      "Architecture",
-      "Monocycle"
+      "Jeu d'instructions",
+      "Sous-ensemble ARM 32 bits"
+     ],
+     [
+      "Cible",
+      "DE10-Lite (MAX 10)"
      ],
      [
       "Vérification",
-      "Testbenchs / simulation"
-     ],
-     [
-      "Type",
-      "Conception numérique"
+      "Un testbench par bloc"
      ]
     ],
-    "context": "<p>Un processeur monocycle exécute chaque instruction entière — lecture, décodage, exécution, accès mémoire, écriture — en un seul cycle d'horloge. C'est l'architecture la plus simple à raisonner, et la base pour comprendre ensuite le pipeline.</p>\n<p>Le projet consiste à décrire chaque bloc du chemin de données en VHDL, à les assembler avec une unité de contrôle, puis à valider le tout en simulation sur de vrais programmes.</p>",
+    "context": "<p>Un processeur monocycle exécute chaque instruction — lecture, décodage, exécution, accès mémoire, écriture — en un seul cycle d'horloge. C'est l'architecture la plus simple à raisonner, et la base pour comprendre ensuite le pipeline.</p>\n<p>Le projet, réalisé en deux étapes, décrit chaque bloc du chemin de données en VHDL avec ses tests unitaires, les assemble avec un décodeur d'instructions, puis exécute un vrai programme en assembleur. Le projet Quartus cible une carte DE10-Lite, avec le résultat affiché sur des afficheurs 7 segments.</p>",
     "pipeline": [
-     "PC",
-     "Mémoire d'instructions",
-     "Décodeur / Contrôle",
+     "PC + mémoire d'instructions",
+     "Décodeur",
      "Banc de registres",
      "Extension de signe",
      "ALU",
@@ -722,35 +722,35 @@
     "points": [
      [
       "ALU",
-      "Opérations arithmétiques et logiques, drapeaux (N, Z, C, V) utilisés pour les branchements conditionnels."
+      "Quatre opérations (A + B, A − B, A, B) et deux drapeaux, N (négatif) et Z (nul), stockés dans un registre d'état."
      ],
      [
       "Banc de registres",
-      "Deux ports de lecture asynchrones, un port d'écriture synchrone sur front d'horloge."
+      "16 registres de 32 bits, deux ports de lecture asynchrones, un port d'écriture synchrone sur front d'horloge."
      ],
      [
-      "Unité de contrôle",
-      "Décodage de l'opcode en signaux de commande : sélection des multiplexeurs, écriture registre / mémoire, opération ALU."
+      "Décodeur",
+      "Reconnaît MOV, ADD (registre ou immédiat), CMP, LDR, STR, B et BLT à partir de la condition, du type et de l'opcode ARM, et génère neuf signaux de commande."
      ],
      [
-      "Mémoires",
-      "Mémoire d'instructions initialisée avec le programme, mémoire de données séparée (architecture Harvard)."
+      "Mémoires séparées",
+      "64 mots pour les instructions, 64 mots pour les données (Harvard). Le programme de test somme un tableau en mémoire avec une boucle LDR / ADD / CMP / BLT."
      ],
      [
       "Gestion du PC",
-      "Incrément, branchements relatifs et sauts, sélectionnés par multiplexeur selon les drapeaux."
+      "PC + 1 ou branchement relatif à partir d'un déplacement de 24 bits étendu en signe ; BLT ne branche que si le drapeau N est levé."
      ],
      [
       "Vérification",
-      "Un testbench par entité, puis un testbench global exécutant un programme et vérifiant les registres en fin d'exécution."
+      "Testbench et script ModelSim pour chaque bloc (ALU, mux, extension, registres, mémoire, décodeur, gestion du PC), puis pour le processeur complet."
      ]
     ],
     "code_lang": "VHDL",
-    "code": "entity alu is\n  port (\n    op     : in  std_logic_vector(1 downto 0);\n    a, b   : in  std_logic_vector(31 downto 0);\n    s      : out std_logic_vector(31 downto 0);\n    n_flag : out std_logic\n  );\nend entity;\n\narchitecture rtl of alu is\n  signal res : signed(31 downto 0);\nbegin\n  with op select res <=\n    signed(a) + signed(b) when \"00\",\n    signed(b)             when \"01\",\n    signed(a) - signed(b) when \"10\",\n    signed(a)             when others;\n\n  s      <= std_logic_vector(res);\n  n_flag <= res(31);\nend architecture;",
+    "code": "entity DECODER is\n    port(\n      Instruction : in std_logic_vector(31 downto 0);\n      RegPSR      : in std_logic_vector(3 downto 0);\n      nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff : out std_logic;\n      ALUCtr      : out std_logic_vector(1 downto 0)\n    );\nend entity;\n\n-- Signaux de commande de chaque instruction\ncase current_instr is\n  when MOV  => RegWr <= '1'; ALUSrc <= '1'; ALUCtr <= \"01\";\n  when ADDi => RegWr <= '1'; ALUSrc <= '1';\n  when ADDr => RegWr <= '1';\n  when CMP  => ALUSrc <= '1'; ALUCtr <= \"10\"; PSREn <= '1';\n  when LDR  => RegWr <= '1'; ALUSrc <= '1'; WrSrc <= '1';\n  when STR  => ALUSrc <= '1'; MemWr <= '1'; RegSel <= '1'; RegAff <= '1';\n  when BAL  => nPCSel <= '1';\n  when BLT  => nPCSel <= RegPSR(3);  -- branche si N = 1\n  when others => null;\nend case;",
     "learned": [
      "Penser en matériel : concurrence, signaux, timing, plutôt qu'en séquence d'instructions.",
-     "Comprendre concrètement comment une instruction devient des signaux électriques.",
-     "L'importance de la vérification par simulation avant toute synthèse."
+     "Comprendre concrètement comment un mot de 32 bits devient des signaux de commande.",
+     "Valider chaque bloc seul, puis en intégration, avant d'assembler le tout."
     ],
     "theme": "architecture"
    }
@@ -1158,13 +1158,14 @@
     "slug": "cpu-monocycle",
     "num": "06",
     "title": "Single-Cycle CPU",
-    "tagline": "A single-cycle processor described in VHDL: every instruction executes in one clock cycle.",
+    "repo": "https://github.com/JonGouspy/cpu-monocycle",
+    "tagline": "A 32-bit ARM-style single-cycle processor described in VHDL, validated in simulation and targeted at a MAX 10 board.",
     "domain": "Architecture · FPGA",
     "tags": [
      "VHDL",
      "Architecture",
-     "ALU",
-     "Simulation",
+     "ModelSim",
+     "Quartus",
      "FPGA"
     ],
     "facts": [
@@ -1173,23 +1174,22 @@
       "VHDL"
      ],
      [
-      "Architecture",
-      "Single-cycle"
+      "Instruction set",
+      "32-bit ARM subset"
+     ],
+     [
+      "Target",
+      "DE10-Lite (MAX 10)"
      ],
      [
       "Verification",
-      "Testbenches / simulation"
-     ],
-     [
-      "Type",
-      "Digital design"
+      "One testbench per block"
      ]
     ],
-    "context": "<p>A single-cycle processor executes each whole instruction — fetch, decode, execute, memory access, write-back — in one clock cycle. It's the simplest architecture to reason about, and the foundation for understanding pipelining later on.</p>\n<p>The project consists of describing each datapath block in VHDL, wiring them together with a control unit, then validating everything in simulation on real programs.</p>",
+    "context": "<p>A single-cycle processor executes each instruction — fetch, decode, execute, memory access, write-back — in one clock cycle. It's the simplest architecture to reason about, and the foundation for understanding pipelining later on.</p>\n<p>The project, done in two steps, describes each datapath block in VHDL with its unit tests, wires them together with an instruction decoder, then runs a real assembly program. The Quartus project targets a DE10-Lite board, with the result shown on its 7-segment displays.</p>",
     "pipeline": [
-     "PC",
-     "Instruction memory",
-     "Decoder / Control",
+     "PC + instruction memory",
+     "Decoder",
      "Register file",
      "Sign extension",
      "ALU",
@@ -1200,35 +1200,35 @@
     "points": [
      [
       "ALU",
-      "Arithmetic and logic operations, with flags (N, Z, C, V) used for conditional branches."
+      "Four operations (A + B, A − B, A, B) and two flags, N (negative) and Z (zero), stored in a status register."
      ],
      [
       "Register file",
-      "Two asynchronous read ports, one write port synchronous on the clock edge."
+      "16 registers of 32 bits, two asynchronous read ports, one write port synchronous on the clock edge."
      ],
      [
-      "Control unit",
-      "Decodes the opcode into control signals: mux selection, register / memory write, ALU operation."
+      "Decoder",
+      "Recognizes MOV, ADD (register or immediate), CMP, LDR, STR, B and BLT from the ARM condition, type and opcode fields, and drives nine control signals."
      ],
      [
-      "Memories",
-      "Instruction memory initialized with the program, separate data memory (Harvard architecture)."
+      "Separate memories",
+      "64 words for instructions, 64 words for data (Harvard). The test program sums an array in memory with an LDR / ADD / CMP / BLT loop."
      ],
      [
       "PC logic",
-      "Increment, relative branches and jumps, selected by a multiplexer based on the flags."
+      "PC + 1 or a relative branch from a sign-extended 24-bit offset; BLT only branches when the N flag is set."
      ],
      [
       "Verification",
-      "One testbench per entity, then a global testbench that runs a program and checks the registers at the end of execution."
+      "A testbench and ModelSim script for each block (ALU, mux, extender, registers, memory, decoder, PC unit), then for the whole processor."
      ]
     ],
     "code_lang": "VHDL",
-    "code": "entity alu is\n  port (\n    op     : in  std_logic_vector(1 downto 0);\n    a, b   : in  std_logic_vector(31 downto 0);\n    s      : out std_logic_vector(31 downto 0);\n    n_flag : out std_logic\n  );\nend entity;\n\narchitecture rtl of alu is\n  signal res : signed(31 downto 0);\nbegin\n  with op select res <=\n    signed(a) + signed(b) when \"00\",\n    signed(b)             when \"01\",\n    signed(a) - signed(b) when \"10\",\n    signed(a)             when others;\n\n  s      <= std_logic_vector(res);\n  n_flag <= res(31);\nend architecture;",
+    "code": "entity DECODER is\n    port(\n      Instruction : in std_logic_vector(31 downto 0);\n      RegPSR      : in std_logic_vector(3 downto 0);\n      nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff : out std_logic;\n      ALUCtr      : out std_logic_vector(1 downto 0)\n    );\nend entity;\n\n-- Control signals of each instruction\ncase current_instr is\n  when MOV  => RegWr <= '1'; ALUSrc <= '1'; ALUCtr <= \"01\";\n  when ADDi => RegWr <= '1'; ALUSrc <= '1';\n  when ADDr => RegWr <= '1';\n  when CMP  => ALUSrc <= '1'; ALUCtr <= \"10\"; PSREn <= '1';\n  when LDR  => RegWr <= '1'; ALUSrc <= '1'; WrSrc <= '1';\n  when STR  => ALUSrc <= '1'; MemWr <= '1'; RegSel <= '1'; RegAff <= '1';\n  when BAL  => nPCSel <= '1';\n  when BLT  => nPCSel <= RegPSR(3);  -- branch if N = 1\n  when others => null;\nend case;",
     "learned": [
      "Thinking in hardware: concurrency, signals, timing, rather than a sequence of instructions.",
-     "Understanding concretely how an instruction turns into electrical signals.",
-     "The importance of simulation-based verification before any synthesis."
+     "Understanding concretely how a 32-bit word becomes control signals.",
+     "Validating each block alone, then in integration, before assembling everything."
     ],
     "theme": "architecture"
    }
@@ -1636,13 +1636,14 @@
     "slug": "cpu-monocycle",
     "num": "06",
     "title": "Ziklo bakarreko CPUa",
-    "tagline": "VHDLz deskribatutako ziklo bakarreko prozesadorea: agindu bakoitza erloju-ziklo bakar batean exekutatzen da.",
+    "repo": "https://github.com/JonGouspy/cpu-monocycle",
+    "tagline": "VHDLz deskribatutako ARM motako 32 biteko ziklo bakarreko prozesadorea, simulazioan balioztatua eta MAX 10 txartel baterako pentsatua.",
     "domain": "Arkitektura · FPGA",
     "tags": [
      "VHDL",
      "Arkitektura",
-     "ALU",
-     "Simulazioa",
+     "ModelSim",
+     "Quartus",
      "FPGA"
     ],
     "facts": [
@@ -1651,23 +1652,22 @@
       "VHDL"
      ],
      [
-      "Arkitektura",
-      "Ziklo bakarrekoa"
+      "Agindu-multzoa",
+      "ARM 32 biteko azpimultzoa"
+     ],
+     [
+      "Helburua",
+      "DE10-Lite (MAX 10)"
      ],
      [
       "Egiaztapena",
-      "Testbench-ak / simulazioa"
-     ],
-     [
-      "Mota",
-      "Diseinu digitala"
+      "Testbench bat bloke bakoitzeko"
      ]
     ],
-    "context": "<p>Ziklo bakarreko prozesadore batek agindu bakoitza osorik — bilaketa, deskodetzea, exekuzioa, memoria-sarbidea, idazketa — erloju-ziklo bakar batean exekutatzen du. Arrazoitzeko arkitekturarik sinpleena da, eta ondoren pipeline-a ulertzeko oinarria.</p>\n<p>Proiektuan datu-bideko bloke bakoitza VHDLz deskribatu, kontrol-unitate batekin elkartu eta dena simulazioan balioztatzen da benetako programekin.</p>",
+    "context": "<p>Ziklo bakarreko prozesadore batek agindu bakoitza — bilaketa, deskodetzea, exekuzioa, memoria-sarbidea, idazketa — erloju-ziklo bakar batean exekutatzen du. Arrazoitzeko arkitekturarik sinpleena da, eta ondoren pipeline-a ulertzeko oinarria.</p>\n<p>Bi urratsetan egindako proiektuak datu-bideko bloke bakoitza VHDLz deskribatzen du bere proba unitarioekin, agindu-deskodetzaile batekin elkartzen ditu, eta gero benetako programa bat exekutatzen du mihiztadura-lengoaian. Quartus proiektuak DE10-Lite txartel bat du helburu, emaitza 7 segmentuko pantailetan erakutsiz.</p>",
     "pipeline": [
-     "PC",
-     "Agindu-memoria",
-     "Deskodetzailea / Kontrola",
+     "PC + agindu-memoria",
+     "Deskodetzailea",
      "Erregistro-bankua",
      "Zeinu-hedapena",
      "ALU",
@@ -1678,35 +1678,35 @@
     "points": [
      [
       "ALU",
-      "Eragiketa aritmetiko eta logikoak, eta baldintzapeko jauzietarako erabiltzen diren adierazleak (N, Z, C, V)."
+      "Lau eragiketa (A + B, A − B, A, B) eta bi adierazle, N (negatiboa) eta Z (nulua), egoera-erregistro batean gordeak."
      ],
      [
       "Erregistro-bankua",
-      "Bi irakurketa-ataka asinkrono eta idazketa-ataka bat, erloju-ertzean sinkronoa."
+      "32 biteko 16 erregistro, bi irakurketa-ataka asinkrono eta idazketa-ataka bat, erloju-ertzean sinkronoa."
      ],
      [
-      "Kontrol-unitatea",
-      "Opcode-a kontrol-seinaletan deskodetzea: multiplexoreen hautaketa, erregistro / memoria idazketa, ALU eragiketa."
+      "Deskodetzailea",
+      "MOV, ADD (erregistroa edo berehalakoa), CMP, LDR, STR, B eta BLT ezagutzen ditu ARM baldintza, mota eta opcode eremuetatik, eta bederatzi kontrol-seinale sortzen ditu."
      ],
      [
-      "Memoriak",
-      "Programarekin hasieratutako agindu-memoria eta datu-memoria bereizia (Harvard arkitektura)."
+      "Memoria bereiziak",
+      "64 hitz aginduentzat, 64 hitz datuentzat (Harvard). Proba-programak memoriako array bat batzen du LDR / ADD / CMP / BLT begizta batekin."
      ],
      [
       "PCaren kudeaketa",
-      "Inkrementua, jauzi erlatiboak eta saltoak, adierazleen arabera multiplexore batek hautatuak."
+      "PC + 1 edo zeinuz hedatutako 24 biteko desplazamendu batetik jauzi erlatiboa; BLT-k N adierazlea altxatuta dagoenean soilik egiten du jauzi."
      ],
      [
       "Egiaztapena",
-      "Testbench bat entitate bakoitzeko, eta ondoren testbench global bat, programa bat exekutatu eta amaieran erregistroak egiaztatzen dituena."
+      "Testbench eta ModelSim script bat bloke bakoitzeko (ALU, mux, hedatzailea, erregistroak, memoria, deskodetzailea, PC unitatea), eta gero prozesadore osoarentzat."
      ]
     ],
     "code_lang": "VHDL",
-    "code": "entity alu is\n  port (\n    op     : in  std_logic_vector(1 downto 0);\n    a, b   : in  std_logic_vector(31 downto 0);\n    s      : out std_logic_vector(31 downto 0);\n    n_flag : out std_logic\n  );\nend entity;\n\narchitecture rtl of alu is\n  signal res : signed(31 downto 0);\nbegin\n  with op select res <=\n    signed(a) + signed(b) when \"00\",\n    signed(b)             when \"01\",\n    signed(a) - signed(b) when \"10\",\n    signed(a)             when others;\n\n  s      <= std_logic_vector(res);\n  n_flag <= res(31);\nend architecture;",
+    "code": "entity DECODER is\n    port(\n      Instruction : in std_logic_vector(31 downto 0);\n      RegPSR      : in std_logic_vector(3 downto 0);\n      nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff : out std_logic;\n      ALUCtr      : out std_logic_vector(1 downto 0)\n    );\nend entity;\n\n-- Aginduen kontrol-seinaleak\ncase current_instr is\n  when MOV  => RegWr <= '1'; ALUSrc <= '1'; ALUCtr <= \"01\";\n  when ADDi => RegWr <= '1'; ALUSrc <= '1';\n  when ADDr => RegWr <= '1';\n  when CMP  => ALUSrc <= '1'; ALUCtr <= \"10\"; PSREn <= '1';\n  when LDR  => RegWr <= '1'; ALUSrc <= '1'; WrSrc <= '1';\n  when STR  => ALUSrc <= '1'; MemWr <= '1'; RegSel <= '1'; RegAff <= '1';\n  when BAL  => nPCSel <= '1';\n  when BLT  => nPCSel <= RegPSR(3);  -- jauzi egin N = 1 bada\n  when others => null;\nend case;",
     "learned": [
      "Hardwarean pentsatzea: konkurrentzia, seinaleak, denbora, agindu-sekuentzia baten ordez.",
-     "Agindu bat seinale elektriko bihurtzen den modua zehazki ulertzea.",
-     "Simulazio bidezko egiaztapenaren garrantzia edozein sintesi egin aurretik."
+     "32 biteko hitz bat kontrol-seinale bihurtzen den modua zehazki ulertzea.",
+     "Bloke bakoitza bakarka eta gero integrazioan balioztatzea, dena elkartu aurretik."
     ],
     "theme": "architecture"
    }

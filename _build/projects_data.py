@@ -244,44 +244,44 @@ void print_matrix(const bool number[LED_COUNT])
     learned=["Concevoir un PCB complet, du schéma au produit soudé.", "Une technique de multiplexage élégante qui économise les broches.", "Le lien très concret entre contraintes matérielles et architecture logicielle."],
   ),
   dict(
-    slug="cpu-monocycle", num="06", title="CPU Monocycle",
-    tagline="Un processeur monocycle décrit en VHDL : chaque instruction s'exécute en un cycle d'horloge.",
-    domain="Architecture · FPGA", tags=["VHDL", "Architecture", "ALU", "Simulation", "FPGA"],
-    facts=[("Langage", "VHDL"), ("Architecture", "Monocycle"), ("Vérification", "Testbenchs / simulation"), ("Type", "Conception numérique")],
-    context="""<p>Un processeur monocycle exécute chaque instruction entière — lecture, décodage, exécution, accès mémoire, écriture — en un seul cycle d'horloge. C'est l'architecture la plus simple à raisonner, et la base pour comprendre ensuite le pipeline.</p>
-<p>Le projet consiste à décrire chaque bloc du chemin de données en VHDL, à les assembler avec une unité de contrôle, puis à valider le tout en simulation sur de vrais programmes.</p>""",
-    pipeline=["PC", "Mémoire d'instructions", "Décodeur / Contrôle", "Banc de registres", "Extension de signe", "ALU", "Mémoire de données", "Write-back"],
+    slug="cpu-monocycle", num="06", title="CPU Monocycle", repo="https://github.com/JonGouspy/cpu-monocycle",
+    tagline="Un processeur 32 bits monocycle de type ARM décrit en VHDL, validé en simulation et prévu pour une carte MAX 10.",
+    domain="Architecture · FPGA", tags=["VHDL", "Architecture", "ModelSim", "Quartus", "FPGA"],
+    facts=[("Langage", "VHDL"), ("Jeu d'instructions", "Sous-ensemble ARM 32 bits"), ("Cible", "DE10-Lite (MAX 10)"), ("Vérification", "Un testbench par bloc")],
+    context="""<p>Un processeur monocycle exécute chaque instruction — lecture, décodage, exécution, accès mémoire, écriture — en un seul cycle d'horloge. C'est l'architecture la plus simple à raisonner, et la base pour comprendre ensuite le pipeline.</p>
+<p>Le projet, réalisé en deux étapes, décrit chaque bloc du chemin de données en VHDL avec ses tests unitaires, les assemble avec un décodeur d'instructions, puis exécute un vrai programme en assembleur. Le projet Quartus cible une carte DE10-Lite, avec le résultat affiché sur des afficheurs 7 segments.</p>""",
+    pipeline=["PC + mémoire d'instructions", "Décodeur", "Banc de registres", "Extension de signe", "ALU", "Mémoire de données", "Write-back"],
     pipeline_caption="Chemin de données du processeur monocycle.",
     points=[
-      ("ALU", "Opérations arithmétiques et logiques, drapeaux (N, Z, C, V) utilisés pour les branchements conditionnels."),
-      ("Banc de registres", "Deux ports de lecture asynchrones, un port d'écriture synchrone sur front d'horloge."),
-      ("Unité de contrôle", "Décodage de l'opcode en signaux de commande : sélection des multiplexeurs, écriture registre / mémoire, opération ALU."),
-      ("Mémoires", "Mémoire d'instructions initialisée avec le programme, mémoire de données séparée (architecture Harvard)."),
-      ("Gestion du PC", "Incrément, branchements relatifs et sauts, sélectionnés par multiplexeur selon les drapeaux."),
-      ("Vérification", "Un testbench par entité, puis un testbench global exécutant un programme et vérifiant les registres en fin d'exécution."),
+      ("ALU", "Quatre opérations (A + B, A − B, A, B) et deux drapeaux, N (négatif) et Z (nul), stockés dans un registre d'état."),
+      ("Banc de registres", "16 registres de 32 bits, deux ports de lecture asynchrones, un port d'écriture synchrone sur front d'horloge."),
+      ("Décodeur", "Reconnaît MOV, ADD (registre ou immédiat), CMP, LDR, STR, B et BLT à partir de la condition, du type et de l'opcode ARM, et génère neuf signaux de commande."),
+      ("Mémoires séparées", "64 mots pour les instructions, 64 mots pour les données (Harvard). Le programme de test somme un tableau en mémoire avec une boucle LDR / ADD / CMP / BLT."),
+      ("Gestion du PC", "PC + 1 ou branchement relatif à partir d'un déplacement de 24 bits étendu en signe ; BLT ne branche que si le drapeau N est levé."),
+      ("Vérification", "Testbench et script ModelSim pour chaque bloc (ALU, mux, extension, registres, mémoire, décodeur, gestion du PC), puis pour le processeur complet."),
     ],
-    code_lang="VHDL", code="""entity alu is
-  port (
-    op     : in  std_logic_vector(1 downto 0);
-    a, b   : in  std_logic_vector(31 downto 0);
-    s      : out std_logic_vector(31 downto 0);
-    n_flag : out std_logic
-  );
+    code_lang="VHDL", code="""entity DECODER is
+    port(
+      Instruction : in std_logic_vector(31 downto 0);
+      RegPSR      : in std_logic_vector(3 downto 0);
+      nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff : out std_logic;
+      ALUCtr      : out std_logic_vector(1 downto 0)
+    );
 end entity;
 
-architecture rtl of alu is
-  signal res : signed(31 downto 0);
-begin
-  with op select res <=
-    signed(a) + signed(b) when "00",
-    signed(b)             when "01",
-    signed(a) - signed(b) when "10",
-    signed(a)             when others;
-
-  s      <= std_logic_vector(res);
-  n_flag <= res(31);
-end architecture;""",
-    learned=["Penser en matériel : concurrence, signaux, timing, plutôt qu'en séquence d'instructions.", "Comprendre concrètement comment une instruction devient des signaux électriques.", "L'importance de la vérification par simulation avant toute synthèse."],
+-- Signaux de commande de chaque instruction
+case current_instr is
+  when MOV  => RegWr <= '1'; ALUSrc <= '1'; ALUCtr <= "01";
+  when ADDi => RegWr <= '1'; ALUSrc <= '1';
+  when ADDr => RegWr <= '1';
+  when CMP  => ALUSrc <= '1'; ALUCtr <= "10"; PSREn <= '1';
+  when LDR  => RegWr <= '1'; ALUSrc <= '1'; WrSrc <= '1';
+  when STR  => ALUSrc <= '1'; MemWr <= '1'; RegSel <= '1'; RegAff <= '1';
+  when BAL  => nPCSel <= '1';
+  when BLT  => nPCSel <= RegPSR(3);  -- branche si N = 1
+  when others => null;
+end case;""",
+    learned=["Penser en matériel : concurrence, signaux, timing, plutôt qu'en séquence d'instructions.", "Comprendre concrètement comment un mot de 32 bits devient des signaux de commande.", "Valider chaque bloc seul, puis en intégration, avant d'assembler le tout."],
   ),
 ]
 
