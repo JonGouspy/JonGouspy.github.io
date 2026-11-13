@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import Deco from "../components/Deco.jsx";
 import Layout from "../components/Layout.jsx";
 import SectionTitle, { Tags } from "../components/Section.jsx";
-import { homePath, projectPath, projects, site, themeLabels, ui } from "../content";
+import { asset, homePath, projectPath, projects, site, themeLabels, ui } from "../content";
 
 // Context text with an image on its right, scaled to twice the height of the text block.
 function ContextWithImage({ html, image, alt }) {
@@ -19,7 +19,7 @@ function ContextWithImage({ html, image, alt }) {
     <div className="context-grid">
       <div ref={textRef} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
       <figure className="media portrait" style={{ "--h": h ? `${h * 2}px` : "auto" }}>
-        <img src={image} alt={alt} width="179" height="440" loading="lazy" />
+        <img src={asset(image)} alt={alt} width="179" height="440" loading="lazy" />
       </figure>
     </div>
   );

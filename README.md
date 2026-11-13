@@ -1,7 +1,7 @@
 # Portfolio — Jon Gouspy
 
 React portfolio (Vite + React 18 + React Router), in three languages (FR · EN · EU) with light/dark mode.
-Deployed to **GitHub Pages** at `https://jon-gouspy.github.io`.
+Deployed to **GitHub Pages** at `https://jongouspy.github.io/jon-gouspy.github.io/`.
 
 ```
 app/                 the React site (source of truth)
@@ -92,7 +92,13 @@ block in the CSS and adjust its variables (`--bg`, `--accent`, `--pattern`…), 
 
 `.github/workflows/deploy.yml` builds `app/` and publishes `app/dist` on every push to `main`.
 
-One-time setup: *Settings → Pages → Source: **GitHub Actions***.
+One-time setup: *Settings → Pages → Source: **GitHub Actions***. Without it, the deploy job fails with
+`Creating Pages deployment failed … Not Found`.
+
+The site adapts to the repository name. A repository named `<username>.github.io` is served from the domain
+root; any other name (like `jon-gouspy.github.io`) is served from `/<repository>/`. The workflow sets
+`BASE_PATH` accordingly, so renaming the repository needs no code change. Files from `public/` must be
+referenced with `asset("/img/…")` (see `src/content.js`), never with a bare `/img/…`.
 
 ## To customize
 

@@ -28,6 +28,13 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
       - run: npm ci
+      # User site (repository named <owner>.github.io): served from "/". Any other repository name
+      # is a project site, served from "/<repository>/".
+      - name: Set base path
+        run: |
+          repo="${GITHUB_REPOSITORY#*/}"
+          if [ "${repo,,}" = "${GITHUB_REPOSITORY_OWNER,,}.github.io" ]; then base="/"; else base="/$repo/"; fi
+          echo "BASE_PATH=$base" >> "$GITHUB_ENV"
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

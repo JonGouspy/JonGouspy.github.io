@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Deco from "../components/Deco.jsx";
 import Layout from "../components/Layout.jsx";
 import SectionTitle, { Tags } from "../components/Section.jsx";
-import { future, projectPath, projects, site, themeLabels, ui } from "../content";
+import { asset, future, projectPath, projects, site, themeLabels, ui } from "../content";
 
 export default function Home({ lang }) {
   const U = ui[lang];
@@ -19,7 +19,7 @@ export default function Home({ lang }) {
           <h1>{U.hero_a}<br /><span className="accent">{U.hero_b}</span></h1>
           <div className="hero-bio">
             <p className="lead">{U.hero_lead.replace("{name}", site.name)}</p>
-            <img className="avatar" src="/img/avatar.jpg" width="400" height="400" alt={`Photo de profil de ${site.name}`} />
+            <img className="avatar" src={asset("/img/avatar.jpg")} width="400" height="400" alt={`Photo de profil de ${site.name}`} />
           </div>
           <div className="actions">
             <a className="btn" href="#projets">{U.btn_projects}</a>

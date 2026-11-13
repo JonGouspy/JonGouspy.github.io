@@ -26,5 +26,8 @@ export const projects = byLang(projectList, ({ fr, en, eu, ...shared }, l) => ({
 export const future = byLang(futureList, ({ fr, en, eu, ...shared }, l) => ({ ...shared, ...{ fr, en, eu }[l] }));
 export { site, langs, langNames, projDir, themeLabels, themes };
 
+// URL of a file in public/ (e.g. asset("/img/avatar.jpg")), correct whatever the site's base path is.
+export const asset = (path) => import.meta.env.BASE_URL + path.replace(/^\//, "");
+
 export const homePath = (lang) => (lang === "fr" ? "/" : `/${lang}`);
 export const projectPath = (lang, slug) => `${lang === "fr" ? "" : `/${lang}`}/${projDir[lang]}/${slug}`;
