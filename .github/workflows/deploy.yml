@@ -36,7 +36,7 @@ jobs:
           if [ "${repo,,}" = "${GITHUB_REPOSITORY_OWNER,,}.github.io" ]; then base="/"; else base="/$repo/"; fi
           echo "BASE_PATH=$base" >> "$GITHUB_ENV"
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: app/dist
 
@@ -48,4 +48,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
