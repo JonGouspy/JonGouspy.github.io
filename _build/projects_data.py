@@ -14,18 +14,18 @@ PROJECTS = [
     slug="tiger-compiler", num="01", title="Tiger Compiler",
     tagline="Un compilateur complet pour le langage Tiger, écrit en C++.",
     domain="Compilation", tags=["C++", "Flex", "Bison", "AST", "IR"],
-    facts=[("Langage", "C++17"), ("Outils", "Flex · Bison · Make"), ("Cible", "Assembleur / IR"), ("Type", "Projet d'équipe")],
+    facts=[("Langage", "C++17"), ("Outils", "Flex · Bison · Make"), ("Cible", "LLVM ou back-end maison"), ("Type", "Projet d'équipe")],
     context="""<p>Tiger est un petit langage impératif typé, issu du livre <em>Modern Compiler Implementation</em> d'Andrew Appel. Il possède des types structurés (records, tableaux), des fonctions imbriquées, des portées lexicales et une gestion explicite de <code>let … in … end</code>.</p>
 <p>L'objectif : partir d'un fichier source <code>.tig</code> et produire du code exécutable, en traversant toutes les étapes d'un vrai compilateur — de l'analyse lexicale jusqu'à l'allocation de registres.</p>""",
-    pipeline=["Source .tig", "Lexer (Flex)", "Parser (Bison)", "AST", "Binding", "Type-checking", "Traduction IR", "Canonisation", "Sélection d'instructions", "Allocation de registres", "Assembleur"],
+    pipeline=["Source .tig", "Lexer (Flex)", "Parser (Bison)", "AST", "Binding", "Type-checking", "Pattern matching", "Traduction IR", "Canonisation", "Sélection d'instructions", "Allocation de registres", "Assembleur"],
     pipeline_caption="Chaîne de compilation, du texte source au code machine.",
     points=[
       ("Analyse lexicale & syntaxique", "Scanner Flex et grammaire Bison, avec gestion des conflits, des priorités d'opérateurs et des messages d'erreur localisés (ligne / colonne)."),
       ("AST & visiteurs", "Arbre syntaxique abstrait en C++ parcouru via le design pattern Visitor : pretty-printer, binder, type-checker et traducteur partagent la même hiérarchie."),
       ("Liaison des noms", "Résolution des identifiants avec tables de symboles à portées imbriquées, détection des variables qui « s'échappent » vers des fonctions internes."),
       ("Vérification de types", "Typage des expressions, des records récursifs et des tableaux ; erreurs sémantiques claires plutôt qu'un crash."),
-      ("Représentation intermédiaire", "Traduction en arbre IR, linéarisation et canonisation des blocs de base avant la génération de code."),
-      ("Back-end", "Sélection d'instructions par tuilage de motifs, analyse de vivacité et allocation de registres par coloration de graphe."),
+      ("Pattern matching & IR", "Après le typage, mon propre pattern matching déstructure les records et réordonne les conditions des plus utilisées aux moins utilisées (disponible uniquement avec LLVM). Puis traduction en arbre IR, linéarisation et canonisation des blocs de base avant la génération de code."),
+      ("Deux back-ends", "Le projet se lie soit à LLVM, soit à mon propre back-end : sélection d'instructions par tuilage de motifs, analyse de vivacité et allocation de registres par coloration de graphe."),
     ],
     code_lang="Tiger", code="""let
   type intlist = { head: int, tail: intlist }
