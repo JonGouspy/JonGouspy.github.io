@@ -75,6 +75,7 @@ UI = {
 
 # Translated code comments (EN and EU use English in code)
 CODE_EN = [
+    ("// Un thread par pixel : écart maximal sur les trois canaux entre l'image et le fond", "// One thread per pixel: maximum difference over the three channels between frame and background"),
     ("-- Signaux de commande de chaque instruction", "-- Control signals of each instruction"),
     ("-- branche si N = 1", "-- branch if N = 1"),
     ("// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »", "// Kalman update: virtual measurement \"velocity = 0\""),
@@ -97,6 +98,7 @@ CODE_EN = [
 
 # Basque code comments (applied before CODE_EN for the EU pages; other comments fall back to CODE_EN)
 CODE_EU = [
+    ("// Un thread par pixel : écart maximal sur les trois canaux entre l'image et le fond", "// Hari bat pixel bakoitzeko: irudiaren eta hondoaren arteko alderik handiena hiru kanaletan"),
     ("-- Signaux de commande de chaque instruction", "-- Aginduen kontrol-seinaleak"),
     ("-- branche si N = 1", "-- jauzi egin N = 1 bada"),
     ("// Mise à jour de Kalman : mesure virtuelle « vitesse = 0 »", "// Kalman eguneraketa: \"abiadura = 0\" neurketa birtuala"),
@@ -152,20 +154,20 @@ TR["en"]["light-tracker"] = dict(
   learned=["Turning a simple idea into a physical system that actually works (noise, tolerances, mechanics).", "Control basics: error, gain, dead zone, stability.", "Cleanly separating control logic from the power stage."])
 
 TR["en"]["object-detection-gpu"] = dict(
-  tagline="Moving-object detection through background subtraction, GPU-accelerated.", domain="Vision · GPU",
-  tags=["CUDA", "C++", "Image processing", "Parallelism"],
-  facts=[("Language", "C++ / CUDA"), ("Method", "Background subtraction"), ("Target", "NVIDIA GPU"), ("Type", "Performance project")],
-  context="""<p>In a video shot by a fixed camera, anything that isn't part of the scenery is an object of interest. The idea: learn a model of the background, then isolate, in each frame, the pixels that deviate from it.</p>
-<p>Since the computation is independent for each pixel, it's a perfect fit for the GPU. The project consists of writing a reference CPU version, porting it to CUDA kernels and measuring the speed-up.</p>""",
-  pipeline=["Video frame", "Background model", "Difference |I − B|", "Thresholding (hysteresis)", "Morphology (opening)", "Connected components", "Bounding boxes"],
-  pipeline_caption="Detection pipeline, each stage being one or more CUDA kernels.",
-  points=[("Background model", "Background estimated and updated over the video (running average) to adapt to slow lighting changes."),
-          ("Motion mask", "Distance between the current frame and the background, then hysteresis thresholding: a high threshold to seed, a low one to propagate."),
-          ("Morphology", "Erosion then dilation to remove isolated noise and fill holes in objects."),
-          ("One thread per pixel", "Each kernel maps one thread to one pixel; 2D grids and coalesced memory accesses."),
-          ("Shared memory", "Neighborhood operations (morphology) load a tile plus its halo into shared memory to avoid re-reading global memory."),
-          ("Benchmark", "CPU vs GPU comparison and profiling (Nsight) to identify bandwidth-bound kernels.")],
-  learned=["Thinking about an algorithm in terms of massive parallelism.", "The huge impact of memory access patterns on GPU performance.", "Measure before optimizing: profile, compare, iterate."])
+  tagline="Moving-object detection through background subtraction: a CUDA GStreamer filter, 30 to 41× faster than the CPU.", domain="Vision · GPU",
+  tags=["CUDA", "C++20", "GStreamer", "Nsight", "CMake"],
+  facts=[("Language", "C++ / CUDA"), ("Result", "×30 to ×41 vs CPU (1080p)"), ("Profiling", "Nsight Systems"), ("Type", "Group project (4)")],
+  context="""<p>GPGPU project at EPITA, in a group of four: write a CUDA GStreamer filter that separates the background from moving objects in a video stream, then displays the moving pixels in red. It is a preliminary step in many video-processing chains.</p>
+<p>We first wrote a reference CPU version, then a naive GPU port, which we optimized in eight steps (v1.1.0 → v1.1.8). Each step was measured with Nsight Systems before choosing the next one.</p>""",
+  pipeline=["Video frame", "Background estimation (reservoirs)", "Mask max(|I − B|)", "Opening (erosion + dilation)", "Hysteresis", "Red overlay"],
+  pipeline_caption="Filter pipeline, each stage being one or more CUDA kernels.",
+  points=[("Background estimation", "Each pixel keeps k weighted candidate colors (a reservoir), updated by cuRAND random draws; the highest-weight color is the background."),
+          ("Mask and hysteresis", "Maximum difference over the RGB channels, then low / high thresholds: a mid-level pixel is kept only if it is connected to a strong one."),
+          ("Shared-memory hysteresis", "Propagation inside a tile until stable with __syncthreads_or, then skipping inactive blocks: from 172 launches per frame to about 11, hysteresis from 12.7 to 0.55 ms."),
+          ("Separable opening", "A min / max over a square window becomes a horizontal then a vertical pass: 81 reads per pixel down to 18, then fused into a single shared-memory kernel with a halo."),
+          ("Data stays on the GPU", "Frame and background stay in GPU memory, buffers are allocated once, the mask is uint8_t instead of float, and the reservoir is a structure of arrays for contiguous accesses."),
+          ("Honest benchmark", "Three videos, same parameters, same machine. Past v1.1.3 the compute is only ~2.4 ms out of 14.6 ms per frame: decoding and transfers dominate.")],
+  learned=["Thinking about an algorithm in terms of massive parallelism.", "Profile before optimizing: we first optimized copies (1.3 ms) while hysteresis cost 12.7.", "Reading a result honestly: an optimization can be neutral (v1.1.4) and still worth keeping for code clarity."])
 
 TR["en"]["deriscage-esp32"] = dict(
   title="Dérisquage on ESP32",
@@ -250,20 +252,20 @@ TR["eu"]["light-tracker"] = dict(
   learned=["Ideia sinple bat benetan funtzionatzen duen sistema fisiko bihurtzea (zarata, tolerantziak, mekanika).", "Kontrolaren oinarriak: errorea, irabazia, zona hila, egonkortasuna.", "Kontrol-logika eta potentzia-etapa garbiki bereiztea."])
 
 TR["eu"]["object-detection-gpu"] = dict(
-  tagline="Mugitzen diren objektuen detekzioa hondoaren kenketaren bidez, GPUan azeleratua.", domain="Ikusmena · GPU",
-  tags=["CUDA", "C++", "Irudi-prozesamendua", "Paralelismoa"],
-  facts=[("Lengoaia", "C++ / CUDA"), ("Metodoa", "Hondoaren kenketa"), ("Helburua", "NVIDIA GPUa"), ("Mota", "Errendimendu-proiektua")],
-  context="""<p>Kamera finko batek grabatutako bideo batean, dekoratuaren parte ez den guztia objektu interesgarria da. Ideia: hondoaren eredu bat ikastea, eta ondoren irudi bakoitzean hartatik aldentzen diren pixelak isolatzea.</p>
-<p>Kalkulua pixel bakoitzerako independentea denez, ezin hobeto egokitzen zaio GPUari. Proiektuan CPU erreferentziazko bertsio bat idatzi, CUDA kernel-etara eraman eta irabazia neurtzen da.</p>""",
-  pipeline=["Bideo-irudia", "Hondoaren eredua", "Aldea |I − B|", "Atalasea (histeresia)", "Morfologia (irekiera)", "Osagai konexuak", "Muga-kutxak"],
-  pipeline_caption="Detekzio-katea; urrats bakoitza CUDA kernel bat edo gehiago da.",
-  points=[("Hondoaren eredua", "Hondoa bideoan zehar estimatu eta eguneratzen da (batez besteko mugikorra), argiztapenaren aldaketa geldoetara egokitzeko."),
-          ("Mugimendu-maskara", "Uneko irudiaren eta hondoaren arteko distantzia, eta ondoren histeresidun atalasea: atalase altua abiatzeko, baxua hedatzeko."),
-          ("Morfologia", "Higadura eta ondoren dilatazioa, zarata isolatua kentzeko eta objektuetako zuloak betetzeko."),
-          ("Hari bat pixel bakoitzeko", "Kernel bakoitzak hari bat lotzen dio pixel bakoitzari; 2D sareak eta memoria-sarbide bateratuak."),
-          ("Memoria partekatua", "Auzo-eragiketek (morfologia) lauza bat eta haren ertza memoria partekatuan kargatzen dituzte, memoria globala berriro ez irakurtzeko."),
-          ("Benchmarka", "CPU eta GPU arteko konparazioa eta profilatzea (Nsight), banda-zabaleraren mende dauden kernelak identifikatzeko.")],
-  learned=["Algoritmo bat paralelismo masiboaren ikuspegitik pentsatzea.", "Memoria-sarbideek GPUaren errendimenduan duten eragin izugarria.", "Optimizatu aurretik neurtu: profilatu, konparatu, iteratu."])
+  tagline="Mugitzen diren objektuen detekzioa hondoaren kenketaren bidez: CPUa baino 30-41 aldiz azkarragoa den CUDA GStreamer iragazkia.", domain="Ikusmena · GPU",
+  tags=["CUDA", "C++20", "GStreamer", "Nsight", "CMake"],
+  facts=[("Lengoaia", "C++ / CUDA"), ("Emaitza", "×30-×41 CPUaren aldean (1080p)"), ("Profilatzea", "Nsight Systems"), ("Mota", "Talde-proiektua (4)")],
+  context="""<p>GPGPU proiektua EPITAn, lau lagunen taldean: bideo-jario batean hondoa eta objektu mugikorrak bereizten dituen CUDA GStreamer iragazki bat idaztea, eta mugitzen diren pixelak gorriz erakustea. Bideo-prozesatze kate askoren aurreko urratsa da.</p>
+<p>Lehenik CPU erreferentziazko bertsio bat idatzi genuen, gero GPU eramate sinple bat, eta zortzi urratsetan optimizatu (v1.1.0 → v1.1.8). Urrats bakoitza Nsight Systems-ekin neurtu zen hurrengoa aukeratu aurretik.</p>""",
+  pipeline=["Bideo-irudia", "Hondoaren estimazioa (erreserbak)", "Maskara max(|I − B|)", "Irekiera (higadura + dilatazioa)", "Histeresia", "Gain gorria"],
+  pipeline_caption="Iragazkiaren katea; urrats bakoitza CUDA kernel bat edo gehiago da.",
+  points=[("Hondoaren estimazioa", "Pixel bakoitzak k kolore hautagai pisutu gordetzen ditu (erreserba), cuRAND zozketa aleatorioekin eguneratuak; pisu handieneko kolorea da hondoa."),
+          ("Maskara eta histeresia", "RGB kanaletako alderik handiena, eta ondoren atalase baxua / altua: erdiko pixel bat atalase altuko pixel batekin konektatuta badago soilik mantentzen da."),
+          ("Histeresia memoria partekatuan", "Lauza baten barruan hedapena egonkortu arte __syncthreads_or-ekin, gero bloke inaktiboak saltatuz: irudiko 172 abiarazletik 11ra inguru, histeresia 12,7 ms-tik 0,55 ms-ra."),
+          ("Irekiera banagarria", "Leiho karratu baten min / max-a pasaldi horizontal eta bertikal bihurtzen da: pixeleko 81 irakurketa 18ra, eta gero memoria partekatuko kernel bakar batean batuta, ertzarekin."),
+          ("Datuak GPUan geratzen dira", "Irudia eta hondoa GPUaren memorian daude, bufferrak behin esleituta, maskara float ordez uint8_t, eta erreserba array-egitura gisa sarbide jarraituetarako."),
+          ("Benchmark zintzoa", "Hiru bideo, parametro berdinak, makina bera. v1.1.3-tik aurrera kalkulua irudiko 14,6 ms-tik ~2,4 ms baino ez da: deskodetzeak eta transferentziek menderatzen dute.")],
+  learned=["Algoritmo bat paralelismo masiboaren ikuspegitik pentsatzea.", "Optimizatu aurretik profilatu: lehenik kopiak optimizatu genituen (1,3 ms) histeresiak 12,7 ms kostatzen zuenean.", "Emaitza bat zintzotasunez irakurtzea: optimizazio bat neutroa izan daiteke (v1.1.4) eta kodearen argitasunagatik mantentzea merezi du."])
 
 TR["eu"]["deriscage-esp32"] = dict(
   title="Dérisquage ESP32an",

@@ -444,13 +444,15 @@
     "slug": "object-detection-gpu",
     "num": "03",
     "title": "Object Detection GPU",
-    "tagline": "Détection d'objets en mouvement par soustraction de fond, accélérée sur GPU.",
+    "repo": "https://github.com/JonGouspy/gpgpu",
+    "tagline": "Détection d'objets en mouvement par soustraction de fond : un filtre GStreamer CUDA, 30 à 41× plus rapide que le CPU.",
     "domain": "Vision · GPU",
     "tags": [
      "CUDA",
-     "C++",
-     "Traitement d'image",
-     "Parallélisme"
+     "C++20",
+     "GStreamer",
+     "Nsight",
+     "CMake"
     ],
     "facts": [
      [
@@ -458,61 +460,60 @@
       "C++ / CUDA"
      ],
      [
-      "Méthode",
-      "Soustraction de fond"
+      "Résultat",
+      "×30 à ×41 vs CPU (1080p)"
      ],
      [
-      "Cible",
-      "GPU NVIDIA"
+      "Profilage",
+      "Nsight Systems"
      ],
      [
       "Type",
-      "Projet de performance"
+      "Projet de groupe (4)"
      ]
     ],
-    "context": "<p>Sur une vidéo filmée par une caméra fixe, tout ce qui ne fait pas partie du décor est un objet d'intérêt. L'idée : apprendre un modèle du fond (background), puis isoler pour chaque image les pixels qui s'en écartent.</p>\n<p>Le calcul étant indépendant pour chaque pixel, il se prête parfaitement au GPU. Le projet consiste à écrire une version CPU de référence, puis à la porter en kernels CUDA et à mesurer le gain.</p>",
+    "context": "<p>Projet GPGPU à l'EPITA, en groupe de quatre : écrire un filtre GStreamer CUDA qui sépare le fond des objets mobiles dans un flux vidéo, puis affiche les pixels en mouvement en rouge. C'est une étape préliminaire de nombreuses chaînes de traitement vidéo.</p>\n<p>Nous avons d'abord écrit une version CPU de référence, puis un portage GPU naïf, que nous avons optimisé en huit étapes (v1.1.0 → v1.1.8). Chaque étape a été mesurée avec Nsight Systems avant d'en choisir la suivante.</p>",
     "pipeline": [
      "Frame vidéo",
-     "Modèle de fond",
-     "Différence |I − B|",
-     "Seuillage (hystérésis)",
-     "Morphologie (ouverture)",
-     "Composantes connexes",
-     "Boîtes englobantes"
+     "Estimation du fond (réservoirs)",
+     "Masque max(|I − B|)",
+     "Ouverture (érosion + dilatation)",
+     "Hystérésis",
+     "Surbrillance rouge"
     ],
-    "pipeline_caption": "Pipeline de détection, chaque étape étant un ou plusieurs kernels CUDA.",
+    "pipeline_caption": "Pipeline du filtre, chaque étape étant un ou plusieurs kernels CUDA.",
     "points": [
      [
-      "Modèle de fond",
-      "Fond estimé et mis à jour au fil de la vidéo (moyenne glissante), pour s'adapter aux changements lents d'éclairage."
+      "Estimation du fond",
+      "Chaque pixel garde k couleurs candidates pondérées (réservoir), mises à jour par tirage aléatoire cuRAND ; la couleur de plus fort poids est le fond."
      ],
      [
-      "Masque de mouvement",
-      "Distance entre l'image courante et le fond, puis seuillage avec hystérésis : un seuil haut pour amorcer, un seuil bas pour propager."
+      "Masque et hystérésis",
+      "Écart maximal sur les canaux RGB, puis seuil bas / seuil haut : un pixel moyen n'est retenu que s'il est connecté à un pixel fort."
      ],
      [
-      "Morphologie",
-      "Érosion puis dilatation pour supprimer le bruit isolé et reboucher les trous dans les objets."
+      "Hystérésis en mémoire partagée",
+      "Propagation dans une tuile jusqu'à stabilité avec __syncthreads_or, puis saut des blocs inactifs : de 172 lancements par frame à environ 11, hystérésis de 12,7 à 0,55 ms."
      ],
      [
-      "Un thread par pixel",
-      "Chaque kernel associe un thread à un pixel ; grilles 2D, accès mémoire coalescés."
+      "Ouverture séparable",
+      "Un min / max sur fenêtre carrée devient un passage horizontal puis vertical : 81 lectures par pixel ramenées à 18, puis fusionné en un kernel en mémoire partagée avec halo."
      ],
      [
-      "Mémoire partagée",
-      "Les opérations à voisinage (morphologie) chargent une tuile + son halo en shared memory pour éviter les relectures en mémoire globale."
+      "Données sur le GPU",
+      "Frame et fond restent en mémoire GPU, buffers alloués une seule fois, masque en uint8_t au lieu de float, et réservoir en structure de tableaux pour des accès contigus."
      ],
      [
-      "Benchmark",
-      "Comparaison CPU vs GPU et profilage (Nsight) pour identifier les kernels limités par la bande passante."
+      "Benchmark honnête",
+      "Trois vidéos, mêmes paramètres, même machine. Au-delà de v1.1.3 le calcul ne pèse plus que ~2,4 ms sur 14,6 ms par frame : le décodage et les transferts dominent."
      ]
     ],
     "code_lang": "CUDA",
-    "code": "__global__ void diff_threshold(const uchar3* frame, const float3* bg,\n                               uint8_t* mask, int w, int h, float th)\n{\n    int x = blockIdx.x * blockDim.x + threadIdx.x;\n    int y = blockIdx.y * blockDim.y + threadIdx.y;\n    if (x >= w || y >= h) return;\n\n    int i = y * w + x;\n    float3 d = make_float3(frame[i].x - bg[i].x,\n                           frame[i].y - bg[i].y,\n                           frame[i].z - bg[i].z);\n    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);\n    mask[i] = dist > th ? 255 : 0;\n}",
+    "code": "// Un thread par pixel : écart maximal sur les trois canaux entre l'image et le fond\n__global__ void mask_kernel(ImageView<rgb8> in, ImageView<rgb8> bg,\n                            ImageView<uint8_t> mask)\n{\n    const int x = blockDim.x * blockIdx.x + threadIdx.x;\n    const int y = blockDim.y * blockIdx.y + threadIdx.y;\n\n    if (x >= in.width || y >= in.height)\n        return;\n\n    const int dr = std::abs(int(in.at(x, y).r) - int(bg.at(x, y).r));\n    const int dg = std::abs(int(in.at(x, y).g) - int(bg.at(x, y).g));\n    const int db = std::abs(int(in.at(x, y).b) - int(bg.at(x, y).b));\n\n    mask.at(x, y) = max(dr, max(dg, db));\n}",
     "learned": [
      "Penser un algorithme en termes de parallélisme massif.",
-     "L'impact énorme des accès mémoire sur les performances GPU.",
-     "Mesurer avant d'optimiser : profiler, comparer, itérer."
+     "Profiler avant d'optimiser : nous avions d'abord optimisé les copies (1,3 ms) alors que l'hystérésis en coûtait 12,7.",
+     "Lire un résultat sans se mentir : une optimisation peut être neutre (v1.1.4) et rester utile pour la clarté du code."
     ],
     "theme": "software"
    },
@@ -922,13 +923,15 @@
     "slug": "object-detection-gpu",
     "num": "03",
     "title": "Object Detection GPU",
-    "tagline": "Moving-object detection through background subtraction, GPU-accelerated.",
+    "repo": "https://github.com/JonGouspy/gpgpu",
+    "tagline": "Moving-object detection through background subtraction: a CUDA GStreamer filter, 30 to 41× faster than the CPU.",
     "domain": "Vision · GPU",
     "tags": [
      "CUDA",
-     "C++",
-     "Image processing",
-     "Parallelism"
+     "C++20",
+     "GStreamer",
+     "Nsight",
+     "CMake"
     ],
     "facts": [
      [
@@ -936,61 +939,60 @@
       "C++ / CUDA"
      ],
      [
-      "Method",
-      "Background subtraction"
+      "Result",
+      "×30 to ×41 vs CPU (1080p)"
      ],
      [
-      "Target",
-      "NVIDIA GPU"
+      "Profiling",
+      "Nsight Systems"
      ],
      [
       "Type",
-      "Performance project"
+      "Group project (4)"
      ]
     ],
-    "context": "<p>In a video shot by a fixed camera, anything that isn't part of the scenery is an object of interest. The idea: learn a model of the background, then isolate, in each frame, the pixels that deviate from it.</p>\n<p>Since the computation is independent for each pixel, it's a perfect fit for the GPU. The project consists of writing a reference CPU version, porting it to CUDA kernels and measuring the speed-up.</p>",
+    "context": "<p>GPGPU project at EPITA, in a group of four: write a CUDA GStreamer filter that separates the background from moving objects in a video stream, then displays the moving pixels in red. It is a preliminary step in many video-processing chains.</p>\n<p>We first wrote a reference CPU version, then a naive GPU port, which we optimized in eight steps (v1.1.0 → v1.1.8). Each step was measured with Nsight Systems before choosing the next one.</p>",
     "pipeline": [
      "Video frame",
-     "Background model",
-     "Difference |I − B|",
-     "Thresholding (hysteresis)",
-     "Morphology (opening)",
-     "Connected components",
-     "Bounding boxes"
+     "Background estimation (reservoirs)",
+     "Mask max(|I − B|)",
+     "Opening (erosion + dilation)",
+     "Hysteresis",
+     "Red overlay"
     ],
-    "pipeline_caption": "Detection pipeline, each stage being one or more CUDA kernels.",
+    "pipeline_caption": "Filter pipeline, each stage being one or more CUDA kernels.",
     "points": [
      [
-      "Background model",
-      "Background estimated and updated over the video (running average) to adapt to slow lighting changes."
+      "Background estimation",
+      "Each pixel keeps k weighted candidate colors (a reservoir), updated by cuRAND random draws; the highest-weight color is the background."
      ],
      [
-      "Motion mask",
-      "Distance between the current frame and the background, then hysteresis thresholding: a high threshold to seed, a low one to propagate."
+      "Mask and hysteresis",
+      "Maximum difference over the RGB channels, then low / high thresholds: a mid-level pixel is kept only if it is connected to a strong one."
      ],
      [
-      "Morphology",
-      "Erosion then dilation to remove isolated noise and fill holes in objects."
+      "Shared-memory hysteresis",
+      "Propagation inside a tile until stable with __syncthreads_or, then skipping inactive blocks: from 172 launches per frame to about 11, hysteresis from 12.7 to 0.55 ms."
      ],
      [
-      "One thread per pixel",
-      "Each kernel maps one thread to one pixel; 2D grids and coalesced memory accesses."
+      "Separable opening",
+      "A min / max over a square window becomes a horizontal then a vertical pass: 81 reads per pixel down to 18, then fused into a single shared-memory kernel with a halo."
      ],
      [
-      "Shared memory",
-      "Neighborhood operations (morphology) load a tile plus its halo into shared memory to avoid re-reading global memory."
+      "Data stays on the GPU",
+      "Frame and background stay in GPU memory, buffers are allocated once, the mask is uint8_t instead of float, and the reservoir is a structure of arrays for contiguous accesses."
      ],
      [
-      "Benchmark",
-      "CPU vs GPU comparison and profiling (Nsight) to identify bandwidth-bound kernels."
+      "Honest benchmark",
+      "Three videos, same parameters, same machine. Past v1.1.3 the compute is only ~2.4 ms out of 14.6 ms per frame: decoding and transfers dominate."
      ]
     ],
     "code_lang": "CUDA",
-    "code": "__global__ void diff_threshold(const uchar3* frame, const float3* bg,\n                               uint8_t* mask, int w, int h, float th)\n{\n    int x = blockIdx.x * blockDim.x + threadIdx.x;\n    int y = blockIdx.y * blockDim.y + threadIdx.y;\n    if (x >= w || y >= h) return;\n\n    int i = y * w + x;\n    float3 d = make_float3(frame[i].x - bg[i].x,\n                           frame[i].y - bg[i].y,\n                           frame[i].z - bg[i].z);\n    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);\n    mask[i] = dist > th ? 255 : 0;\n}",
+    "code": "// One thread per pixel: maximum difference over the three channels between frame and background\n__global__ void mask_kernel(ImageView<rgb8> in, ImageView<rgb8> bg,\n                            ImageView<uint8_t> mask)\n{\n    const int x = blockDim.x * blockIdx.x + threadIdx.x;\n    const int y = blockDim.y * blockIdx.y + threadIdx.y;\n\n    if (x >= in.width || y >= in.height)\n        return;\n\n    const int dr = std::abs(int(in.at(x, y).r) - int(bg.at(x, y).r));\n    const int dg = std::abs(int(in.at(x, y).g) - int(bg.at(x, y).g));\n    const int db = std::abs(int(in.at(x, y).b) - int(bg.at(x, y).b));\n\n    mask.at(x, y) = max(dr, max(dg, db));\n}",
     "learned": [
      "Thinking about an algorithm in terms of massive parallelism.",
-     "The huge impact of memory access patterns on GPU performance.",
-     "Measure before optimizing: profile, compare, iterate."
+     "Profile before optimizing: we first optimized copies (1.3 ms) while hysteresis cost 12.7.",
+     "Reading a result honestly: an optimization can be neutral (v1.1.4) and still worth keeping for code clarity."
     ],
     "theme": "software"
    },
@@ -1400,13 +1402,15 @@
     "slug": "object-detection-gpu",
     "num": "03",
     "title": "Object Detection GPU",
-    "tagline": "Mugitzen diren objektuen detekzioa hondoaren kenketaren bidez, GPUan azeleratua.",
+    "repo": "https://github.com/JonGouspy/gpgpu",
+    "tagline": "Mugitzen diren objektuen detekzioa hondoaren kenketaren bidez: CPUa baino 30-41 aldiz azkarragoa den CUDA GStreamer iragazkia.",
     "domain": "Ikusmena · GPU",
     "tags": [
      "CUDA",
-     "C++",
-     "Irudi-prozesamendua",
-     "Paralelismoa"
+     "C++20",
+     "GStreamer",
+     "Nsight",
+     "CMake"
     ],
     "facts": [
      [
@@ -1414,61 +1418,60 @@
       "C++ / CUDA"
      ],
      [
-      "Metodoa",
-      "Hondoaren kenketa"
+      "Emaitza",
+      "×30-×41 CPUaren aldean (1080p)"
      ],
      [
-      "Helburua",
-      "NVIDIA GPUa"
+      "Profilatzea",
+      "Nsight Systems"
      ],
      [
       "Mota",
-      "Errendimendu-proiektua"
+      "Talde-proiektua (4)"
      ]
     ],
-    "context": "<p>Kamera finko batek grabatutako bideo batean, dekoratuaren parte ez den guztia objektu interesgarria da. Ideia: hondoaren eredu bat ikastea, eta ondoren irudi bakoitzean hartatik aldentzen diren pixelak isolatzea.</p>\n<p>Kalkulua pixel bakoitzerako independentea denez, ezin hobeto egokitzen zaio GPUari. Proiektuan CPU erreferentziazko bertsio bat idatzi, CUDA kernel-etara eraman eta irabazia neurtzen da.</p>",
+    "context": "<p>GPGPU proiektua EPITAn, lau lagunen taldean: bideo-jario batean hondoa eta objektu mugikorrak bereizten dituen CUDA GStreamer iragazki bat idaztea, eta mugitzen diren pixelak gorriz erakustea. Bideo-prozesatze kate askoren aurreko urratsa da.</p>\n<p>Lehenik CPU erreferentziazko bertsio bat idatzi genuen, gero GPU eramate sinple bat, eta zortzi urratsetan optimizatu (v1.1.0 → v1.1.8). Urrats bakoitza Nsight Systems-ekin neurtu zen hurrengoa aukeratu aurretik.</p>",
     "pipeline": [
      "Bideo-irudia",
-     "Hondoaren eredua",
-     "Aldea |I − B|",
-     "Atalasea (histeresia)",
-     "Morfologia (irekiera)",
-     "Osagai konexuak",
-     "Muga-kutxak"
+     "Hondoaren estimazioa (erreserbak)",
+     "Maskara max(|I − B|)",
+     "Irekiera (higadura + dilatazioa)",
+     "Histeresia",
+     "Gain gorria"
     ],
-    "pipeline_caption": "Detekzio-katea; urrats bakoitza CUDA kernel bat edo gehiago da.",
+    "pipeline_caption": "Iragazkiaren katea; urrats bakoitza CUDA kernel bat edo gehiago da.",
     "points": [
      [
-      "Hondoaren eredua",
-      "Hondoa bideoan zehar estimatu eta eguneratzen da (batez besteko mugikorra), argiztapenaren aldaketa geldoetara egokitzeko."
+      "Hondoaren estimazioa",
+      "Pixel bakoitzak k kolore hautagai pisutu gordetzen ditu (erreserba), cuRAND zozketa aleatorioekin eguneratuak; pisu handieneko kolorea da hondoa."
      ],
      [
-      "Mugimendu-maskara",
-      "Uneko irudiaren eta hondoaren arteko distantzia, eta ondoren histeresidun atalasea: atalase altua abiatzeko, baxua hedatzeko."
+      "Maskara eta histeresia",
+      "RGB kanaletako alderik handiena, eta ondoren atalase baxua / altua: erdiko pixel bat atalase altuko pixel batekin konektatuta badago soilik mantentzen da."
      ],
      [
-      "Morfologia",
-      "Higadura eta ondoren dilatazioa, zarata isolatua kentzeko eta objektuetako zuloak betetzeko."
+      "Histeresia memoria partekatuan",
+      "Lauza baten barruan hedapena egonkortu arte __syncthreads_or-ekin, gero bloke inaktiboak saltatuz: irudiko 172 abiarazletik 11ra inguru, histeresia 12,7 ms-tik 0,55 ms-ra."
      ],
      [
-      "Hari bat pixel bakoitzeko",
-      "Kernel bakoitzak hari bat lotzen dio pixel bakoitzari; 2D sareak eta memoria-sarbide bateratuak."
+      "Irekiera banagarria",
+      "Leiho karratu baten min / max-a pasaldi horizontal eta bertikal bihurtzen da: pixeleko 81 irakurketa 18ra, eta gero memoria partekatuko kernel bakar batean batuta, ertzarekin."
      ],
      [
-      "Memoria partekatua",
-      "Auzo-eragiketek (morfologia) lauza bat eta haren ertza memoria partekatuan kargatzen dituzte, memoria globala berriro ez irakurtzeko."
+      "Datuak GPUan geratzen dira",
+      "Irudia eta hondoa GPUaren memorian daude, bufferrak behin esleituta, maskara float ordez uint8_t, eta erreserba array-egitura gisa sarbide jarraituetarako."
      ],
      [
-      "Benchmarka",
-      "CPU eta GPU arteko konparazioa eta profilatzea (Nsight), banda-zabaleraren mende dauden kernelak identifikatzeko."
+      "Benchmark zintzoa",
+      "Hiru bideo, parametro berdinak, makina bera. v1.1.3-tik aurrera kalkulua irudiko 14,6 ms-tik ~2,4 ms baino ez da: deskodetzeak eta transferentziek menderatzen dute."
      ]
     ],
     "code_lang": "CUDA",
-    "code": "__global__ void diff_threshold(const uchar3* frame, const float3* bg,\n                               uint8_t* mask, int w, int h, float th)\n{\n    int x = blockIdx.x * blockDim.x + threadIdx.x;\n    int y = blockIdx.y * blockDim.y + threadIdx.y;\n    if (x >= w || y >= h) return;\n\n    int i = y * w + x;\n    float3 d = make_float3(frame[i].x - bg[i].x,\n                           frame[i].y - bg[i].y,\n                           frame[i].z - bg[i].z);\n    float dist = sqrtf(d.x*d.x + d.y*d.y + d.z*d.z);\n    mask[i] = dist > th ? 255 : 0;\n}",
+    "code": "// Hari bat pixel bakoitzeko: irudiaren eta hondoaren arteko alderik handiena hiru kanaletan\n__global__ void mask_kernel(ImageView<rgb8> in, ImageView<rgb8> bg,\n                            ImageView<uint8_t> mask)\n{\n    const int x = blockDim.x * blockIdx.x + threadIdx.x;\n    const int y = blockDim.y * blockIdx.y + threadIdx.y;\n\n    if (x >= in.width || y >= in.height)\n        return;\n\n    const int dr = std::abs(int(in.at(x, y).r) - int(bg.at(x, y).r));\n    const int dg = std::abs(int(in.at(x, y).g) - int(bg.at(x, y).g));\n    const int db = std::abs(int(in.at(x, y).b) - int(bg.at(x, y).b));\n\n    mask.at(x, y) = max(dr, max(dg, db));\n}",
     "learned": [
      "Algoritmo bat paralelismo masiboaren ikuspegitik pentsatzea.",
-     "Memoria-sarbideek GPUaren errendimenduan duten eragin izugarria.",
-     "Optimizatu aurretik neurtu: profilatu, konparatu, iteratu."
+     "Optimizatu aurretik profilatu: lehenik kopiak optimizatu genituen (1,3 ms) histeresiak 12,7 ms kostatzen zuenean.",
+     "Emaitza bat zintzotasunez irakurtzea: optimizazio bat neutroa izan daiteke (v1.1.4) eta kodearen argitasunagatik mantentzea merezi du."
     ],
     "theme": "software"
    },
